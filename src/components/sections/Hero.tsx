@@ -32,10 +32,11 @@ export function Hero() {
     }, { scope: containerRef })
 
     return (
-        <section ref={containerRef} className="relative pt-24 pb-20 md:pt-32 md:pb-32 overflow-hidden bg-background">
+        <section ref={containerRef} className="relative pt-40 pb-20 md:pt-36 md:pb-32 overflow-hidden bg-background">
             {/* Mesh Gradients */}
             <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] bg-primary/20 blur-[120px] rounded-full mix-blend-multiply opacity-20 animate-pulse" />
-            <div className="absolute bottom-0 left-0 -z-10 h-[500px] w-[500px] bg-secondary/30 blur-[100px] rounded-full mix-blend-multiply opacity-20" />
+            <div className="absolute bottom-0 left-0 -z-10 h-[500px] w-[500px] bg-accent-cool/20 blur-[100px] rounded-full mix-blend-multiply opacity-30" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[400px] w-[400px] bg-accent-warm/15 blur-[100px] rounded-full mix-blend-multiply opacity-40" />
 
             <div className="container px-4 mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -43,25 +44,28 @@ export function Hero() {
                     {/* Left Column: Text */}
                     <div ref={leftContentRef} className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0">
                         <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-6">
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary backdrop-blur-sm">
-                                <Star className="h-3.5 w-3.5 fill-primary" />
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-warm/30 bg-accent-warm/10 px-3 py-1 text-sm font-medium text-accent-warm backdrop-blur-sm">
+                                <Star className="h-3.5 w-3.5 fill-accent-warm" />
                                 Rated #1 CV Service
                             </span>
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/50 px-3 py-1 text-sm font-medium text-muted-foreground backdrop-blur-sm">
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-cool/30 bg-accent-cool/10 px-3 py-1 text-sm font-medium text-accent-cool backdrop-blur-sm">
                                 <CheckCircle2 className="h-3.5 w-3.5" />
                                 ATS-Optimized
                             </span>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground font-heading mb-6 leading-[1.1]">
-                            Your Story, <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
-                                Professional & Hired.
-                            </span>
+                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground font-heading mb-6 leading-[1.05]">
+                            ATS-Optimized <br />
+                            <span className="text-primary">
+                                CV &amp; Resume Writing
+                            </span>{" "}
+                            <br />
+                            That Gets You Interviews.
                         </h1>
 
                         <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                            Stop getting rejected by bots. I craft ATS-optimized biographies that position you as the top 1% candidate in your industry.
+                            Stop getting filtered out by ATS. I craft recruiter-approved CVs, resumes, and LinkedIn
+                            profiles that highlight your impact and match your target role.
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -74,7 +78,7 @@ export function Hero() {
                             </Link>
                             <Link
                                 href="#work"
-                                className="inline-flex h-12 items-center justify-center rounded-lg border border-input bg-background/50 backdrop-blur-sm px-8 text-base font-medium transition-all hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                                className="inline-flex h-12 items-center justify-center rounded-lg border border-input bg-card px-8 text-base font-medium transition-all hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             >
                                 View Samples
                             </Link>
@@ -82,18 +86,25 @@ export function Hero() {
 
                         <div className="mt-10 flex items-center justify-center lg:justify-start gap-4 text-sm text-muted-foreground">
                             <div className="flex -space-x-2">
-                                {[1, 2, 3, 4].map(i => (
-                                    <div key={i} className={`h-8 w-8 rounded-full border-2 border-background`} style={{ backgroundColor: `hsl(0, 0%, ${90 - i * 10}%)` }} />
+                                {[11, 12, 13, 14].map((id) => (
+                                    <img
+                                        key={id}
+                                        src={`https://i.pravatar.cc/64?img=${id}`}
+                                        alt=""
+                                        width={32}
+                                        height={32}
+                                        className="h-8 w-8 rounded-full object-cover border-2 border-background bg-muted"
+                                    />
                                 ))}
                             </div>
                             <div>
-                                <span className="font-bold text-foreground">500+</span> Clients Hired
+                                <span className="font-bold text-accent-cool">500+</span> Clients Hired
                             </div>
                         </div>
                     </div>
 
                     {/* Right Column: Visual */}
-                    <div ref={rightContentRef} className="relative hidden lg:block perspective-distant overflow-visible">
+                    <div ref={rightContentRef} className="relative hidden lg:block perspective-[1200px] overflow-visible">
                         <HeroVisual />
                     </div>
 

@@ -17,7 +17,7 @@ export function GradientBorderCard({
     return (
         <div className={cn("relative group p-[1px] rounded-2xl overflow-hidden isolation-auto", containerClassName)}>
             {/* Animated Gradient Border */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/50 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-cool/40 via-primary/50 to-accent-warm/40 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
 
             {/* Static Border Fallback */}
             <div className="absolute inset-0 bg-border/50 rounded-2xl z-[-1]" />

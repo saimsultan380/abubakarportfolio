@@ -68,7 +68,7 @@ export function Navbar() {
                             href="/"
                             className="group flex items-center gap-2 text-2xl font-black tracking-tighter font-heading text-foreground nav-desktop-item"
                         >
-                            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground transform group-hover:rotate-12 transition-transform duration-300">
+                            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent-cool flex items-center justify-center text-primary-foreground transform group-hover:rotate-12 transition-transform duration-300">
                                 <Zap className="h-5 w-5 fill-current" />
                             </div>
                             <span>Abubakar<span className="text-primary italic">.</span></span>
@@ -80,7 +80,7 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="px-5 py-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-all rounded-full hover:bg-background/50"
+                                    className="px-5 py-2 text-sm font-bold text-muted-foreground hover:text-primary transition-all rounded-full hover:bg-background/50"
                                 >
                                     {link.name}
                                 </Link>

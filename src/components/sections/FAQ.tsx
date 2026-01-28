@@ -1,8 +1,13 @@
 "use client"
 
 import * as React from "react"
-import { Plus, Minus, HelpCircle } from "lucide-react"
+import { Plus, Minus, MessageCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 const faqs = [
     {
@@ -10,7 +15,7 @@ const faqs = [
         answer: "Standard delivery is within 48-72 hours. If you need it sooner, we have a 24-hour express option available in our Executive package."
     },
     {
-        question: "Do you guarantee I will get interviews?",
+        question: "Do you guarantee interviews?",
         answer: "While we cannot legally guarantee a job, our clients report a 3x increase in interview invitations. We focus on ATS optimization and keyword alignment which are the biggest hurdles."
     },
     {
@@ -29,70 +34,115 @@ const faqs = [
 
 export function FAQ() {
     const [openIndex, setOpenIndex] = React.useState<number | null>(null)
+    const containerRef = React.useRef<HTMLDivElement>(null)
+
+    useGSAP(() => {
+        // Staggered reveal for FAQ items
+        gsap.from(".faq-item", {
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 75%",
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+        })
+    }, { scope: containerRef })
 
     return (
-        <section id="faq" className="py-24 bg-background relative overflow-hidden">
-            {/* Background Accent */}
-            <div className="absolute bottom-0 right-0 w-[30%] h-[30%] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+        <section id="faq" ref={containerRef} className="py-24 md:py-32 bg-background relative border-t border-border/50">
+            <div className="container px-4 mx-auto">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+                    
+                    {/* Sticky Sidebar: Title */}
+                    <div className="lg:w-1/3">
+                        <div className="lg:sticky lg:top-32 p-6 rounded-3xl bg-secondary/20 border border-border/50 backdrop-blur-sm">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6">
+                                <MessageCircle className="h-3 w-3" />
+                                FAQ
+                            </div>
+                            
+                            <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight text-foreground mb-6">
+                                Everything you <br />
+                                need to know.
+                            </h2>
+                            
+                            <p className="text-muted-foreground text-base mb-8 leading-relaxed">
+                                Can't find the answer you're looking for? Chat with our team directly.
+                            </p>
 
-            <div className="container px-4 mx-auto max-w-3xl relative z-10">
-                <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-muted-foreground text-xs font-semibold mb-4 border border-border">
-                        <HelpCircle className="h-3.5 w-3.5" />
-                        Frequently Asked Questions
-                    </div>
-                    <h2 className="text-3xl md:text-5xl font-bold font-heading text-foreground">
-                        Still Have <span className="text-primary">Questions?</span>
-                    </h2>
-                </div>
-
-                <div className="space-y-4">
-                    {faqs.map((faq, index) => (
-                        <div
-                            key={index}
-                            className={cn(
-                                "rounded-2xl border transition-all duration-300",
-                                openIndex === index
-                                    ? "border-primary/30 bg-primary/5 shadow-lg shadow-primary/5"
-                                    : "border-border bg-card hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
-                            )}
-                        >
-                            <button
-                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                className="w-full flex items-center justify-between p-6 text-left"
-                            >
-                                <span className="text-lg font-bold font-heading text-foreground">{faq.question}</span>
-                                <div className={cn(
-                                    "h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300",
-                                    openIndex === index ? "bg-primary text-primary-foreground rotate-180" : "bg-secondary text-muted-foreground"
-                                )}>
-                                    {openIndex === index ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-background ring-2 ring-border">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&q=80" 
+                                        alt="Support" 
+                                        className="h-full w-full object-cover"
+                                    />
                                 </div>
-                            </button>
-
-                            <div className={cn(
-                                "overflow-hidden transition-all duration-500 ease-in-out",
-                                openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                            )}>
-                                <div className="p-6 pt-0 text-muted-foreground leading-relaxed font-medium">
-                                    {faq.answer}
+                                <div>
+                                    <p className="text-sm font-bold text-foreground">Still have questions?</p>
+                                    <p className="text-xs text-muted-foreground">We usually reply in minutes.</p>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
 
-                <div className="mt-16 p-8 rounded-3xl bg-primary text-primary-foreground flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl shadow-primary/20">
-                    <div className="text-center md:text-left">
-                        <h3 className="text-xl font-bold mb-1">Didn't find your answer?</h3>
-                        <p className="opacity-80">Message me directly on WhatsApp for a quick chat.</p>
+                            <a
+                                href="https://wa.me/447478564745"
+                                className="w-full inline-flex h-12 items-center justify-center px-6 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 font-bold uppercase tracking-widest text-xs shadow-lg shadow-primary/20 group"
+                            >
+                                Ask on WhatsApp
+                                <Plus className="ml-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
+                            </a>
+                        </div>
                     </div>
-                    <a
-                        href="https://wa.me/1234567890"
-                        className="h-12 px-8 rounded-xl bg-white text-primary font-bold uppercase tracking-widest text-sm flex items-center justify-center hover:scale-105 transition-transform"
-                    >
-                        Ask on WhatsApp
-                    </a>
+
+                    {/* Right: Accordion List */}
+                    <div className="lg:w-2/3 space-y-4">
+                        {faqs.map((faq, index) => (
+                            <div 
+                                key={index} 
+                                className={cn(
+                                    "faq-item group rounded-2xl border transition-all duration-300 overflow-hidden",
+                                    openIndex === index 
+                                        ? "bg-card border-primary/50 shadow-lg shadow-primary/5" 
+                                        : "bg-card/50 border-border hover:border-primary/30 hover:bg-card"
+                                )}
+                            >
+                                <button
+                                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                                    className="w-full flex items-center justify-between p-6 md:p-8 text-left"
+                                >
+                                    <span className={cn(
+                                        "text-lg md:text-xl font-bold font-heading transition-colors pr-8",
+                                        openIndex === index ? "text-primary" : "text-foreground group-hover:text-primary/80"
+                                    )}>
+                                        {faq.question}
+                                    </span>
+                                    <div className={cn(
+                                        "flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300",
+                                        openIndex === index 
+                                            ? "bg-primary text-primary-foreground rotate-45" 
+                                            : "bg-secondary text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                                    )}>
+                                        <Plus className="h-5 w-5" />
+                                    </div>
+                                </button>
+
+                                <div className={cn(
+                                    "grid transition-all duration-500 ease-in-out",
+                                    openIndex === index ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                )}>
+                                    <div className="overflow-hidden">
+                                        <p className="px-6 md:px-8 pb-6 md:pb-8 text-muted-foreground leading-relaxed">
+                                            {faq.answer}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
             </div>
         </section>

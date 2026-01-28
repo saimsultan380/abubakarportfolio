@@ -61,13 +61,14 @@ export function HowItWorks() {
         <section id="process" ref={sectionRef} className="py-24 bg-zinc-50 dark:bg-black relative overflow-hidden border-t border-border">
             {/* Background Decorative Mesh */}
             <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500 blur-[150px] rounded-full" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary blur-[150px] rounded-full" />
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary blur-[150px] rounded-full" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-cool blur-[150px] rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-accent-warm blur-[120px] rounded-full" />
             </div>
 
             <div className="container px-4 mx-auto relative z-10">
                 <div className="text-center max-w-3xl mx-auto mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-6 border border-primary/20">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-cool/10 text-accent-cool text-[10px] font-black uppercase tracking-widest mb-6 border border-accent-cool/20">
                         Workflow
                     </div>
                     <h2 className="text-4xl md:text-6xl font-black font-heading mb-6 tracking-tight text-foreground">
@@ -87,7 +88,7 @@ export function HowItWorks() {
                         <SpotlightCard
                             key={index}
                             className="process-card group relative p-8 h-full flex flex-col bg-card border-border shadow-lg transition-transform hover:-translate-y-2 duration-500"
-                            spotlightColor="rgba(var(--primary), 0.05)"
+                            spotlightColor="rgba(var(--primary-rgb), 0.08)"
                         >
                             {/* Step Header */}
                             <div className="relative mb-8">
@@ -119,11 +120,11 @@ export function HowItWorks() {
 
                 {/* Bottom CTA Placeholder */}
                 <div className="mt-20 flex justify-center">
-                    <a href="#contact" className="flex items-center gap-4 p-1 pr-6 rounded-full bg-primary/5 border border-primary/20 hover:bg-primary/10 transition-all group">
-                        <span className="h-10 w-10 flex items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+                    <a href="#contact" className="flex items-center gap-4 p-1 pr-6 rounded-full bg-card border border-border hover:bg-accent transition-all group shadow-sm">
+                        <span className="h-10 w-10 flex items-center justify-center rounded-full bg-accent-warm text-white shadow-lg shadow-accent-warm/30">
                             <ArrowRight className="h-5 w-5" />
                         </span>
-                        <span className="text-sm font-bold tracking-tight">Ready to see the difference? Book Now</span>
+                        <span className="text-sm font-bold tracking-tight text-foreground">Ready to see the difference? Book Now</span>
                     </a>
                 </div>
             </div>

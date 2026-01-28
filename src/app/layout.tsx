@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingActions } from "@/components/FloatingActions";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -19,6 +20,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Professional CV Writing & Career Services",
   description: "Get more interviews with ATS-optimized, recruiter-approved resumes. tailored to your role and industry.",
+  verification: {
+    google: "3lT3phbyzEO6yh8nkCSIfsnzWpAhfxIhU_WNM2r60sQ",
+  },
 };
 
 export default function RootLayout({
@@ -29,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={cn(
           inter.variable,
           outfit.variable,
@@ -42,10 +47,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="flex-1">
+          <main className="flex-1 relative z-10 bg-background shadow-xl">
             {children}
           </main>
           <Footer />
+          <FloatingActions />
         </ThemeProvider>
       </body>
     </html>

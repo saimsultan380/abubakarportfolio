@@ -1,150 +1,221 @@
 "use client"
 
 import * as React from "react"
-import { Check, Star, Zap, Rocket, Shield } from "lucide-react"
-import { SpotlightCard } from "@/components/ui/SpotlightCard"
+import Link from "next/link"
+import { Check, Rocket, Shield, Zap, ArrowRight, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { PLANS, type PlanId } from "@/lib/plans"
 
-const packages = [
-    {
-        name: "Professional Resume",
-        price: "149",
-        description: "Perfect for entry to mid-level professionals seeking a competitive edge.",
-        features: [
-            "ATS-Optimized Resume Writing",
-            "Strategic Keyword Research",
-            "Industry-Specific Formatting",
-            "2 Rounds of Revisions",
-            "48-Hour Delivery",
-        ],
-        icon: Rocket,
-        tag: "Most Popular",
-        gradient: "from-blue-500/20 to-blue-600/20",
-    },
-    {
-        name: "The Executive",
-        price: "299",
-        description: "A complete overhaul for senior leaders and executive-level candidates.",
-        features: [
-            "Everything in Professional",
-            "LinkedIn Profile Optimization",
-            "Targeted Cover Letter",
-            "Unlimited Revisions",
-            "Direct WhatsApp Priority",
-            "Post-Interview Guide",
-        ],
-        icon: Shield,
-        tag: "Premium",
-        gradient: "from-primary/20 to-primary/40",
-        popular: true,
-    },
-    {
-        name: "Career Transition",
-        price: "199",
-        description: "Designed for those changing industries or returning to the workforce.",
-        features: [
-            "Transferable Skills Audit",
-            "Career Pivot Strategy",
-            "Strategic Cover Letter",
-            "ATS Framework Refresh",
-            "Job Search Guide",
-        ],
-        icon: Zap,
-        tag: "Strategic",
-        gradient: "from-purple-500/20 to-purple-600/20",
-    },
-]
+gsap.registerPlugin(ScrollTrigger)
+
+const planMeta: Record<PlanId, { icon: typeof Rocket; label: string }> = {
+  professional: { icon: Rocket, label: "Entry to Mid-Level" },
+  executive: { icon: Shield, label: "Senior & Executive" },
+  transition: { icon: Zap, label: "Career Changers" },
+}
 
 export function Pricing() {
-    return (
-        <section id="pricing" className="py-24 bg-background relative overflow-hidden">
-            {/* Background Gradients */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-primary/2 blur-[150px] rounded-full pointer-events-none" />
+  const containerRef = React.useRef<HTMLElement>(null)
+  const cardsRef = React.useRef<HTMLDivElement>(null)
 
-            <div className="container px-4 mx-auto relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-4 border border-primary/20">
-                        Transparent Pricing
-                    </div>
-                    <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight">
-                        Invest in the <span className="text-primary italic">Career You Deserve.</span>
-                    </h2>
-                    <p className="text-lg text-muted-foreground">
-                        Choose the package that fits your career stage. Every document is 100% hand-crafted to bypass bots and wow humans.
-                    </p>
-                </div>
+  useGSAP(() => {
+    const trigger = containerRef.current
+    if (!trigger) return
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {packages.map((pkg, index) => (
-                        <SpotlightCard
-                            key={index}
-                            className={cn(
-                                "p-0 overflow-hidden flex flex-col group border-border/50 transition-all duration-500",
-                                pkg.popular && "ring-2 ring-primary border-primary/50 shadow-2xl shadow-primary/10"
-                            )}
-                            spotlightColor="rgba(var(--primary), 0.1)"
-                        >
-                            {/* Header */}
-                            <div className={cn("p-8 bg-gradient-to-br border-b border-border/50 relative", pkg.gradient)}>
-                                {pkg.popular && (
-                                    <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest shadow-lg">
-                                        {pkg.tag}
-                                    </div>
-                                )}
-                                {!pkg.popular && (
-                                    <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-[10px] font-bold uppercase tracking-widest border border-border">
-                                        {pkg.tag}
-                                    </div>
-                                )}
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger,
+        start: "top 85%",
+        end: "bottom 20%",
+      },
+    })
 
-                                <div className="h-12 w-12 rounded-xl bg-background/50 backdrop-blur-md flex items-center justify-center mb-6 shadow-sm border border-white/20">
-                                    <pkg.icon className="h-6 w-6 text-foreground" />
-                                </div>
-                                <h3 className="text-2xl font-bold font-heading mb-2">{pkg.name}</h3>
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-4xl font-black font-heading text-foreground">${pkg.price}</span>
-                                    <span className="text-muted-foreground font-medium">USD</span>
-                                </div>
-                            </div>
-
-                            {/* Body */}
-                            <div className="p-8 flex-grow">
-                                <p className="text-sm text-muted-foreground mb-8 font-medium italic">
-                                    "{pkg.description}"
-                                </p>
-                                <ul className="space-y-4">
-                                    {pkg.features.map((feature, i) => (
-                                        <li key={i} className="flex items-start gap-3">
-                                            <div className="mt-1 h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
-                                                <Check className="h-3 w-3 text-primary" />
-                                            </div>
-                                            <span className="text-sm text-foreground/80 font-medium">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* Footer */}
-                            <div className="p-8 pt-0">
-                                <button
-                                    className={cn(
-                                        "w-full h-12 rounded-xl text-sm font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2",
-                                        pkg.popular
-                                            ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02]"
-                                            : "bg-secondary text-foreground border border-border hover:bg-zinc-200 dark:hover:bg-zinc-800"
-                                    )}
-                                >
-                                    Start Project <Star className={cn("h-4 w-4", pkg.popular ? "fill-white" : "fill-primary")} />
-                                </button>
-                            </div>
-                        </SpotlightCard>
-                    ))}
-                </div>
-
-                <div className="mt-16 text-center text-muted-foreground text-sm font-medium">
-                    Need a custom solution? <a href="#contact" className="text-primary hover:underline font-bold">Contact me</a> for a free quote.
-                </div>
-            </div>
-        </section>
+    tl.fromTo(
+      ".pricing-badge",
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }
     )
+      .fromTo(
+        ".pricing-title",
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+        "-=0.3"
+      )
+      .fromTo(
+        ".pricing-subtitle",
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+        "-=0.4"
+      )
+      .fromTo(
+        ".pricing-card",
+        { y: 48, scale: 0.96, opacity: 0 },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "back.out(1.1)",
+          overwrite: "auto",
+        },
+        "-=0.25"
+      )
+      .fromTo(
+        ".pricing-payment",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+        "-=0.5"
+      )
+
+    // Hover lift + scale on cards (GSAP-driven)
+    const cards = cardsRef.current?.querySelectorAll(".pricing-card") ?? []
+    const onEnter = (e: Event) => {
+      const el = e.currentTarget as HTMLElement
+      gsap.to(el, { y: -6, scale: 1.02, duration: 0.3, ease: "power2.out", overwrite: "auto" })
+    }
+    const onLeave = (e: Event) => {
+      const el = e.currentTarget as HTMLElement
+      gsap.to(el, { y: 0, scale: 1, duration: 0.35, ease: "power2.out", overwrite: "auto" })
+    }
+    cards.forEach((card) => {
+      card.addEventListener("mouseenter", onEnter)
+      card.addEventListener("mouseleave", onLeave)
+    })
+
+    return () => {
+      cards.forEach((card) => {
+        card.removeEventListener("mouseenter", onEnter)
+        card.removeEventListener("mouseleave", onLeave)
+      })
+    }
+  }, { scope: containerRef })
+
+  return (
+    <section
+      id="pricing"
+      ref={containerRef}
+      className="relative py-24 md:py-32 overflow-hidden border-t border-border/50"
+    >
+      {/* Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:24px_24px] opacity-[0.4] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_40%,transparent_100%)]" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[40%] h-[50%] bg-accent-cool/5 blur-[100px] rounded-full pointer-events-none" />
+
+      <div className="container relative z-10 px-4 mx-auto">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center mb-16 md:mb-20">
+          <div className="pricing-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
+            <Sparkles className="h-3.5 w-3.5" />
+            Investment
+          </div>
+          <h2 className="pricing-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-tight text-foreground mb-5">
+            Invest in your{" "}
+            <span className="text-primary">future self.</span>
+          </h2>
+          <p className="pricing-subtitle text-lg md:text-xl text-muted-foreground font-medium">
+            Transparent pricing. No hidden fees. 100% human-crafted.
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto">
+          {PLANS.map((plan, index) => {
+            const meta = planMeta[plan.id]
+            const Icon = meta.icon
+            const isPopular = plan.id === "executive"
+
+            return (
+              <div
+                key={plan.id}
+                className={cn(
+                  "pricing-card group relative flex flex-col rounded-3xl border transition-all duration-300 overflow-hidden",
+                  isPopular
+                    ? "bg-card border-primary/50 shadow-xl shadow-primary/10 md:-mt-2 md:mb-2 md:ring-2 md:ring-primary/20"
+                    : "bg-card/80 border-border hover:border-primary/30 hover:shadow-lg"
+                )}
+              >
+                {isPopular && (
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+                )}
+                <div className="p-6 md:p-8 flex flex-col flex-1">
+                  {/* Plan label */}
+                  <div className="flex items-center gap-2 mb-6">
+                    <div
+                      className={cn(
+                        "flex h-10 w-10 items-center justify-center rounded-xl",
+                        isPopular ? "bg-primary/15 text-primary" : "bg-secondary text-muted-foreground"
+                      )}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                      {meta.label}
+                    </span>
+                  </div>
+
+                  {/* Name & price */}
+                  <h3 className="text-2xl font-black font-heading tracking-tight text-foreground mb-2">
+                    {plan.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-6 line-clamp-2">
+                    {plan.description}
+                  </p>
+
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-lg font-bold text-muted-foreground">$</span>
+                    <span className="text-5xl font-black tracking-tighter text-foreground">
+                      {plan.priceUsd}
+                    </span>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="space-y-4 flex-1">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" />
+                        <span className="text-sm font-medium text-foreground/90">
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Link
+                    href={`/checkout?plan=${plan.id}`}
+                    className={cn(
+                      "mt-8 w-full h-12 flex items-center justify-center gap-2 rounded-xl font-bold text-sm transition-all duration-300",
+                      isPopular
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
+                        : "bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground"
+                    )}
+                  >
+                    Get Started
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Payment methods */}
+        <div className="pricing-payment mt-16 md:mt-20 text-center">
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+            Secure checkout · Visa, Mastercard, PayPal
+          </p>
+          <div className="flex flex-wrap justify-center gap-6 text-muted-foreground/50 text-sm font-bold">
+            <span>VISA</span>
+            <span>Mastercard</span>
+            <span>PayPal</span>
+            <span>Stripe</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }

@@ -111,15 +111,16 @@ export function Reviews() {
         <section id="reviews" className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
             {/* Background Gradients */}
             <div className="absolute top-0 right-0 -z-10 h-[400px] w-[400px] bg-primary/5 blur-[100px] rounded-full" />
-            <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] bg-blue-500/5 blur-[100px] rounded-full" />
+            <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] bg-accent-cool/10 blur-[100px] rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[250px] w-[250px] bg-accent-warm/10 blur-[80px] rounded-full" />
 
             <div className="container px-4 mx-auto mb-16">
                 <div className="text-center max-w-3xl mx-auto">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-                        <Star className="h-3 w-3 fill-primary" />
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-warm/10 border border-accent-warm/20 text-accent-warm text-xs font-medium mb-4">
+                        <Star className="h-3 w-3 fill-accent-warm" />
                         100+ Reviews
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight">
+                    <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
                         Loved by Professionals <br />
                         <span className="text-primary">Globally.</span>
                     </h2>
@@ -152,7 +153,7 @@ export function Reviews() {
 function ReviewCard({ review }: { review: any }) {
     return (
         <div className="flex flex-col h-full justify-between select-none">
-            <div className="mb-6 text-primary/20">
+            <div className="mb-6 text-accent-warm/30">
                 <Quote className="h-8 w-8 fill-current" />
             </div>
             <p className="text-lg text-foreground mb-8 leading-relaxed font-medium">
@@ -165,7 +166,7 @@ function ReviewCard({ review }: { review: any }) {
                         {review.role} • {review.location}
                     </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-secondary text-secondary-foreground border border-border">
+                <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-accent-cool/10 text-accent-cool border border-accent-cool/20">
                     {review.platform}
                 </div>
             </div>

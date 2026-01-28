@@ -20,6 +20,37 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Checkout & Payments
+
+This project includes a checkout page at `/checkout` that collects customer details and supports:
+
+- **Card payments** (Visa / Mastercard / Amex / etc.) via **Stripe Checkout**
+- **PayPal payments** via **PayPal Orders API**
+
+### Environment variables
+
+Create a `.env.local` in the project root:
+
+```bash
+# Required for card payments (Stripe)
+STRIPE_SECRET_KEY=sk_live_...
+
+# Optional (used to build redirect URLs if request origin is unavailable)
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+
+# Required for PayPal server API
+PAYPAL_ENV=sandbox   # or: live
+PAYPAL_CLIENT_ID=...
+PAYPAL_CLIENT_SECRET=...
+
+# Required for PayPal buttons (client-side SDK)
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=...
+```
+
+### Plans
+
+Plans (names + USD prices) are defined in `src/lib/plans.ts`. Payments are always created from these server-trusted values.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

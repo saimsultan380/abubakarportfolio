@@ -1,112 +1,76 @@
+"use client"
+
+import * as React from "react"
 import Link from "next/link"
-import { Twitter, Linkedin, Github, Mail, ArrowRight, Zap, MapPin, Phone } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 export function Footer() {
-    return (
-        <footer className="w-full bg-background border-t border-border relative overflow-hidden">
-            {/* Background Mesh Decor */}
-            <div className="absolute bottom-0 right-0 -z-10 h-[400px] w-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
-            <div className="absolute top-0 left-0 -z-10 h-[300px] w-[300px] bg-blue-500/5 blur-[80px] rounded-full pointer-events-none" />
-
-            <div className="container mx-auto px-4 pt-20 pb-12">
-                <div className="grid gap-12 lg:grid-cols-4 md:grid-cols-2">
-                    {/* Brand Section */}
-                    <div className="space-y-6">
-                        <Link
-                            href="/"
-                            className="flex items-center gap-2 text-2xl font-black tracking-tighter font-heading text-foreground"
-                        >
-                            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
-                                <Zap className="h-5 w-5 fill-current" />
-                            </div>
-                            <span>Abubakar<span className="text-primary italic">.</span></span>
-                        </Link>
-                        <p className="text-sm text-muted-foreground leading-relaxed max-w-xs font-medium">
-                            Crafting elite career documents for high-performing professionals. Stop settling, start scaling.
-                        </p>
-                        <div className="flex items-center gap-4">
-                            <a href="#" className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 border border-border">
-                                <Twitter className="h-4 w-4" />
-                            </a>
-                            <a href="#" className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 border border-border">
-                                <Linkedin className="h-4 w-4" />
-                            </a>
-                            <a href="#" className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 border border-border">
-                                <Github className="h-4 w-4" />
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* Quick Links */}
-                    <div className="space-y-6">
-                        <h4 className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">Navigation</h4>
-                        <ul className="space-y-4">
-                            {["Services", "Process", "Reviews", "Recent Work", "FAQ"].map((item) => (
-                                <li key={item}>
-                                    <Link
-                                        href={`#${item.toLowerCase().replace(" ", "-")}`}
-                                        className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors flex items-center group"
-                                    >
-                                        <ArrowRight className="h-3 w-3 mr-2 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Services */}
-                    <div className="space-y-6">
-                        <h4 className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">Services</h4>
-                        <ul className="space-y-4">
-                            {["CV Writing", "LinkedIn Optimization", "Cover Letters", "Career Coaching"].map((item) => (
-                                <li key={item}>
-                                    <Link
-                                        href="#"
-                                        className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Contact Info */}
-                    <div className="space-y-6">
-                        <h4 className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">Get In Touch</h4>
-                        <div className="space-y-4">
-                            <a href="mailto:hello@example.com" className="group flex items-center gap-3 p-3 rounded-2xl bg-secondary/50 border border-border hover:bg-primary/5 hover:border-primary/20 transition-all">
-                                <div className="h-10 w-10 rounded-xl bg-background flex items-center justify-center text-primary shadow-sm border border-border">
-                                    <Mail className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">Email Me</p>
-                                    <p className="text-xs font-bold text-foreground">hello@example.com</p>
-                                </div>
-                            </a>
-                            <div className="flex items-center gap-3 px-3">
-                                <div className="h-5 w-5 flex items-center justify-center text-primary/40">
-                                    <MapPin className="h-4 w-4" />
-                                </div>
-                                <span className="text-xs font-bold text-muted-foreground">Available Worldwide</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom Bar */}
-                <div className="mt-20 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-xs font-bold text-muted-foreground">
-                        © {new Date().getFullYear()} Abubakar. Built for high-performance.
-                    </p>
-                    <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                        <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
-                    </div>
-                </div>
+  return (
+    <div className="relative min-h-[480px] h-[min(800px,85vh)] md:min-h-[560px] md:h-[min(900px,88vh)]">
+      <footer className="fixed bottom-0 left-0 right-0 w-full min-h-[480px] h-[min(800px,85vh)] md:min-h-[560px] md:h-[min(900px,88vh)] max-h-[95vh] bg-[#050505] text-[#e1e1e1] overflow-y-auto overflow-x-hidden">
+        <div className="min-h-full flex flex-col justify-between px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-12 gap-6 md:gap-8">
+          
+          {/* Top Section: Nav & Links */}
+          <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-6 shrink-0">
+            <div className="space-y-4 md:space-y-6">
+              <h3 className="text-base md:text-lg font-medium text-white/60 uppercase tracking-widest">Connect</h3>
+              <div className="flex flex-col gap-2 md:gap-4">
+                <a href="mailto:resumesuplift@gmail.com" className="text-lg sm:text-xl md:text-2xl lg:text-3xl hover:text-primary transition-colors flex items-center gap-2 md:gap-3 group whitespace-nowrap">
+                  resumesuplift@gmail.com
+                  <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+                <a href="tel:+447478564745" className="text-lg sm:text-xl md:text-2xl lg:text-3xl hover:text-primary transition-colors flex items-center gap-2 md:gap-3 group">
+                  +44 7478 564745
+                  <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </div>
             </div>
-        </footer>
-    )
-}
 
+            <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-24 shrink-0">
+              <div className="space-y-4 md:space-y-6">
+                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">Menu</h3>
+                <ul className="space-y-2 md:space-y-3">
+                  {["Home", "Services", "Work", "Process", "FAQ"].map((item) => (
+                    <li key={item}>
+                      <Link href={`#${item.toLowerCase()}`} className="text-base md:text-lg hover:text-primary transition-colors">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4 md:space-y-6">
+                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">Socials</h3>
+                <ul className="space-y-2 md:space-y-3">
+                  {["LinkedIn", "Twitter", "Instagram", "GitHub"].map((item) => (
+                    <li key={item}>
+                      <Link href="#" className="text-base md:text-lg hover:text-primary transition-colors">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Middle: Big Text — shrinkable on small viewports */}
+          <div className="flex-1 min-h-[60px] flex items-center justify-center py-6 md:py-12 shrink">
+            <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-primary hover:via-accent-cool hover:to-accent-warm hover:scale-105 max-w-full">
+              Abubakar.
+            </h1>
+          </div>
+
+          {/* Bottom: Copyright */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 pt-6 md:pt-8 border-t border-white/10 text-white/40 text-xs md:text-sm font-medium uppercase tracking-widest pl-20 pr-20 sm:pl-24 sm:pr-24 shrink-0">
+            <p className="text-center md:text-left max-w-[calc(100%-10rem)]">© {new Date().getFullYear()} Abubakar. All Rights Reserved.</p>
+            <div className="flex gap-6 md:gap-8 shrink-0">
+              <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="#" className="hover:text-white transition-colors">Terms</Link>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
