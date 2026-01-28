@@ -70,7 +70,7 @@ export function FAQ() {
                             </h2>
                             
                             <p className="text-muted-foreground text-base mb-8 leading-relaxed">
-                                Can't find the answer you're looking for? Chat with our team directly.
+                                Can&apos;t find the answer you&apos;re looking for? Chat with our team directly.
                             </p>
 
                             <div className="flex items-center gap-4 mb-8">
@@ -110,7 +110,10 @@ export function FAQ() {
                                 )}
                             >
                                 <button
+                                    type="button"
                                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                                    aria-expanded={openIndex === index}
+                                    aria-controls={`faq-panel-${index}`}
                                     className="w-full flex items-center justify-between p-6 md:p-8 text-left"
                                 >
                                     <span className={cn(
@@ -125,20 +128,17 @@ export function FAQ() {
                                             ? "bg-primary text-primary-foreground rotate-45" 
                                             : "bg-secondary text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                                     )}>
-                                        <Plus className="h-5 w-5" />
+                                        {openIndex === index ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
                                     </div>
                                 </button>
 
-                                <div className={cn(
-                                    "grid transition-all duration-500 ease-in-out",
-                                    openIndex === index ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                                )}>
-                                    <div className="overflow-hidden">
-                                        <p className="px-6 md:px-8 pb-6 md:pb-8 text-muted-foreground leading-relaxed">
+                                {openIndex === index && (
+                                    <div id={`faq-panel-${index}`} className="px-6 md:px-8 pb-6 md:pb-8">
+                                        <p className="text-muted-foreground leading-relaxed">
                                             {faq.answer}
                                         </p>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         ))}
                     </div>

@@ -3,7 +3,6 @@
 import * as React from "react"
 import Link from "next/link"
 import { Check, Rocket, Shield, Zap, ArrowRight, Sparkles } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -11,10 +10,10 @@ import { PLANS, type PlanId } from "@/lib/plans"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const planMeta: Record<PlanId, { icon: typeof Rocket; label: string }> = {
-  professional: { icon: Rocket, label: "Entry to Mid-Level" },
-  executive: { icon: Shield, label: "Senior & Executive" },
-  transition: { icon: Zap, label: "Career Changers" },
+const planMeta: Record<PlanId, { icon: typeof Rocket }> = {
+  entry: { icon: Rocket },
+  mid: { icon: Zap },
+  executive: { icon: Shield },
 }
 
 export function Pricing() {
@@ -123,78 +122,58 @@ export function Pricing() {
 
         {/* Cards */}
         <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto">
-          {PLANS.map((plan, index) => {
+          {PLANS.map((plan) => {
             const meta = planMeta[plan.id]
             const Icon = meta.icon
-            const isPopular = plan.id === "executive"
 
             return (
               <div
                 key={plan.id}
-                className={cn(
-                  "pricing-card group relative flex flex-col rounded-3xl border transition-all duration-300 overflow-hidden",
-                  isPopular
-                    ? "bg-card border-primary/50 shadow-xl shadow-primary/10 md:-mt-2 md:mb-2 md:ring-2 md:ring-primary/20"
-                    : "bg-card/80 border-border hover:border-primary/30 hover:shadow-lg"
-                )}
+                className="pricing-card group relative flex flex-col rounded-2xl border border-border bg-card transition-all duration-300 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
               >
-                {isPopular && (
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
-                )}
                 <div className="p-6 md:p-8 flex flex-col flex-1">
-                  {/* Plan label */}
-                  <div className="flex items-center gap-2 mb-6">
-                    <div
-                      className={cn(
-                        "flex h-10 w-10 items-center justify-center rounded-xl",
-                        isPopular ? "bg-primary/15 text-primary" : "bg-secondary text-muted-foreground"
-                      )}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                      {meta.label}
-                    </span>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors mb-5">
+                    <Icon className="h-5 w-5" />
                   </div>
 
-                  {/* Name & price */}
-                  <h3 className="text-2xl font-black font-heading tracking-tight text-foreground mb-2">
+                  <h3 className="text-xl font-black font-heading tracking-tight text-foreground mb-0.5">
                     {plan.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-6 line-clamp-2">
+                  <p className="text-sm text-muted-foreground mb-5">
                     {plan.description}
                   </p>
 
-                  <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-lg font-bold text-muted-foreground">$</span>
-                    <span className="text-5xl font-black tracking-tighter text-foreground">
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="text-base font-bold text-muted-foreground">$</span>
+                    <span className="text-4xl md:text-5xl font-black tracking-tighter text-foreground">
                       {plan.priceUsd}
                     </span>
                   </div>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    {plan.deliveryDays} days delivery
+                  </p>
 
-                  {/* Features */}
-                  <ul className="space-y-4 flex-1">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" />
-                        <span className="text-sm font-medium text-foreground/90">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="pt-5 border-t border-border flex-1">
+                    <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
+                      What&apos;s included
+                    </p>
+                    <ul className="space-y-2.5">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-2.5">
+                          <Check className="h-4 w-4 shrink-0 text-primary" />
+                          <span className="text-sm font-medium text-foreground/90">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                  {/* CTA */}
                   <Link
                     href={`/checkout?plan=${plan.id}`}
-                    className={cn(
-                      "mt-8 w-full h-12 flex items-center justify-center gap-2 rounded-xl font-bold text-sm transition-all duration-300",
-                      isPopular
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                        : "bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground"
-                    )}
+                    className="mt-6 w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors"
                   >
-                    Get Started
+                    Order Now
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>

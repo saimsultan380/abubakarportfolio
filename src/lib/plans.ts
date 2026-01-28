@@ -1,4 +1,4 @@
-export type PlanId = "professional" | "executive" | "transition"
+export type PlanId = "entry" | "mid" | "executive"
 
 export type PricingPlan = {
   id: PlanId
@@ -6,52 +6,37 @@ export type PricingPlan = {
   priceUsd: number
   currency: "USD"
   description: string
+  deliveryDays: number
   features: string[]
 }
 
 export const PLANS: PricingPlan[] = [
   {
-    id: "professional",
-    name: "Professional Resume",
-    priceUsd: 149,
+    id: "entry",
+    name: "Entry Level",
+    priceUsd: 180,
     currency: "USD",
-    description: "Perfect for entry to mid-level professionals seeking a competitive edge.",
-    features: [
-      "ATS-Optimized Resume Writing",
-      "Strategic Keyword Research",
-      "Industry-Specific Formatting",
-      "2 Rounds of Revisions",
-      "48-Hour Delivery",
-    ],
+    description: "ATS-optimized (0–2 years exp…)",
+    deliveryDays: 2,
+    features: ["Resume/CV", "Cover Letter", "LinkedIn Profile"],
+  },
+  {
+    id: "mid",
+    name: "Mid Level",
+    priceUsd: 220,
+    currency: "USD",
+    description: "ATS-optimized (2–10 years exp…)",
+    deliveryDays: 2,
+    features: ["Resume/CV", "Cover Letter", "LinkedIn Profile"],
   },
   {
     id: "executive",
-    name: "The Executive",
-    priceUsd: 299,
+    name: "Executive Level",
+    priceUsd: 300,
     currency: "USD",
-    description: "A complete overhaul for senior leaders and executive-level candidates.",
-    features: [
-      "Everything in Professional",
-      "LinkedIn Profile Optimization",
-      "Targeted Cover Letter",
-      "Unlimited Revisions",
-      "Direct WhatsApp Priority",
-      "Post-Interview Guide",
-    ],
-  },
-  {
-    id: "transition",
-    name: "Career Transition",
-    priceUsd: 199,
-    currency: "USD",
-    description: "Designed for those changing industries or returning to the workforce.",
-    features: [
-      "Transferable Skills Audit",
-      "Career Pivot Strategy",
-      "Strategic Cover Letter",
-      "ATS Framework Refresh",
-      "Job Search Guide",
-    ],
+    description: "ATS-optimized (10+ years exp…)",
+    deliveryDays: 3,
+    features: ["Resume/CV", "Cover Letter", "LinkedIn Profile"],
   },
 ]
 
