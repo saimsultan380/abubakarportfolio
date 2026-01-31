@@ -6,6 +6,7 @@ import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ArrowRight, CheckCircle2, Star } from "lucide-react"
 import { HeroVisual } from "@/components/sections/HeroVisual"
+import { CVReviewModal } from "@/components/CVReviewModal"
 
 gsap.registerPlugin(useGSAP)
 
@@ -13,6 +14,7 @@ export function Hero() {
     const containerRef = React.useRef<HTMLDivElement>(null)
     const leftContentRef = React.useRef<HTMLDivElement>(null)
     const rightContentRef = React.useRef<HTMLDivElement>(null)
+    const [isModalOpen, setIsModalOpen] = React.useState(false)
 
     useGSAP(() => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
@@ -55,12 +57,9 @@ export function Hero() {
                         </div>
 
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground font-heading mb-6 leading-[1.05]">
-                            ATS-Optimized <br />
-                            <span className="text-primary">
-                                CV &amp; Resume Writing
-                            </span>{" "}
-                            <br />
-                            That Gets You Interviews.
+                            <span className="text-primary">ATS-Optimized</span>{" "}
+                            Resumes &amp; CVs That Land You{" "}
+                            <span className="text-primary">Interviews</span>
                         </h1>
 
                         <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
@@ -69,15 +68,15 @@ export function Hero() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                            <Link
-                                href="#contact"
+                            <button
+                                onClick={() => setIsModalOpen(true)}
                                 className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             >
                                 Review My CV
                                 <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
+                            </button>
                             <Link
-                                href="#work"
+                                href="/samples"
                                 className="inline-flex h-12 items-center justify-center rounded-lg border border-input bg-card px-8 text-base font-medium transition-all hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             >
                                 View Samples
@@ -104,12 +103,15 @@ export function Hero() {
                     </div>
 
                     {/* Right Column: Visual */}
-                    <div ref={rightContentRef} className="relative hidden lg:block perspective-[1200px] overflow-visible">
+                    <div ref={rightContentRef} className="relative w-full flex justify-center lg:justify-end perspective-[1200px] overflow-visible mt-12 lg:mt-0">
                         <HeroVisual />
                     </div>
 
                 </div>
             </div>
+
+            {/* CV Review Modal */}
+            <CVReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
     )
 }

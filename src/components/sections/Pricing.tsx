@@ -97,13 +97,8 @@ export function Pricing() {
     <section
       id="pricing"
       ref={containerRef}
-      className="relative py-24 md:py-32 overflow-hidden border-t border-border/50"
+      className="relative py-24 md:py-32 overflow-hidden border-t border-border/50 bg-zinc-50 dark:bg-black/40"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:24px_24px] opacity-[0.4] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_40%,transparent_100%)]" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[40%] h-[50%] bg-accent-cool/5 blur-[100px] rounded-full pointer-events-none" />
-
       <div className="container relative z-10 px-4 mx-auto">
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-16 md:mb-20">
@@ -111,11 +106,11 @@ export function Pricing() {
             <Sparkles className="h-3.5 w-3.5" />
             Investment
           </div>
-          <h2 className="pricing-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-tight text-foreground mb-5">
+          <h2 className="pricing-title text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
             Invest in your{" "}
             <span className="text-primary">future self.</span>
           </h2>
-          <p className="pricing-subtitle text-lg md:text-xl text-muted-foreground font-medium">
+          <p className="pricing-subtitle text-lg text-muted-foreground">
             Transparent pricing. No hidden fees. 100% human-crafted.
           </p>
         </div>
@@ -136,7 +131,7 @@ export function Pricing() {
                     <Icon className="h-5 w-5" />
                   </div>
 
-                  <h3 className="text-xl font-black font-heading tracking-tight text-foreground mb-0.5">
+                  <h3 className="text-xl font-extrabold font-heading tracking-tight text-foreground mb-0.5">
                     {plan.name}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-5">
@@ -144,8 +139,8 @@ export function Pricing() {
                   </p>
 
                   <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-base font-bold text-muted-foreground">$</span>
-                    <span className="text-4xl md:text-5xl font-black tracking-tighter text-foreground">
+                    <span className="text-base font-semibold text-muted-foreground">$</span>
+                    <span className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground">
                       {plan.priceUsd}
                     </span>
                   </div>
@@ -153,20 +148,59 @@ export function Pricing() {
                     {plan.deliveryDays} days delivery
                   </p>
 
-                  <div className="pt-5 border-t border-border flex-1">
-                    <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
-                      What&apos;s included
-                    </p>
-                    <ul className="space-y-2.5">
-                      {plan.features.map((feature, i) => (
-                        <li key={i} className="flex items-center gap-2.5">
-                          <Check className="h-4 w-4 shrink-0 text-primary" />
-                          <span className="text-sm font-medium text-foreground/90">
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="pt-5 border-t border-border flex-1 space-y-5">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
+                        Package breakdown
+                      </p>
+                      <div className="space-y-2.5">
+                        {plan.breakdown.map((item) => (
+                          <div key={item.name} className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <Check className="h-4 w-4 shrink-0 text-primary" />
+                              <span className="text-sm font-medium text-foreground/90 truncate">
+                                {item.name}
+                              </span>
+                            </div>
+                            <span className="text-sm font-semibold text-foreground whitespace-nowrap">
+                              ${item.priceUsd}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl border border-border bg-secondary/30 p-3">
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                          All combined
+                        </span>
+                        <span className="text-base font-extrabold text-foreground">
+                          ${plan.priceUsd}
+                        </span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-muted-foreground">
+                        <span>{plan.deliveryDays} days delivery</span>
+                        <span>12 hours: +${plan.rush12hFeeUsd}</span>
+                        <span>Revisions: {plan.revisions}</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
+                        What&apos;s included
+                      </p>
+                      <ul className="space-y-2.5">
+                        {plan.features.map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2.5">
+                            <Check className="h-4 w-4 shrink-0 text-primary" />
+                            <span className="text-sm font-medium text-foreground/90">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
                   <Link
@@ -193,6 +227,20 @@ export function Pricing() {
             <span>PayPal</span>
             <span>Stripe</span>
           </div>
+        </div>
+
+        {/* End CTA */}
+        <div className="mt-12 text-center">
+          <p className="text-lg text-muted-foreground mb-4">
+            Not sure which package is right for you?
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+          >
+            Book a Consultation
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </div>
     </section>

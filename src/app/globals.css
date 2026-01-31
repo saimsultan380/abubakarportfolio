@@ -51,25 +51,26 @@
     --card-foreground: oklch(0.141 0.005 285.823);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.141 0.005 285.823);
-    --primary: oklch(0.5 0.18 195);
-    --primary-foreground: oklch(0.98 0 0);
+    --primary: oklch(from #ff6800 l c h);
+    --primary-foreground: oklch(1 0 0);
     --secondary: oklch(0.967 0.001 286.375);
     --secondary-foreground: oklch(0.21 0.006 285.885);
     --muted: oklch(0.967 0.001 286.375);
     --muted-foreground: oklch(0.552 0.016 285.938);
     --accent: oklch(0.967 0.001 286.375);
     --accent-foreground: oklch(0.21 0.006 285.885);
-    --accent-warm: oklch(0.72 0.17 75);
-    --accent-cool: oklch(0.62 0.16 165);
+    /* Brand accents (kept in-sync with primary) */
+    --accent-warm: oklch(from #ff6800 l c h);
+    --accent-cool: oklch(from #ff6800 l c h);
     --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: oklch(0.577 0.245 27.325);
     --border: oklch(0.92 0.004 286.32);
     --input: oklch(0.92 0.004 286.32);
-    --ring: oklch(0.5 0.18 195);
+    --ring: oklch(from #ff6800 l c h);
     --radius: 0.75rem;
-    --primary-rgb: 20, 184, 166;
-    --accent-warm-rgb: 245, 158, 11;
-    --accent-cool-rgb: 16, 185, 129;
+    --primary-rgb: 255, 104, 0;
+    --accent-warm-rgb: 255, 104, 0;
+    --accent-cool-rgb: 255, 104, 0;
 }
 
 .dark {
@@ -79,24 +80,25 @@
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.18 0.008 285.823);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.65 0.18 195);
-    --primary-foreground: oklch(0.12 0.03 195);
+    --primary: oklch(from #ff6800 l c h);
+    --primary-foreground: oklch(0.13 0 0);
     --secondary: oklch(0.21 0.008 286.033);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.21 0.008 286.033);
     --muted-foreground: oklch(0.78 0.012 286.067);
     --accent: oklch(0.21 0.008 286.033);
     --accent-foreground: oklch(0.985 0 0);
-    --accent-warm: oklch(0.78 0.15 75);
-    --accent-cool: oklch(0.68 0.14 165);
+    /* Brand accents (kept in-sync with primary) */
+    --accent-warm: oklch(from #ff6800 l c h);
+    --accent-cool: oklch(from #ff6800 l c h);
     --destructive: oklch(0.396 0.141 25.723);
     --destructive-foreground: oklch(0.637 0.237 25.331);
     --border: oklch(0.28 0.01 286.033);
     --input: oklch(0.28 0.01 286.033);
-    --ring: oklch(0.65 0.18 195);
-    --primary-rgb: 45, 212, 191;
-    --accent-warm-rgb: 251, 191, 36;
-    --accent-cool-rgb: 52, 211, 153;
+    --ring: oklch(from #ff6800 l c h);
+    --primary-rgb: 255, 104, 0;
+    --accent-warm-rgb: 255, 104, 0;
+    --accent-cool-rgb: 255, 104, 0;
 }
 
 @layer base {
@@ -138,4 +140,13 @@
 
 .preserve-3d {
     transform-style: preserve-3d;
+}
+
+/* Hide scrollbars (keep scroll) */
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
 }

@@ -35,7 +35,7 @@ export function CTA() {
     }, { scope: containerRef })
 
     return (
-        <section ref={containerRef} className="relative py-32 bg-background overflow-hidden border-t border-border z-10">
+        <section id="contact" ref={containerRef} className="relative py-32 bg-background overflow-hidden border-t border-border z-10">
             {/* Background Marquee */}
             <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full opacity-[0.03] pointer-events-none select-none">
                 <div ref={marqueeRef} className="flex whitespace-nowrap text-[20vw] font-black leading-none uppercase text-foreground">
@@ -52,7 +52,7 @@ export function CTA() {
                         Let's Build <br />
                         <span className="text-primary">Your Future.</span>
                     </h2>
-                    
+
                     <p className="text-xl md:text-2xl text-muted-foreground font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
                         Stop blending in. Get the career documents that put you in the top 1% of applicants.
                     </p>
@@ -60,20 +60,20 @@ export function CTA() {
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                         <a
                             href="#contact"
-                            className="group relative inline-flex h-20 px-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-lg font-black uppercase tracking-widest overflow-hidden transition-all hover:scale-105"
+                            className="group relative inline-flex h-14 sm:h-14 px-8 sm:px-10 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm sm:text-base font-extrabold uppercase tracking-[0.18em] overflow-hidden transition-all hover:scale-[1.02]"
                         >
                             <span className="relative z-10 flex items-center gap-3">
                                 Start Now
-                                <ArrowUpRight className="h-6 w-6" />
+                                <ArrowUpRight className="h-5 w-5" />
                             </span>
                             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                         </a>
-                        
+
                         <a
                             href="https://wa.me/447478564745"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-lg font-bold text-foreground hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1"
+                            className="inline-flex h-14 items-center justify-center px-6 rounded-full border border-border bg-card text-sm sm:text-base font-bold text-foreground hover:border-primary/40 hover:text-primary transition-colors"
                         >
                             Chat on WhatsApp
                         </a>

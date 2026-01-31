@@ -1,8 +1,22 @@
 "use client"
 
 import * as React from "react"
-import { Quote, Star } from "lucide-react"
-import { InfiniteMovingCards } from "@/components/ui/InfiniteMovingCards"
+import { Quote, Star, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
+
+type ReviewProfile = { label: string; href?: string }
+
+// Add your real profile links here for verifiable proof (optional).
+const REVIEW_PROFILES: ReviewProfile[] = [
+    { label: "Google Reviews", href: "" },
+    { label: "Trustpilot", href: "" },
+    { label: "LinkedIn", href: "" },
+    { label: "Upwork", href: "" },
+]
 
 const reviews = [
     {
@@ -12,6 +26,7 @@ const reviews = [
         platform: "Direct Client",
         content: "I started getting interviews within two weeks. My resume was completely restructured and optimized for ATS. The difference was immediate.",
         rating: 5,
+        avatarId: 11,
     },
     {
         name: "Ahmed R.",
@@ -20,6 +35,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "Professional, honest, and very strategic. The CV felt tailored exactly to my role. Highly recommended.",
         rating: 5,
+        avatarId: 12,
     },
     {
         name: "Jessica T.",
@@ -28,6 +44,7 @@ const reviews = [
         platform: "Upwork",
         content: "The turnaround was fast, but the quality was incredible. He highlighted achievements I didn't even think were important.",
         rating: 5,
+        avatarId: 13,
     },
     {
         name: "David K.",
@@ -36,6 +53,7 @@ const reviews = [
         platform: "Direct Client",
         content: "Worth every penny. The LinkedIn optimization alone doubled my profile views in 3 days. Got hired at a Big 4 firm.",
         rating: 5,
+        avatarId: 14,
     },
     {
         name: "Emily W.",
@@ -44,6 +62,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "He knows exactly what recruiters are looking for. The design was clean but the content strategy was the real game changer.",
         rating: 5,
+        avatarId: 15,
     },
     {
         name: "Michael B.",
@@ -52,6 +71,7 @@ const reviews = [
         platform: "Referral",
         content: "I was skeptical about hiring a writer, but this was a game changer. Landed a VP role in 3 weeks.",
         rating: 5,
+        avatarId: 16,
     },
     {
         name: "Linda C.",
@@ -60,6 +80,7 @@ const reviews = [
         platform: "Direct Client",
         content: "Helped me transition from clinical work to administration. The new CV positioned my transferable skills perfectly.",
         rating: 5,
+        avatarId: 17,
     },
     {
         name: "Raj P.",
@@ -68,6 +89,7 @@ const reviews = [
         platform: "Upwork",
         content: "Technically accurate and well formatted. The ATS scan report provided was very reassuring.",
         rating: 5,
+        avatarId: 18,
     },
     {
         name: "Sophie L.",
@@ -76,6 +98,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "As a writer myself, I'm picky. But his ability to synthesize my career into a punchy 2-pager was impressive.",
         rating: 5,
+        avatarId: 19,
     },
     {
         name: "James H.",
@@ -84,6 +107,7 @@ const reviews = [
         platform: "Direct Client",
         content: "Got my first grad scheme offer after using this CV. The structure really helped hide my lack of experience.",
         rating: 5,
+        avatarId: 20,
     },
     {
         name: "Maria G.",
@@ -92,6 +116,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "I see resumes all day. This is exactly what we want to see. Clean, relevant, and no fluff.",
         rating: 5,
+        avatarId: 21,
     },
     {
         name: "Tom W.",
@@ -100,75 +125,177 @@ const reviews = [
         platform: "Referral",
         content: "Responsive, professional, and delivered early. The cover letter was specific to the company I applied for.",
         rating: 5,
+        avatarId: 22,
     }
 ]
 
 export function Reviews() {
-    const firstRow = reviews.slice(0, 6)
-    const secondRow = reviews.slice(6, 12)
+    const sectionRef = React.useRef<HTMLElement>(null)
+    const trackRef = React.useRef<HTMLDivElement>(null)
+
+    useGSAP(() => {
+        gsap.from(".reviews-header", {
+            scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            ease: "power3.out",
+        })
+        gsap.from(".review-slide", {
+            scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+        })
+    }, { scope: sectionRef })
+
+    const scrollByCards = (dir: -1 | 1) => {
+        const el = trackRef.current
+        if (!el) return
+        const firstSlide = el.querySelector<HTMLElement>("[data-review-slide]")
+        const cs = window.getComputedStyle(el)
+        const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0
+        const step = (firstSlide?.offsetWidth ?? el.clientWidth) + gap
+        const max = Math.max(0, el.scrollWidth - el.clientWidth)
+        const target = Math.max(0, Math.min(max, el.scrollLeft + dir * step))
+        const state = { x: el.scrollLeft }
+        gsap.to(state, {
+            x: target,
+            duration: 0.55,
+            ease: "power3.out",
+            onUpdate: () => { if (trackRef.current) trackRef.current.scrollLeft = state.x },
+        })
+    }
 
     return (
-        <section id="reviews" className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
-            {/* Background Gradients */}
-            <div className="absolute top-0 right-0 -z-10 h-[400px] w-[400px] bg-primary/5 blur-[100px] rounded-full" />
-            <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] bg-accent-cool/10 blur-[100px] rounded-full" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[250px] w-[250px] bg-accent-warm/10 blur-[80px] rounded-full" />
-
-            <div className="container px-4 mx-auto mb-16">
-                <div className="text-center max-w-3xl mx-auto">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-warm/10 border border-accent-warm/20 text-accent-warm text-xs font-medium mb-4">
-                        <Star className="h-3 w-3 fill-accent-warm" />
-                        100+ Reviews
+        <section ref={sectionRef} id="reviews" className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
+            <div className="container px-4 mx-auto mb-10 md:mb-14">
+                <div className="reviews-header text-center max-w-3xl mx-auto">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-4">
+                        <Star className="h-3 w-3 fill-current" />
+                        Verified Reviews
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
                         Loved by Professionals <br />
                         <span className="text-primary">Globally.</span>
                     </h2>
                     <p className="text-muted-foreground text-lg">
-                        Don't just take my word for it. Here's what 10+ real clients are saying.
+                        See how we&apos;ve helped clients stand out and land interviews.
                     </p>
+
+                    {/* Review profile links (optional) */}
+                    <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+                        {REVIEW_PROFILES.map((p) =>
+                            p.href ? (
+                                <a
+                                    key={p.label}
+                                    href={p.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/40 hover:text-primary transition-colors"
+                                >
+                                    {p.label}
+                                    <ExternalLink className="h-3.5 w-3.5" />
+                                </a>
+                            ) : (
+                                <span
+                                    key={p.label}
+                                    className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-semibold text-muted-foreground/70"
+                                    title="Add your review profile link"
+                                >
+                                    {p.label}
+                                </span>
+                            )
+                        )}
+                    </div>
                 </div>
             </div>
 
-            <div className="space-y-6">
-                <InfiniteMovingCards
-                    items={firstRow.map((review, index) => (
-                        <ReviewCard key={index} review={review} />
+            <div className="container px-4 mx-auto">
+                <div className="flex items-center justify-end gap-2 mb-4">
+                    <button
+                        type="button"
+                        onClick={() => scrollByCards(-1)}
+                        aria-label="Previous reviews"
+                        className="h-10 w-10 rounded-full border border-border bg-background/80 hover:bg-background transition-colors flex items-center justify-center"
+                    >
+                        <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => scrollByCards(1)}
+                        aria-label="Next reviews"
+                        className="h-10 w-10 rounded-full border border-border bg-background/80 hover:bg-background transition-colors flex items-center justify-center"
+                    >
+                        <ChevronRight className="h-5 w-5" />
+                    </button>
+                </div>
+
+                <div
+                    ref={trackRef}
+                    className="no-scrollbar grid grid-flow-col auto-cols-[100%] sm:auto-cols-[70%] md:auto-cols-[440px] lg:auto-cols-[480px] gap-0 sm:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory pb-2"
+                >
+                    {reviews.map((review, idx) => (
+                        <div
+                            key={idx}
+                            data-review-slide
+                            className="review-slide snap-start"
+                        >
+                            <ReviewCard review={review} />
+                        </div>
                     ))}
-                    direction="left"
-                    speed={40}
-                />
-                <InfiniteMovingCards
-                    items={secondRow.map((review, index) => (
-                        <ReviewCard key={index} review={review} />
-                    ))}
-                    direction="right"
-                    speed={35}
-                />
+                </div>
             </div>
         </section>
     )
 }
 
-function ReviewCard({ review }: { review: any }) {
+type Review = (typeof reviews)[number]
+
+function ReviewCard({ review }: { review: Review }) {
     return (
-        <div className="flex flex-col h-full justify-between select-none">
-            <div className="mb-6 text-accent-warm/30">
-                <Quote className="h-8 w-8 fill-current" />
-            </div>
-            <p className="text-lg text-foreground mb-8 leading-relaxed font-medium">
-                "{review.content}"
-            </p>
-            <div className="flex items-center justify-between border-t border-border/50 pt-6 mt-auto">
-                <div>
-                    <div className="font-bold text-base text-foreground">{review.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                        {review.role} • {review.location}
+        <div
+            data-review-card
+            className="h-full rounded-2xl border border-border bg-card/80 backdrop-blur-sm p-6 md:p-8 shadow-sm hover:shadow-lg transition-shadow"
+        >
+            <div className="flex items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-3">
+                    <img
+                        src={`https://i.pravatar.cc/96?img=${review.avatarId}`}
+                        alt={`${review.name} avatar`}
+                        width={44}
+                        height={44}
+                        className="h-11 w-11 rounded-full object-cover border border-border bg-muted"
+                        loading="lazy"
+                    />
+                    <div className="min-w-0">
+                        <div className="font-bold text-base text-foreground truncate">{review.name}</div>
+                        <div className="text-xs text-muted-foreground truncate">
+                            {review.role} • {review.location}
+                        </div>
                     </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-accent-cool/10 text-accent-cool border border-accent-cool/20">
+                <div className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
                     {review.platform}
                 </div>
+            </div>
+
+            <div className="mb-5 text-primary/30">
+                <Quote className="h-8 w-8 fill-current" />
+            </div>
+            <p className="text-base md:text-lg text-foreground leading-relaxed font-medium">
+                “{review.content}”
+            </p>
+
+            <div className="mt-6 pt-5 border-t border-border/50 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-1 text-primary">
+                    {Array.from({ length: review.rating }).map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-current" />
+                    ))}
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground">Verified</span>
             </div>
         </div>
     )

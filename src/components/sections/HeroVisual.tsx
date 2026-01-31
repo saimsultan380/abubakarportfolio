@@ -1,94 +1,88 @@
 "use client"
 
 import Image from "next/image"
-import { CheckCircle2, Star, StarHalf, TrendingUp, Trophy } from "lucide-react"
+import { CheckCircle2, Star, User } from "lucide-react"
 
 export function HeroVisual() {
     return (
-        <div className="relative w-full aspect-square flex items-center justify-center p-8 bg-transparent">
+        <div className="relative w-full max-w-[500px] mx-auto perspective-[1000px] group">
+            {/* Background Glows */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/20 blur-[100px] rounded-full opacity-50 pointer-events-none group-hover:opacity-70 transition-opacity duration-700" />
 
-            {/* Background Decorative Rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible">
-                <div className="absolute w-[110%] h-[110%] rounded-full border border-accent-cool/10 animate-pulse" />
-                <div className="absolute w-[90%] h-[90%] rounded-full border border-primary/15" />
-                <div className="absolute w-[70%] h-[70%] rounded-full border border-accent-warm/20" />
-
-                {/* Glow Effect */}
-                <div className="absolute w-[50%] h-[50%] bg-gradient-to-br from-primary/10 via-accent-cool/10 to-accent-warm/10 blur-[120px] rounded-full" />
-            </div>
-
-            {/* Main Premium Card */}
-            <div className="relative w-full max-w-[420px] aspect-[1/1.2] bg-white dark:bg-zinc-950 rounded-[32px] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] border border-border/50 overflow-hidden">
-                {/* Hero Image Section */}
-                <div className="relative w-full h-[65%] overflow-hidden bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950">
-                    <Image
-                        src="/hero-visual.png"
-                        alt="Professional Resume Success"
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-zinc-950 via-transparent to-transparent " />
-                </div>
-
-                {/* Card Content Section */}
-                <div className="p-6 sm:p-8 flex flex-col gap-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                                <Trophy className="h-4 w-4" />
-                            </div>
-                            <span className="text-sm font-bold text-foreground">Top-Tier Candidate</span>
-                        </div>
-                        <div className="flex items-center gap-0.5">
-                            {[1, 2, 3, 4].map(i => <Star key={i} className="h-3 w-3 fill-accent-warm text-accent-warm" />)}
-                            <StarHalf className="h-3 w-3 fill-accent-warm text-accent-warm" />
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-3">
-                            <CheckCircle2 className="h-4 w-4 text-accent-cool" />
-                            <div className="h-1.5 flex-1 bg-muted dark:bg-zinc-800 rounded-full" />
-                        </div>
-                        <div className="flex items-center gap-3 opacity-60">
-                            <CheckCircle2 className="h-4 w-4 text-accent-cool" />
-                            <div className="h-1.5 flex-1 bg-muted dark:bg-zinc-800 rounded-full" />
-                        </div>
-                    </div>
-
-                    <div className="mt-auto flex items-center justify-between opacity-30">
-                        <span className="text-[9px] font-black tracking-widest uppercase">ATS Optimization Verified</span>
-                        <span className="text-[9px] font-black tracking-widest uppercase">2026</span>
-                    </div>
+            {/* Floating Decorative Elements */}
+            <div className="absolute -top-6 -right-6 animate-float-slow delay-700 hidden sm:block">
+                <div className="bg-white dark:bg-zinc-800 p-3 rounded-2xl shadow-xl shadow-primary/5 border border-white/50 dark:border-white/5 rotate-12 transition-transform group-hover:rotate-6">
+                    <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
                 </div>
             </div>
 
-            {/* Floating Badges */}
-            <div className="absolute -right-6 top-[15%] sm:-right-12 sm:top-[20%] animate-float-slow z-30">
-                <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-primary/20 flex items-center gap-4">
-                    <div className="h-10 w-10 rounded-full bg-zinc-900 flex items-center justify-center text-white ring-4 ring-primary/10">
-                        <TrendingUp className="h-5 w-5" />
-                    </div>
-                    <div className="pr-2">
-                        <p className="text-[10px] font-black opacity-40 uppercase tracking-widest mb-0.5">ATS Score</p>
-                        <p className="text-xl font-black text-foreground">98%</p>
-                    </div>
-                </div>
-            </div>
+            {/* Main Card */}
+            <div className="relative bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border border-white/60 dark:border-white/10 rounded-[2rem] p-6 sm:p-8 shadow-2xl transition-all duration-500 hover:shadow-primary/10">
 
-            <div className="absolute -left-6 bottom-[20%] sm:-left-12 sm:bottom-[25%] animate-float-delayed z-30">
-                <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-accent-warm/30 flex items-center gap-4">
-                    <div className="h-10 w-10 rounded-full bg-accent-warm/20 flex items-center justify-center text-accent-warm ring-4 ring-accent-warm/10">
-                        <CheckCircle2 className="h-5 w-5" />
-                    </div>
-                    <div className="pr-2">
-                        <p className="text-[10px] font-black opacity-40 uppercase tracking-widest mb-0.5">Status</p>
-                        <p className="text-base font-black text-foreground">Interview Invited</p>
+                {/* Header Label */}
+                <div className="flex items-center gap-2 mb-6 opacity-80">
+                    <div className="h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
+                            Meet Our Team
+                        </span>
                     </div>
                 </div>
+
+                {/* Profile Block */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+                    {/* Image */}
+                    <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-zinc-800 shrink-0 group-hover:scale-105 transition-transform duration-500">
+                        <Image
+                            src="/brand/WhatsApp%20Image%202026-01-31%20at%2012.05.58%20AM.jpeg"
+                            alt="Muhammad Abu Bakar"
+                            fill
+                            className="object-cover object-center"
+                            priority
+                        />
+                    </div>
+
+                    {/* Name & Title */}
+                    <div className="flex-1 min-w-0 pt-1">
+                        <h3 className="text-2xl font-bold font-heading text-foreground tracking-tight">
+                            Muhammad Abu Bakar
+                        </h3>
+                        <p className="text-sm font-semibold text-primary mt-0.5">
+                            Expert Writing Head
+                        </p>
+                        <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <Star key={star} className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                            ))}
+                            <span className="text-[10px] font-medium text-muted-foreground ml-1">(500+ Hired)</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Divider with simple gradient */}
+                <div className="my-6 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+                {/* Intro/Bio */}
+                <div className="relative z-10">
+                    <p className="text-sm sm:text-[15px] text-muted-foreground leading-relaxed font-medium">
+                        "I personally ensure every CV we craft is not just a document, but a <span className="text-foreground font-bold">strategic career tool</span> designed to beat the ATS and impress recruiters instantly."
+                    </p>
+                </div>
+
+                {/* Bottom Tags */}
+                <div className="mt-6 flex flex-wrap justify-center sm:justify-start gap-2">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                        <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">Recruiter Approved</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                        <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">ATS Optimized</span>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
     )
 }
-

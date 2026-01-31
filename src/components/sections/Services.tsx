@@ -12,14 +12,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 const services = [
     {
-        title: "ATS-Optimized CV Writing",
+        title: "ATS Optimized CV/Resume Writing",
         description: "Built from scratch with keywords that pass Automated Tracking Systems and catch recruiter attention.",
         icon: FileText,
         colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
         accent: "primary",
     },
     {
-        title: "Resume Redesign",
+        title: "Resume Revamp",
         description: "Modernize your existing resume with a clean, professional layout that highlights your achievements.",
         icon: Edit,
         colSpan: "col-span-1",
@@ -66,12 +66,7 @@ export function Services() {
     }, { scope: sectionRef })
 
     return (
-        <section id="services" ref={sectionRef} className="py-24 bg-zinc-50 dark:bg-black relative overflow-hidden">
-            {/* Subtle background texture/grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
-            <div className="absolute top-0 right-0 -z-10 h-[400px] w-[400px] bg-accent-cool/10 blur-[120px] rounded-full" />
-            <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] bg-accent-warm/10 blur-[100px] rounded-full" />
-
+        <section id="services" ref={sectionRef} className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
             <div className="container px-4 mx-auto relative z-10">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div className="max-w-2xl">
@@ -79,9 +74,9 @@ export function Services() {
                             <Star className="h-3 w-3 fill-accent-warm" />
                             Premium Services
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-bold font-heading mb-4 text-foreground">
-                            Everything You Need to <br />
-                            <span className="text-primary">Stand Out.</span>
+                        <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
+                            Get Noticed.{" "}
+                            <span className="text-primary">Get Hired.</span>
                         </h2>
                         <p className="text-lg text-muted-foreground">
                             Strategic career documents crafted to bypass bots and impress humans.
@@ -136,6 +131,20 @@ export function Services() {
                             </div>
                         </SpotlightCard>
                     ))}
+                </div>
+
+                {/* End CTA */}
+                <div className="mt-12 text-center">
+                    <a
+                        href="#pricing"
+                        className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+                    >
+                        Choose Your Package
+                        <ArrowRight className="h-4 w-4" />
+                    </a>
+                    <p className="mt-4 text-sm text-muted-foreground">
+                        100% satisfaction guaranteed
+                    </p>
                 </div>
             </div>
         </section>

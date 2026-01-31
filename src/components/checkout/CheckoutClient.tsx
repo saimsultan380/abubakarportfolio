@@ -6,6 +6,7 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { cn } from "@/lib/utils"
 import type { PricingPlan, PlanId } from "@/lib/plans"
 import { CreditCard, Lock, ShieldCheck, Wallet } from "lucide-react"
+import { MastercardLogo, PaypalLogo, VisaLogo } from "./PaymentIcons"
 
 type Props = {
   initialPlanId: PlanId
@@ -115,7 +116,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
       <div className="lg:col-span-3 rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-8">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <h2 className="text-xl md:text-2xl font-black font-heading tracking-tight">Your details</h2>
+            <h2 className="text-xl md:text-2xl font-bold font-heading tracking-tight">Your details</h2>
             <p className="mt-2 text-sm text-muted-foreground font-medium">
               We only use this information to deliver your service and send your confirmation.
             </p>
@@ -203,52 +204,55 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
         </div>
 
         <div className="mt-10">
-          <h3 className="text-lg font-black font-heading tracking-tight">Payment method</h3>
+          <h3 className="text-lg font-bold font-heading tracking-tight">Payment method</h3>
 
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button
-              type="button"
-              onClick={() => setMethod("card")}
+          <div className="mt-4 flex flex-col gap-3">
+            <label
               className={cn(
-                methodCardBase,
+                "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
                 method === "card"
-                  ? "border-primary/50 ring-2 ring-primary/20 bg-primary/[0.06]"
-                  : "border-border bg-background/40 hover:bg-background/60"
+                  ? "border-primary bg-primary/5 ring-1 ring-primary"
+                  : "border-border bg-background"
               )}
             >
               <div className="flex items-center gap-3">
-                <div className={cn(iconWrapBase, method === "card" ? "bg-primary/10 border-primary/20" : "bg-secondary")}>
-                  <CreditCard className="h-5 w-5" />
-                </div>
-                <div className="text-left">
-                  <div className="text-sm font-black uppercase tracking-widest">Card</div>
-                  <div className="text-xs text-muted-foreground font-semibold">Visa, Mastercard, Amex & more</div>
-                </div>
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="card"
+                  checked={method === "card"}
+                  onChange={() => setMethod("card")}
+                  className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                />
+                <div className="text-sm font-bold text-foreground">Pay with Card</div>
               </div>
-            </button>
+              <div className="flex items-center gap-2">
+                <VisaLogo className="h-6 w-auto" />
+                <MastercardLogo className="h-6 w-auto" />
+              </div>
+            </label>
 
-            <button
-              type="button"
-              onClick={() => setMethod("paypal")}
+            <label
               className={cn(
-                methodCardBase,
+                "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
                 method === "paypal"
-                  ? "border-primary/50 ring-2 ring-primary/20 bg-primary/[0.06]"
-                  : "border-border bg-background/40 hover:bg-background/60"
+                  ? "border-primary bg-primary/5 ring-1 ring-primary"
+                  : "border-border bg-background"
               )}
             >
               <div className="flex items-center gap-3">
-                <div
-                  className={cn(iconWrapBase, method === "paypal" ? "bg-primary/10 border-primary/20" : "bg-secondary")}
-                >
-                  <Wallet className="h-5 w-5" />
-                </div>
-                <div className="text-left">
-                  <div className="text-sm font-black uppercase tracking-widest">PayPal</div>
-                  <div className="text-xs text-muted-foreground font-semibold">Pay with PayPal balance or bank</div>
-                </div>
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="paypal"
+                  checked={method === "paypal"}
+                  onChange={() => setMethod("paypal")}
+                  className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                />
+                <div className="text-sm font-bold text-foreground">PayPal</div>
               </div>
-            </button>
+              <PaypalLogo className="h-5 w-auto" />
+            </label>
           </div>
 
           {error && (
@@ -264,7 +268,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
                 onClick={payWithCard}
                 disabled={isSubmitting}
                 className={cn(
-                  "w-full h-12 rounded-2xl text-sm font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2",
+                  "w-full h-12 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2",
                   "bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:bg-primary/90",
                   isSubmitting && "opacity-60 pointer-events-none"
                 )}
@@ -340,13 +344,13 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
       </div>
 
       <aside className="lg:col-span-2 rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-8 h-fit">
-        <h2 className="text-xl md:text-2xl font-black font-heading tracking-tight">Order summary</h2>
+        <h2 className="text-xl md:text-2xl font-bold font-heading tracking-tight">Order summary</h2>
         <p className="mt-2 text-sm text-muted-foreground font-medium">
           Select your plan and review the total.
         </p>
 
         <div className="mt-6">
-          <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+          <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
             Plan
           </label>
           <select
@@ -365,14 +369,14 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
         <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-sm font-black">{plan.name}</div>
+              <div className="text-sm font-bold">{plan.name}</div>
               <div className="mt-1 text-xs text-muted-foreground font-semibold italic">"{plan.description}"</div>
             </div>
-            <div className="text-sm font-black">{money(plan.priceUsd)}</div>
+            <div className="text-sm font-bold">{money(plan.priceUsd)}</div>
           </div>
           <div className="mt-4 border-t border-border/70 pt-4 flex items-center justify-between">
-            <div className="text-xs font-black uppercase tracking-widest text-muted-foreground">Total</div>
-            <div className="text-lg font-black">{money(plan.priceUsd)}</div>
+            <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Total</div>
+            <div className="text-lg font-bold">{money(plan.priceUsd)}</div>
           </div>
         </div>
 
@@ -402,7 +406,7 @@ function Field({
 }) {
   return (
     <label className={cn("block", className)}>
-      <div className="mb-2 text-xs font-black uppercase tracking-widest text-muted-foreground">
+      <div className="mb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
         {label} {required ? <span className="text-primary">*</span> : null}
       </div>
       {children}
@@ -411,11 +415,11 @@ function Field({
 }
 
 const inputClass =
-  "w-full rounded-2xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 placeholder:text-muted-foreground/70"
+  "w-full rounded-[4px] border border-border bg-background/60 px-4 py-3 text-sm font-semibold text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 placeholder:text-muted-foreground/70"
 
 const methodCardBase =
-  "rounded-2xl border p-4 transition-all duration-300 flex items-center justify-between"
+  "rounded-[4px] border p-4 transition-all duration-300 flex items-center justify-between"
 
 const iconWrapBase =
-  "h-11 w-11 rounded-2xl border border-border flex items-center justify-center text-foreground"
+  "h-11 w-11 rounded-[4px] border border-border flex items-center justify-center text-foreground"
 

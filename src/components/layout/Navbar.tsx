@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { cn } from "@/lib/utils"
 import { Menu, X, ArrowRight, Zap, Briefcase, Star, MessageSquare, ClipboardCheck, HelpCircle } from "lucide-react"
@@ -44,9 +45,9 @@ export function Navbar() {
 
     const navLinks = [
         { name: "Services", href: "#services", icon: Briefcase },
-        { name: "Reviews", href: "#reviews", icon: Star },
-        { name: "Process", href: "#process", icon: ClipboardCheck },
+        { name: "Pricing", href: "#pricing", icon: Zap },
         { name: "Work", href: "#work", icon: MessageSquare },
+        { name: "Process", href: "#process", icon: ClipboardCheck },
         { name: "FAQ", href: "#faq", icon: HelpCircle },
     ]
 
@@ -66,12 +67,19 @@ export function Navbar() {
                         {/* Logo */}
                         <Link
                             href="/"
-                            className="group flex items-center gap-2 text-2xl font-black tracking-tighter font-heading text-foreground nav-desktop-item"
+                            className="group flex items-center gap-2.5 text-xl font-bold tracking-tight text-foreground nav-desktop-item"
                         >
-                            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent-cool flex items-center justify-center text-primary-foreground transform group-hover:rotate-12 transition-transform duration-300">
-                                <Zap className="h-5 w-5 fill-current" />
+                            <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+                                <Image
+                                    src="/brand/logo-new.png"
+                                    alt="Resumes Uplift logo"
+                                    width={40}
+                                    height={40}
+                                    className="h-7 w-7 object-contain"
+                                    priority
+                                />
                             </div>
-                            <span>Abubakar<span className="text-primary italic">.</span></span>
+                            <span>Resumes <span className="text-primary">Uplift</span></span>
                         </Link>
 
                         {/* Desktop Navigation */}
@@ -125,12 +133,19 @@ export function Navbar() {
                     <Link
                         href="/"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-2 text-2xl font-black tracking-tighter font-heading text-foreground"
+                        className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-foreground"
                     >
-                        <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
-                            <Zap className="h-5 w-5 fill-current" />
+                        <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
+                            <Image
+                                src="/brand/logo-new.png"
+                                alt="Resumes Uplift logo"
+                                width={40}
+                                height={40}
+                                className="h-7 w-7 object-contain"
+                                priority
+                            />
                         </div>
-                        <span>Abubakar<span className="text-primary italic">.</span></span>
+                        <span>Resumes <span className="text-primary">Uplift</span></span>
                     </Link>
                     <button
                         className="h-10 w-10 flex items-center justify-center rounded-full bg-secondary border border-border text-foreground group active:scale-95 transition-all hover:bg-primary hover:text-primary-foreground hover:border-primary"

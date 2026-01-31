@@ -4,8 +4,7 @@ import * as React from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { FileUp, Search, PenTool, Sparkles, ArrowRight } from "lucide-react"
-import { SpotlightCard } from "@/components/ui/SpotlightCard"
+import { ClipboardCheck, Target, Pencil, Rocket, ArrowRight } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,29 +13,25 @@ const steps = [
         number: "01",
         title: "Onboarding & Audit",
         description: "Upload your current documents. I perform a clinical audit of your existing CV against ATS standards.",
-        icon: FileUp,
-        color: "from-blue-500/20 to-blue-600/20"
+        icon: ClipboardCheck,
     },
     {
         number: "02",
         title: "Market Alignment",
         description: "I research your target industry and senior-level keywords to ensure your profile ranks at the top.",
-        icon: Search,
-        color: "from-purple-500/20 to-purple-600/20"
+        icon: Target,
     },
     {
         number: "03",
         title: "The Crafting Phase",
         description: "Your new CV is built line-by-line. No generic AI bullet points; every sentence is a career win.",
-        icon: PenTool,
-        color: "from-emerald-500/20 to-emerald-600/20"
+        icon: Pencil,
     },
     {
         number: "04",
         title: "Launch & Hired",
         description: "Receive your final ATS-optimized package, plus a LinkedIn guide to boost search visibility.",
-        icon: Sparkles,
-        color: "from-amber-500/20 to-amber-600/20"
+        icon: Rocket,
     }
 ]
 
@@ -44,87 +39,76 @@ export function HowItWorks() {
     const sectionRef = React.useRef<HTMLElement>(null)
 
     useGSAP(() => {
-        gsap.from(".process-card", {
-            scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 75%",
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power3.out",
-        })
+        gsap.fromTo(".process-card",
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 75%",
+                },
+            }
+        )
     }, { scope: sectionRef })
 
     return (
-        <section id="process" ref={sectionRef} className="py-24 bg-zinc-50 dark:bg-black relative overflow-hidden border-t border-border">
-            {/* Background Decorative Mesh */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary blur-[150px] rounded-full" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-cool blur-[150px] rounded-full" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-accent-warm blur-[120px] rounded-full" />
-            </div>
-
+        <section id="process" ref={sectionRef} className="py-20 md:py-28 bg-zinc-50 dark:bg-black/40 relative overflow-hidden text-center md:text-left">
             <div className="container px-4 mx-auto relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-cool/10 text-accent-cool text-[10px] font-black uppercase tracking-widest mb-6 border border-accent-cool/20">
+                {/* Header */}
+                <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-6 border border-orange-200 dark:border-orange-500/20">
                         Workflow
                     </div>
                     <h2 className="text-4xl md:text-6xl font-black font-heading mb-6 tracking-tight text-foreground">
                         Your Roadmap to <br />
-                        <span className="text-primary italic">The Next Level.</span>
+                        <span className="text-orange-600 dark:text-orange-500">The Next Level.</span>
                     </h2>
-                    <p className="text-lg text-muted-foreground font-medium">
+                    <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                         A streamlined, white-glove process designed for high-performing professionals.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-                    {/* Connecting Path Visual (Desktop) */}
-                    <div className="hidden lg:block absolute top-[100px] left-0 w-full h-0.5 border-t-2 border-dashed border-primary/20 -z-10" />
-
                     {steps.map((step, index) => (
-                        <SpotlightCard
+                        <div
                             key={index}
-                            className="process-card group relative p-8 h-full flex flex-col bg-card border-border shadow-lg transition-transform hover:-translate-y-2 duration-500"
-                            spotlightColor="rgba(var(--primary-rgb), 0.08)"
+                            className="process-card group relative p-8 h-full flex flex-col bg-white dark:bg-zinc-900/50 border border-border/60 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:-translate-y-1 transition-all duration-300"
                         >
-                            {/* Step Header */}
-                            <div className="relative mb-8">
-                                <div className={`h-16 w-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 shadow-xl border border-white/10 group-hover:scale-110 transition-transform duration-500 ring-4 ring-background z-10 relative`}>
-                                    <step.icon className="h-8 w-8 text-foreground" />
+                            {/* Top Row: Icon & Number */}
+                            <div className="flex items-start justify-between mb-8">
+                                <div className="h-14 w-14 rounded-2xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                                    <step.icon className="h-7 w-7" />
                                 </div>
-                                <div className="absolute -top-4 -right-4 text-6xl font-black text-primary/5 italic select-none group-hover:text-primary/10 transition-colors">
+                                <span className="text-xs font-bold tracking-widest text-muted-foreground/50 font-heading">
                                     {step.number}
-                                </div>
+                                </span>
                             </div>
 
-                            {/* Step Content */}
-                            <div className="flex-grow pt-4">
-                                <h3 className="text-2xl font-black font-heading mb-4 text-foreground group-hover:text-primary transition-colors leading-tight italic">
+                            {/* Content */}
+                            <div className="flex-grow text-left">
+                                <h3 className="text-xl font-bold font-heading mb-3 text-foreground group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors">
                                     {step.title}
                                 </h3>
                                 <p className="text-sm text-muted-foreground leading-relaxed font-medium">
                                     {step.description}
                                 </p>
                             </div>
-
-                            {/* Progress Connector (Mobile/Tablet) */}
-                            <div className="mt-8 lg:hidden flex justify-center">
-                                <ArrowRight className="h-6 w-6 text-primary rotate-90" />
-                            </div>
-                        </SpotlightCard>
+                        </div>
                     ))}
                 </div>
 
-                {/* Bottom CTA Placeholder */}
-                <div className="mt-20 flex justify-center">
-                    <a href="#contact" className="flex items-center gap-4 p-1 pr-6 rounded-full bg-card border border-border hover:bg-accent transition-all group shadow-sm">
-                        <span className="h-10 w-10 flex items-center justify-center rounded-full bg-accent-warm text-white shadow-lg shadow-accent-warm/30">
-                            <ArrowRight className="h-5 w-5" />
-                        </span>
-                        <span className="text-sm font-bold tracking-tight text-foreground">Ready to see the difference? Book Now</span>
+                {/* Bottom CTA */}
+                <div className="mt-16 flex justify-center">
+                    <a
+                        href="#contact"
+                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-orange-600 px-8 text-base font-bold text-white shadow-lg shadow-orange-600/20 hover:bg-orange-700 hover:scale-105 active:scale-95 transition-all duration-300"
+                    >
+                        Ready to see the difference?
+                        <ArrowRight className="h-5 w-5" />
                     </a>
                 </div>
             </div>

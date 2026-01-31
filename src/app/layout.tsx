@@ -18,7 +18,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Professional CV Writing & Career Services",
+  title: "ATS-Optimized Resumes & CVs That Land You Interviews",
   description: "Get more interviews with ATS-optimized, recruiter-approved resumes. tailored to your role and industry.",
   verification: {
     google: "3lT3phbyzEO6yh8nkCSIfsnzWpAhfxIhU_WNM2r60sQ",
@@ -57,3 +57,4 @@ export default function RootLayout({
     </html>
   );
 }
+

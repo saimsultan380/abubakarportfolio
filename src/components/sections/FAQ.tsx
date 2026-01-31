@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Plus, Minus, MessageCircle } from "lucide-react"
+import { Plus, X, MessageCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
@@ -38,24 +38,32 @@ export function FAQ() {
 
     useGSAP(() => {
         // Staggered reveal for FAQ items
-        gsap.from(".faq-item", {
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top 75%",
+        gsap.fromTo(".faq-item",
+            {
+                y: 30,
+                opacity: 0,
             },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power3.out",
-        })
+            {
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top 85%",
+                    once: true,
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out",
+                force3D: true,
+            }
+        )
     }, { scope: containerRef })
 
     return (
-        <section id="faq" ref={containerRef} className="py-24 md:py-32 bg-background relative border-t border-border/50">
+        <section id="faq" ref={containerRef} className="py-24 md:py-32 bg-zinc-50 dark:bg-black/40 relative border-t border-border/50">
             <div className="container px-4 mx-auto">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-                    
+
                     {/* Sticky Sidebar: Title */}
                     <div className="lg:w-1/3">
                         <div className="lg:sticky lg:top-32 p-6 rounded-3xl bg-secondary/20 border border-border/50 backdrop-blur-sm">
@@ -63,21 +71,21 @@ export function FAQ() {
                                 <MessageCircle className="h-3 w-3" />
                                 FAQ
                             </div>
-                            
-                            <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight text-foreground mb-6">
+
+                            <h2 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
                                 Everything you <br />
                                 need to know.
                             </h2>
-                            
-                            <p className="text-muted-foreground text-base mb-8 leading-relaxed">
+
+                            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                                 Can&apos;t find the answer you&apos;re looking for? Chat with our team directly.
                             </p>
 
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-background ring-2 ring-border">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&q=80" 
-                                        alt="Support" 
+                                    <img
+                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&q=80"
+                                        alt="Support"
                                         className="h-full w-full object-cover"
                                     />
                                 </div>
@@ -100,12 +108,12 @@ export function FAQ() {
                     {/* Right: Accordion List */}
                     <div className="lg:w-2/3 space-y-4">
                         {faqs.map((faq, index) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className={cn(
                                     "faq-item group rounded-2xl border transition-all duration-300 overflow-hidden",
-                                    openIndex === index 
-                                        ? "bg-card border-primary/50 shadow-lg shadow-primary/5" 
+                                    openIndex === index
+                                        ? "bg-card border-primary/50 shadow-lg shadow-primary/5"
                                         : "bg-card/50 border-border hover:border-primary/30 hover:bg-card"
                                 )}
                             >
@@ -123,12 +131,15 @@ export function FAQ() {
                                         {faq.question}
                                     </span>
                                     <div className={cn(
-                                        "flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300",
-                                        openIndex === index 
-                                            ? "bg-primary text-primary-foreground rotate-45" 
+                                        "flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center transition-all duration-300",
+                                        openIndex === index
+                                            ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
                                             : "bg-secondary text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                                     )}>
-                                        {openIndex === index ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                                        {openIndex === index
+                                            ? <X className="h-5 w-5" />
+                                            : <Plus className="h-5 w-5" />
+                                        }
                                     </div>
                                 </button>
 

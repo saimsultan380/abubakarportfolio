@@ -56,14 +56,14 @@ export function Footer() {
 
           {/* Middle: Big Text — shrinkable on small viewports */}
           <div className="flex-1 min-h-[60px] flex items-center justify-center py-6 md:py-12 shrink">
-            <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-primary hover:via-accent-cool hover:to-accent-warm hover:scale-105 max-w-full">
-              Abubakar.
+            <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-primary hover:scale-105 max-w-full">
+              Resumes Uplift
             </h1>
           </div>
 
           {/* Bottom: Copyright */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 pt-6 md:pt-8 border-t border-white/10 text-white/40 text-xs md:text-sm font-medium uppercase tracking-widest pl-20 pr-20 sm:pl-24 sm:pr-24 shrink-0">
-            <p className="text-center md:text-left max-w-[calc(100%-10rem)]">© {new Date().getFullYear()} Abubakar. All Rights Reserved.</p>
+            <p className="text-center md:text-left max-w-[calc(100%-10rem)]">© {new Date().getFullYear()} Resumes Uplift. All Rights Reserved.</p>
             <div className="flex gap-6 md:gap-8 shrink-0">
               <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
               <Link href="#" className="hover:text-white transition-colors">Terms</Link>
@@ -74,3 +74,4 @@ export function Footer() {
     </div>
   )
 }
+
