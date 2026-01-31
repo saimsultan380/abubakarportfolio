@@ -1,0 +1,43 @@
+{
+    "name": "Resumes Uplift - ATS-Optimized Resume & CV Writing",
+    "short_name": "Resumes Uplift",
+    "description": "Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#FF6B35",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/brand/logo-new.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/brand/logo-new.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "business",
+        "productivity",
+        "career"
+    ],
+    "shortcuts": [
+        {
+            "name": "View Samples",
+            "short_name": "Samples",
+            "description": "Browse resume samples",
+            "url": "/samples",
+            "icons": [
+                {
+                    "src": "/brand/logo-new.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ]
+}

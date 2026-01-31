@@ -1,0 +1,8 @@
+<!-- This file will be replaced with an actual favicon.ico generated from logo-new.png -->
+<!-- For now, the metadata in layout.tsx points to /brand/logo-new.png -->
+<!-- To create a proper favicon.ico:
+     1. Use an online tool like https://favicon.io/ or https://realfavicongenerator.net/
+     2. Upload /public/brand/logo-new.png
+     3. Download the generated favicon.ico
+     4. Replace this file with the generated favicon.ico
+-->
