@@ -42,13 +42,21 @@ export function Footer() {
               <div className="space-y-4 md:space-y-6">
                 <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">Socials</h3>
                 <ul className="space-y-2 md:space-y-3">
-                  {["LinkedIn", "Twitter", "Instagram", "GitHub"].map((item) => (
-                    <li key={item}>
-                      <Link href="#" className="text-base md:text-lg hover:text-primary transition-colors">
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
+                  <li>
+                    <a
+                      href="https://www.linkedin.com/in/muhammad-abubakar-resumewriter?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-base md:text-lg hover:text-primary transition-colors"
+                    >
+                      LinkedIn
+                    </a>
+                  </li>
+                  <li>
+                    <Link href="#" className="text-base md:text-lg hover:text-primary transition-colors">
+                      Instagram
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -62,11 +70,13 @@ export function Footer() {
           </div>
 
           {/* Bottom: Copyright */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 pt-6 md:pt-8 border-t border-white/10 text-white/40 text-xs md:text-sm font-medium uppercase tracking-widest pl-20 pr-20 sm:pl-24 sm:pr-24 shrink-0">
-            <p className="text-center md:text-left max-w-[calc(100%-10rem)]">© {new Date().getFullYear()} Resumes Uplift. All Rights Reserved.</p>
-            <div className="flex gap-6 md:gap-8 shrink-0">
-              <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms</Link>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 pt-6 md:pt-8 border-t border-white/10 text-white/40 text-[11px] sm:text-xs md:text-sm font-medium uppercase tracking-widest shrink-0">
+            <p className="text-center md:text-left">
+              © {new Date().getFullYear()} Resumes Uplift. All Rights Reserved.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
             </div>
           </div>
         </div>

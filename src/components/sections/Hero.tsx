@@ -6,7 +6,6 @@ import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ArrowRight, CheckCircle2, Star } from "lucide-react"
 import { HeroVisual } from "@/components/sections/HeroVisual"
-import { CVReviewModal } from "@/components/CVReviewModal"
 
 gsap.registerPlugin(useGSAP)
 
@@ -14,7 +13,6 @@ export function Hero() {
     const containerRef = React.useRef<HTMLDivElement>(null)
     const leftContentRef = React.useRef<HTMLDivElement>(null)
     const rightContentRef = React.useRef<HTMLDivElement>(null)
-    const [isModalOpen, setIsModalOpen] = React.useState(false)
 
     useGSAP(() => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
@@ -34,7 +32,7 @@ export function Hero() {
     }, { scope: containerRef })
 
     return (
-        <section ref={containerRef} className="relative pt-40 pb-20 md:pt-36 md:pb-32 overflow-hidden bg-background">
+        <section ref={containerRef} className="relative pt-40 pb-20 md:pt-36 md:pb-32 lg:pt-44 overflow-hidden bg-background">
             {/* Mesh Gradients */}
             <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] bg-primary/20 blur-[120px] rounded-full mix-blend-multiply opacity-20 animate-pulse" />
             <div className="absolute bottom-0 left-0 -z-10 h-[500px] w-[500px] bg-accent-cool/20 blur-[100px] rounded-full mix-blend-multiply opacity-30" />
@@ -68,13 +66,13 @@ export function Hero() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                            <button
-                                onClick={() => setIsModalOpen(true)}
+                            <Link
+                                href="/cv-review"
                                 className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             >
                                 Review My CV
                                 <ArrowRight className="ml-2 h-4 w-4" />
-                            </button>
+                            </Link>
                             <Link
                                 href="/samples"
                                 className="inline-flex h-12 items-center justify-center rounded-lg border border-input bg-card px-8 text-base font-medium transition-all hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
@@ -109,9 +107,6 @@ export function Hero() {
 
                 </div>
             </div>
-
-            {/* CV Review Modal */}
-            <CVReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
     )
 }

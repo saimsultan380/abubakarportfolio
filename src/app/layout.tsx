@@ -77,8 +77,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
+    shortcut: ['/brand/logo-new.png'],
     icon: [
-      { url: '/brand/logo-new.png' },
       { url: '/brand/logo-new.png', sizes: '32x32', type: 'image/png' },
       { url: '/brand/logo-new.png', sizes: '16x16', type: 'image/png' },
     ],

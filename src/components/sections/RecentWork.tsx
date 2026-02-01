@@ -65,15 +65,15 @@ export function RecentWork() {
       <div className="container px-4 mx-auto relative z-10">
         {/* Header */}
         <header className="work-header text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-widest mb-6 border border-orange-200 dark:border-orange-500/20">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
             <Sparkles className="h-3.5 w-3.5" />
             Free Resume Audit
           </div>
-          <h2 className="text-4xl md:text-6xl font-black font-heading tracking-tight text-foreground mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
             See exactly what you&apos;ll{" "}
-            <span className="text-orange-600 dark:text-orange-500">get</span>.
+            <span className="text-primary">get</span>.
           </h2>
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             Before you order, I can review your current CV and share a clear snapshot of what to fix to start getting interviews.
           </p>
         </header>

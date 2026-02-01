@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ArrowUpRight } from "lucide-react"
+import { Linkedin } from "lucide-react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -49,7 +49,7 @@ export function CTA() {
             <div className="container px-4 mx-auto relative z-10 cta-content">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-6xl md:text-8xl font-black font-heading tracking-tighter mb-8 text-foreground">
-                        Let's Build <br />
+                        Let&apos;s Build <br />
                         <span className="text-primary">Your Future.</span>
                     </h2>
 
@@ -59,23 +59,22 @@ export function CTA() {
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                         <a
-                            href="#contact"
-                            className="group relative inline-flex h-14 sm:h-14 px-8 sm:px-10 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm sm:text-base font-extrabold uppercase tracking-[0.18em] overflow-hidden transition-all hover:scale-[1.02]"
-                        >
-                            <span className="relative z-10 flex items-center gap-3">
-                                Start Now
-                                <ArrowUpRight className="h-5 w-5" />
-                            </span>
-                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                        </a>
-
-                        <a
                             href="https://wa.me/447478564745"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex h-14 items-center justify-center px-6 rounded-full border border-border bg-card text-sm sm:text-base font-bold text-foreground hover:border-primary/40 hover:text-primary transition-colors"
                         >
                             Chat on WhatsApp
+                        </a>
+
+                        <a
+                            href="https://www.linkedin.com/in/muhammad-abubakar-resumewriter?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex h-14 items-center justify-center gap-2 px-6 rounded-full bg-primary text-primary-foreground text-sm sm:text-base font-extrabold uppercase tracking-[0.14em] shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+                        >
+                            LinkedIn
+                            <Linkedin className="h-5 w-5" />
                         </a>
                     </div>
                 </div>

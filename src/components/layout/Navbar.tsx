@@ -2,10 +2,11 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { cn } from "@/lib/utils"
-import { Menu, X, ArrowRight, Zap, Briefcase, Star, MessageSquare, ClipboardCheck, HelpCircle } from "lucide-react"
+import { Menu, X, ArrowRight, Zap, Briefcase, Star, MessageSquare, ClipboardCheck, HelpCircle, FileText } from "lucide-react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 
@@ -14,6 +15,8 @@ export function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const navRef = React.useRef<HTMLElement>(null)
     const mobileMenuRef = React.useRef<HTMLDivElement>(null)
+    const router = useRouter()
+    const pathname = usePathname()
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -42,13 +45,92 @@ export function Navbar() {
         })
     }, { scope: navRef })
 
+    const scrollToSection = React.useCallback((id: string, behavior: ScrollBehavior = "smooth") => {
+        const el = document.getElementById(id)
+        if (!el) return false
+
+        const headerOffset = (navRef.current?.offsetHeight ?? 88) + 12
+        const top = el.getBoundingClientRect().top + window.scrollY - headerOffset
+        window.scrollTo({ top: Math.max(0, top), behavior })
+
+        // keep URL in sync without triggering default jump
+        try {
+            window.history.pushState(null, "", `/#${id}`)
+        } catch {
+            // ignore
+        }
+        return true
+    }, [])
+
+    const requestScrollAfterNavigation = React.useCallback((id: string) => {
+        try {
+            window.sessionStorage.setItem("pendingNavScrollId", id)
+        } catch {
+            // ignore
+        }
+    }, [])
+
+    React.useEffect(() => {
+        if (pathname !== "/") return
+
+        let pendingId: string | null = null
+        try {
+            pendingId = window.sessionStorage.getItem("pendingNavScrollId")
+        } catch {
+            pendingId = null
+        }
+        if (!pendingId) return
+
+        const start = Date.now()
+        const maxMs = 2000
+        const tick = () => {
+            const ok = scrollToSection(pendingId!, "auto")
+            if (ok || Date.now() - start > maxMs) {
+                try {
+                    window.sessionStorage.removeItem("pendingNavScrollId")
+                } catch {
+                    // ignore
+                }
+                return
+            }
+            window.setTimeout(tick, 50)
+        }
+
+        // allow a moment for sections to render
+        window.setTimeout(tick, 0)
+    }, [pathname, scrollToSection])
+
+    const handleNavLinkClick = React.useCallback((href: string) => {
+        return (e: React.MouseEvent) => {
+            // Always close the mobile menu on navigation
+            setIsMobileMenuOpen(false)
+
+            // For normal routes like "/pricing", let Next.js handle navigation
+            if (!href.includes("#")) return
+
+            const id = href.split("#")[1]
+            if (!id) return
+            e.preventDefault()
+
+            if (pathname === "/") {
+                // same page: scroll immediately
+                scrollToSection(id)
+                return
+            }
+
+            // other page: navigate home, then scroll when ready
+            requestScrollAfterNavigation(id)
+            router.push("/")
+        }
+    }, [pathname, requestScrollAfterNavigation, router, scrollToSection])
 
     const navLinks = [
-        { name: "Services", href: "#services", icon: Briefcase },
-        { name: "Pricing", href: "#pricing", icon: Zap },
-        { name: "Work", href: "#work", icon: MessageSquare },
-        { name: "Process", href: "#process", icon: ClipboardCheck },
-        { name: "FAQ", href: "#faq", icon: HelpCircle },
+        { name: "Services", href: "/#services", icon: Briefcase },
+        { name: "Pricing", href: "/#pricing", icon: Zap },
+        { name: "Samples", href: "/samples", icon: FileText },
+        { name: "Work", href: "/#work", icon: MessageSquare },
+        { name: "Process", href: "/#process", icon: ClipboardCheck },
+        { name: "FAQ", href: "/#faq", icon: HelpCircle },
     ]
 
     return (
@@ -88,6 +170,7 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
+                                    onClick={handleNavLinkClick(link.href)}
                                     className="px-5 py-2 text-sm font-bold text-muted-foreground hover:text-primary transition-all rounded-full hover:bg-background/50"
                                 >
                                     {link.name}
@@ -99,7 +182,8 @@ export function Navbar() {
                         <div className="flex items-center gap-4 nav-desktop-item">
                             <ThemeToggle />
                             <Link
-                                href="#contact"
+                                href="/#contact"
+                                onClick={handleNavLinkClick("/#contact")}
                                 className="hidden md:inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-black uppercase tracking-widest text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
                             >
                                 Hire Me
@@ -164,7 +248,7 @@ export function Navbar() {
                         <Link
                             key={link.name}
                             href={link.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            onClick={handleNavLinkClick(link.href)}
                             className="mobile-link group flex items-center gap-6 text-2xl xs:text-3xl sm:text-4xl font-black font-heading text-foreground hover:text-primary transition-all italic tracking-tighter"
                         >
                             <div className="h-10 w-10 xs:h-12 xs:w-12 rounded-2xl bg-secondary flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors group-hover:rotate-[10deg]">
@@ -178,8 +262,8 @@ export function Navbar() {
                 {/* Mobile Footer */}
                 <div className="p-8 border-t border-border bg-background">
                     <Link
-                        href="#contact"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        href="/#contact"
+                        onClick={handleNavLinkClick("/#contact")}
                         className="inline-flex h-16 w-full items-center justify-center rounded-2xl bg-primary px-8 text-base font-black uppercase tracking-widest text-primary-foreground shadow-xl shadow-primary/20"
                     >
                         Elevate My Career

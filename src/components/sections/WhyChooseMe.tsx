@@ -88,7 +88,7 @@ export function WhyChooseMe() {
                                 Expert Guidance
                             </div>
                             <blockquote className="text-white text-xl md:text-2xl font-bold font-heading leading-tight max-w-md">
-                                "Your career story deserves to be told with power, precision, and purpose."
+                                &ldquo;Your career story deserves to be told with power, precision, and purpose.&rdquo;
                             </blockquote>
                         </div>
                     </div>

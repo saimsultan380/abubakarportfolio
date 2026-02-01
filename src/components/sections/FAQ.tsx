@@ -11,25 +11,81 @@ gsap.registerPlugin(ScrollTrigger)
 
 const faqs = [
     {
-        question: "How long does the process take?",
-        answer: "Standard delivery is within 48-72 hours. If you need it sooner, we have a 24-hour express option available in our Executive package."
+        question: "Who can benefit from your CV and LinkedIn services?",
+        answer: "Our services are designed for professionals at all career stages, including fresh graduates, mid-level professionals, career switchers, and senior or executive candidates seeking a competitive edge in the job market."
     },
     {
-        question: "Do you guarantee interviews?",
-        answer: "While we cannot legally guarantee a job, our clients report a 3x increase in interview invitations. We focus on ATS optimization and keyword alignment which are the biggest hurdles."
+        question: "How is an ATS-optimized resume different from a traditional resume?",
+        answer: "An ATS-optimized resume is structured and written to meet the technical requirements of applicant tracking systems while remaining clear and compelling for human recruiters. This ensures maximum visibility and shortlisting potential."
     },
     {
-        question: "Will the new CV pass ATS bots?",
-        answer: "Absolutely. We use industry-standard frameworks and clean formatting that is specifically designed to be read by all major Applicant Tracking Systems."
+        question: "Do you use templates or create resumes individually?",
+        answer: "Every resume is written individually and strategically. We do not rely on generic templates. Each document is customized based on your experience, career goals, and target roles."
     },
     {
-        question: "What if I'm not happy with the first draft?",
-        answer: "We offer unlimited revisions on our Executive package and 2 rounds on our Professional package. We work with you until you are 100% confident in your new document."
+        question: "How do you ensure my resume aligns with my target job role?",
+        answer: "We study role-specific job descriptions and industry expectations to align skills, keywords, and achievements with employer requirements."
     },
     {
-        question: "Can you help with career transitions?",
-        answer: "Yes, we specialize in identifying transferable skills and rebuilding your professional narrative to align with your new target industry."
-    }
+        question: "Will my resume be optimized for both ATS and recruiters?",
+        answer: "Yes. Our resumes balance technical ATS compliance with professional storytelling to appeal equally to automated systems and hiring managers."
+    },
+    {
+        question: "What information do you need to start the process?",
+        answer: "We require your existing resume if available, target job titles, industry preference, and career goals. Additional details such as achievements or projects help enhance results."
+    },
+    {
+        question: "Can you rewrite my resume without changing my experience?",
+        answer: "Yes. We focus on improving structure, wording, and presentation without misrepresenting your background. All content remains accurate and ethical."
+    },
+    {
+        question: "What does the resume revamp service include?",
+        answer: "The service includes content refinement, achievement-focused writing, modern formatting, keyword optimization, and overall professional enhancement."
+    },
+    {
+        question: "Are your cover letters customized for specific roles?",
+        answer: "Yes. Each cover letter is tailored to your role, company type, and career narrative to ensure relevance and authenticity."
+    },
+    {
+        question: "Do recruiters still read cover letters?",
+        answer: "Many recruiters do, especially for professional, technical, and executive roles. A strong cover letter can significantly improve your chances of selection."
+    },
+    {
+        question: "What is included in LinkedIn profile optimization?",
+        answer: "LinkedIn optimization includes headline enhancement, keyword-rich summary writing, experience restructuring, skills optimization, and overall profile alignment with recruiter search behavior."
+    },
+    {
+        question: "Will LinkedIn optimization increase profile visibility?",
+        answer: "Yes. Proper keyword placement and strategic formatting improve search rankings and increase inbound recruiter engagement."
+    },
+    {
+        question: "Do you offer industry-specific resumes?",
+        answer: "Yes. We specialize in career-specific CVs for Technology, Finance, Healthcare, and Executive roles, using industry-appropriate terminology and standards."
+    },
+    {
+        question: "Can you help with international job applications?",
+        answer: "Yes. We follow globally accepted resume formats suitable for the US, UK, Canada, Europe, and remote roles."
+    },
+    {
+        question: "How long does the service take?",
+        answer: "Standard delivery typically takes three to five business days, depending on the service and complexity."
+    },
+    {
+        question: "Do you provide revisions?",
+        answer: "Yes. We include revisions to ensure complete satisfaction and alignment with your expectations."
+    },
+    {
+        question: "Is my information kept confidential?",
+        answer: "Absolutely. All client information and documents are handled with strict confidentiality and data privacy."
+    },
+    {
+        question: "Will you guarantee interviews or job placement?",
+        answer: "While no service can guarantee job placement, our professionally written and optimized documents significantly improve your chances of securing interviews."
+    },
+    {
+        question: "How do I get started?",
+        answer: "You can get started by contacting us through the website or booking a consultation to discuss your career goals."
+    },
 ]
 
 export function FAQ() {
@@ -73,8 +129,8 @@ export function FAQ() {
                             </div>
 
                             <h2 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
-                                Everything you <br />
-                                need to know.
+                                Frequently Asked <br />
+                                Questions
                             </h2>
 
                             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
@@ -84,8 +140,8 @@ export function FAQ() {
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-background ring-2 ring-border">
                                     <img
-                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&q=80"
-                                        alt="Support"
+                                        src="/brand/WhatsApp%20Image%202026-01-31%20at%2012.05.58%20AM.jpeg"
+                                        alt="Abubakar"
                                         className="h-full w-full object-cover"
                                     />
                                 </div>

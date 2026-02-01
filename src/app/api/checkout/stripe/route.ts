@@ -1,7 +1,7 @@
 import Stripe from "stripe"
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
-import { getPlanById, planAmountCents } from "@/lib/plans"
+import { getPlanById, packageAmountCents, getPlanPackageById } from "@/lib/plans"
 
 export const runtime = "nodejs"
 
@@ -17,6 +17,8 @@ const stripe =
 
 type StripeCheckoutBody = {
   planId?: string
+  packageId?: string
+  rush12h?: boolean
   customer?: {
     fullName?: string
     email?: string
@@ -54,10 +56,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid plan." }, { status: 400 })
     }
 
-    const amount = planAmountCents(planId)
-    if (!amount) {
+    const pkg = getPlanPackageById(planId, body.packageId?.toString() ?? null)
+    if (!pkg) {
+      return NextResponse.json({ error: "Invalid package." }, { status: 400 })
+    }
+
+    const baseAmount = packageAmountCents(planId, body.packageId?.toString() ?? null)
+    if (!baseAmount) {
       return NextResponse.json({ error: "Invalid amount." }, { status: 400 })
     }
+
+    const rush12h = Boolean(body.rush12h)
+    const rushFee = rush12h ? Math.round(plan.rush12hFeeUsd * 100) : 0
+    const amount = baseAmount + rushFee
 
     const customerEmail = body.customer?.email?.toString().trim() ?? ""
     if (!customerEmail) {
@@ -77,7 +88,7 @@ export async function POST(req: Request) {
             currency: "usd",
             unit_amount: amount,
             product_data: {
-              name: plan.name,
+              name: `${plan.name} — ${pkg.name}${rush12h ? " (12h)" : ""}`,
               description: plan.description,
             },
           },
@@ -85,6 +96,9 @@ export async function POST(req: Request) {
       ],
       metadata: {
         planId,
+        packageId: pkg.id,
+        packageName: pkg.name,
+        rush12h: rush12h ? "1" : "0",
         fullName: body.customer?.fullName ?? "",
         phone: body.customer?.phone ?? "",
         country: body.customer?.country ?? "",

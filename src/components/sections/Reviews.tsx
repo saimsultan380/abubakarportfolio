@@ -26,7 +26,7 @@ const reviews = [
         platform: "Direct Client",
         content: "I started getting interviews within two weeks. My resume was completely restructured and optimized for ATS. The difference was immediate.",
         rating: 5,
-        avatarId: 11,
+        photoUrl: "https://randomuser.me/api/portraits/women/44.jpg",
     },
     {
         name: "Ahmed R.",
@@ -35,7 +35,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "Professional, honest, and very strategic. The CV felt tailored exactly to my role. Highly recommended.",
         rating: 5,
-        avatarId: 12,
+        photoUrl: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
         name: "Jessica T.",
@@ -44,7 +44,7 @@ const reviews = [
         platform: "Upwork",
         content: "The turnaround was fast, but the quality was incredible. He highlighted achievements I didn't even think were important.",
         rating: 5,
-        avatarId: 13,
+        photoUrl: "https://randomuser.me/api/portraits/women/68.jpg",
     },
     {
         name: "David K.",
@@ -53,7 +53,7 @@ const reviews = [
         platform: "Direct Client",
         content: "Worth every penny. The LinkedIn optimization alone doubled my profile views in 3 days. Got hired at a Big 4 firm.",
         rating: 5,
-        avatarId: 14,
+        photoUrl: "https://randomuser.me/api/portraits/men/76.jpg",
     },
     {
         name: "Emily W.",
@@ -62,7 +62,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "He knows exactly what recruiters are looking for. The design was clean but the content strategy was the real game changer.",
         rating: 5,
-        avatarId: 15,
+        photoUrl: "https://randomuser.me/api/portraits/women/65.jpg",
     },
     {
         name: "Michael B.",
@@ -71,7 +71,7 @@ const reviews = [
         platform: "Referral",
         content: "I was skeptical about hiring a writer, but this was a game changer. Landed a VP role in 3 weeks.",
         rating: 5,
-        avatarId: 16,
+        photoUrl: "https://randomuser.me/api/portraits/men/45.jpg",
     },
     {
         name: "Linda C.",
@@ -80,7 +80,7 @@ const reviews = [
         platform: "Direct Client",
         content: "Helped me transition from clinical work to administration. The new CV positioned my transferable skills perfectly.",
         rating: 5,
-        avatarId: 17,
+        photoUrl: "https://randomuser.me/api/portraits/women/12.jpg",
     },
     {
         name: "Raj P.",
@@ -89,7 +89,7 @@ const reviews = [
         platform: "Upwork",
         content: "Technically accurate and well formatted. The ATS scan report provided was very reassuring.",
         rating: 5,
-        avatarId: 18,
+        photoUrl: "https://randomuser.me/api/portraits/men/22.jpg",
     },
     {
         name: "Sophie L.",
@@ -98,7 +98,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "As a writer myself, I'm picky. But his ability to synthesize my career into a punchy 2-pager was impressive.",
         rating: 5,
-        avatarId: 19,
+        photoUrl: "https://randomuser.me/api/portraits/women/29.jpg",
     },
     {
         name: "James H.",
@@ -107,7 +107,7 @@ const reviews = [
         platform: "Direct Client",
         content: "Got my first grad scheme offer after using this CV. The structure really helped hide my lack of experience.",
         rating: 5,
-        avatarId: 20,
+        photoUrl: "https://randomuser.me/api/portraits/men/19.jpg",
     },
     {
         name: "Maria G.",
@@ -116,7 +116,7 @@ const reviews = [
         platform: "LinkedIn",
         content: "I see resumes all day. This is exactly what we want to see. Clean, relevant, and no fluff.",
         rating: 5,
-        avatarId: 21,
+        photoUrl: "https://randomuser.me/api/portraits/women/52.jpg",
     },
     {
         name: "Tom W.",
@@ -125,13 +125,17 @@ const reviews = [
         platform: "Referral",
         content: "Responsive, professional, and delivered early. The cover letter was specific to the company I applied for.",
         rating: 5,
-        avatarId: 22,
+        photoUrl: "https://randomuser.me/api/portraits/men/9.jpg",
     }
 ]
 
 export function Reviews() {
     const sectionRef = React.useRef<HTMLElement>(null)
     const trackRef = React.useRef<HTMLDivElement>(null)
+    const isInViewRef = React.useRef(false)
+    const isPausedRef = React.useRef(false)
+    const intervalRef = React.useRef<number | null>(null)
+    const resumeTimeoutRef = React.useRef<number | null>(null)
 
     useGSAP(() => {
         gsap.from(".reviews-header", {
@@ -151,23 +155,144 @@ export function Reviews() {
         })
     }, { scope: sectionRef })
 
+    const getStepInfo = React.useCallback(() => {
+        const el = trackRef.current
+        if (!el) return null
+        const slides = Array.from(el.querySelectorAll<HTMLElement>("[data-review-slide]"))
+        if (!slides.length) return null
+        const cs = window.getComputedStyle(el)
+        const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0
+        const step = (slides[0]?.getBoundingClientRect().width || el.clientWidth) + gap
+        if (!step) return null
+        const maxIndex = Math.max(0, slides.length - 1)
+        const currentIndex = Math.round(el.scrollLeft / step)
+        return { el, step, maxIndex, currentIndex }
+    }, [])
+
+    const stopAutoPlay = React.useCallback(() => {
+        if (intervalRef.current != null) {
+            window.clearInterval(intervalRef.current)
+            intervalRef.current = null
+        }
+    }, [])
+
+    const startAutoPlay = React.useCallback(() => {
+        if (!isInViewRef.current || isPausedRef.current) return
+        if (intervalRef.current != null) return
+
+        intervalRef.current = window.setInterval(() => {
+            if (!isInViewRef.current || isPausedRef.current) return
+            const info = getStepInfo()
+            if (!info) return
+            const { el, step, maxIndex, currentIndex } = info
+            const nextIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1
+            const targetLeft = Math.round(nextIndex * step)
+            try {
+                el.scrollTo({ left: targetLeft, behavior: "smooth" })
+            } catch {
+                el.scrollLeft = targetLeft
+            }
+        }, 4200)
+    }, [getStepInfo])
+
+    const scheduleResume = React.useCallback((delayMs: number) => {
+        stopAutoPlay()
+        isPausedRef.current = true
+        if (resumeTimeoutRef.current != null) {
+            window.clearTimeout(resumeTimeoutRef.current)
+            resumeTimeoutRef.current = null
+        }
+        resumeTimeoutRef.current = window.setTimeout(() => {
+            isPausedRef.current = false
+            resumeTimeoutRef.current = null
+            startAutoPlay()
+        }, delayMs)
+    }, [startAutoPlay, stopAutoPlay])
+
     const scrollByCards = (dir: -1 | 1) => {
         const el = trackRef.current
         if (!el) return
-        const firstSlide = el.querySelector<HTMLElement>("[data-review-slide]")
+
+        const slides = Array.from(el.querySelectorAll<HTMLElement>("[data-review-slide]"))
+        if (!slides.length) return
+
         const cs = window.getComputedStyle(el)
         const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0
-        const step = (firstSlide?.offsetWidth ?? el.clientWidth) + gap
-        const max = Math.max(0, el.scrollWidth - el.clientWidth)
-        const target = Math.max(0, Math.min(max, el.scrollLeft + dir * step))
-        const state = { x: el.scrollLeft }
-        gsap.to(state, {
-            x: target,
-            duration: 0.55,
-            ease: "power3.out",
-            onUpdate: () => { if (trackRef.current) trackRef.current.scrollLeft = state.x },
-        })
+        const step = (slides[0]?.getBoundingClientRect().width || el.clientWidth) + gap
+        if (!step) return
+
+        const maxIndex = Math.max(0, slides.length - 1)
+        const currentIndex = Math.round(el.scrollLeft / step)
+        const nextIndex = Math.max(0, Math.min(maxIndex, currentIndex + dir))
+        const targetLeft = Math.round(nextIndex * step)
+
+        // Native scrolling is more reliable on mobile than JS-driven scrollLeft animation
+        try {
+            el.scrollTo({ left: targetLeft, behavior: "smooth" })
+        } catch {
+            el.scrollLeft = targetLeft
+        }
+
+        // Pause autoplay briefly after manual navigation
+        scheduleResume(7000)
     }
+
+    React.useEffect(() => {
+        if (typeof window === "undefined") return
+        const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
+        if (prefersReducedMotion) return
+
+        const sectionEl = sectionRef.current
+        if (!sectionEl) return
+
+        const io = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0]
+                isInViewRef.current = !!entry?.isIntersecting
+                if (isInViewRef.current) startAutoPlay()
+                else stopAutoPlay()
+            },
+            { threshold: 0.25 }
+        )
+        io.observe(sectionEl)
+
+        return () => {
+            io.disconnect()
+            stopAutoPlay()
+            if (resumeTimeoutRef.current != null) window.clearTimeout(resumeTimeoutRef.current)
+        }
+    }, [startAutoPlay, stopAutoPlay])
+
+    React.useEffect(() => {
+        const el = trackRef.current
+        if (!el) return
+
+        const onPointerEnter = () => {
+            stopAutoPlay()
+            isPausedRef.current = true
+        }
+        const onPointerLeave = () => {
+            isPausedRef.current = false
+            startAutoPlay()
+        }
+        const onTouchStart = () => scheduleResume(9000)
+        const onWheel = () => scheduleResume(5000)
+        const onScroll = () => scheduleResume(3000)
+
+        el.addEventListener("pointerenter", onPointerEnter)
+        el.addEventListener("pointerleave", onPointerLeave)
+        el.addEventListener("touchstart", onTouchStart, { passive: true })
+        el.addEventListener("wheel", onWheel, { passive: true })
+        el.addEventListener("scroll", onScroll, { passive: true })
+
+        return () => {
+            el.removeEventListener("pointerenter", onPointerEnter)
+            el.removeEventListener("pointerleave", onPointerLeave)
+            el.removeEventListener("touchstart", onTouchStart)
+            el.removeEventListener("wheel", onWheel)
+            el.removeEventListener("scroll", onScroll)
+        }
+    }, [scheduleResume, startAutoPlay, stopAutoPlay])
 
     return (
         <section ref={sectionRef} id="reviews" className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
@@ -263,7 +388,7 @@ function ReviewCard({ review }: { review: Review }) {
             <div className="flex items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <img
-                        src={`https://i.pravatar.cc/96?img=${review.avatarId}`}
+                        src={review.photoUrl}
                         alt={`${review.name} avatar`}
                         width={44}
                         height={44}

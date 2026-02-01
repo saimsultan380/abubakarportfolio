@@ -22,6 +22,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function FloatingActions() {
   const [showScrollTop, setShowScrollTop] = React.useState(false)
+  const [showWhatsAppHint, setShowWhatsAppHint] = React.useState(true)
 
   React.useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400)
@@ -29,6 +30,13 @@ export function FloatingActions() {
     onScroll()
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  // Auto-hide WhatsApp hint after a short time
+  React.useEffect(() => {
+    if (!showWhatsAppHint) return
+    const t = window.setTimeout(() => setShowWhatsAppHint(false), 7000)
+    return () => window.clearTimeout(t)
+  }, [showWhatsAppHint])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
@@ -51,15 +59,34 @@ export function FloatingActions() {
       </button>
 
       {/* WhatsApp - right */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
-      >
-        <WhatsAppIcon />
-      </a>
+      <div className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50 flex flex-col items-end gap-2">
+        {showWhatsAppHint && (
+          <div className="flex items-center gap-2 rounded-2xl border border-border bg-background/95 backdrop-blur px-3 py-2 shadow-lg max-w-[72vw] sm:max-w-none">
+            <div className="text-xs sm:text-sm font-semibold text-foreground whitespace-nowrap">
+              Chat on WhatsApp
+            </div>
+            <button
+              type="button"
+              aria-label="Dismiss WhatsApp hint"
+              onClick={() => setShowWhatsAppHint(false)}
+              className="h-6 w-6 rounded-full border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center shrink-0"
+            >
+              <span className="text-xs font-bold leading-none">×</span>
+            </button>
+          </div>
+        )}
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+          onClick={() => setShowWhatsAppHint(false)}
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
+        >
+          <WhatsAppIcon />
+        </a>
+      </div>
     </>
   )
 }

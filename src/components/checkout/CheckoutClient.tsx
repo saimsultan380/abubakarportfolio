@@ -4,12 +4,13 @@ import * as React from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { cn } from "@/lib/utils"
-import type { PricingPlan, PlanId } from "@/lib/plans"
-import { CreditCard, Lock, ShieldCheck, Wallet } from "lucide-react"
+import { getPlanPackage, type PackageId, type PricingPlan, type PlanId } from "@/lib/plans"
+import { Lock, ShieldCheck } from "lucide-react"
 import { MastercardLogo, PaypalLogo, VisaLogo } from "./PaymentIcons"
 
 type Props = {
   initialPlanId: PlanId
+  initialPackageId?: string
   plans: PricingPlan[]
 }
 
@@ -30,13 +31,64 @@ function money(amountUsd: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amountUsd)
 }
 
-export function CheckoutClient({ initialPlanId, plans }: Props) {
+function normalizePackageId(raw: string | null | undefined): PackageId {
+  const v = (raw ?? "").toLowerCase()
+  const allowed: PackageId[] = ["cover", "linkedin", "resume", "cover_linkedin", "cover_resume", "linkedin_resume", "all"]
+  return (allowed.includes(v as PackageId) ? (v as PackageId) : "all")
+}
+
+type ServiceKey = "cover" | "linkedin" | "resume"
+
+function servicesToPackageId(services: ServiceKey[]): PackageId {
+  const s = new Set(services)
+  const hasCover = s.has("cover")
+  const hasLinkedIn = s.has("linkedin")
+  const hasResume = s.has("resume")
+  const count = (hasCover ? 1 : 0) + (hasLinkedIn ? 1 : 0) + (hasResume ? 1 : 0)
+
+  if (count === 3) return "all"
+  if (hasCover && hasLinkedIn) return "cover_linkedin"
+  if (hasCover && hasResume) return "cover_resume"
+  if (hasLinkedIn && hasResume) return "linkedin_resume"
+  if (hasCover) return "cover"
+  if (hasLinkedIn) return "linkedin"
+  return "resume"
+}
+
+function packageIdToServices(pkg: PackageId): ServiceKey[] {
+  switch (pkg) {
+    case "cover":
+      return ["cover"]
+    case "linkedin":
+      return ["linkedin"]
+    case "resume":
+      return ["resume"]
+    case "cover_linkedin":
+      return ["cover", "linkedin"]
+    case "cover_resume":
+      return ["cover", "resume"]
+    case "linkedin_resume":
+      return ["linkedin", "resume"]
+    case "all":
+    default:
+      return ["cover", "linkedin", "resume"]
+  }
+}
+
+export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const sp = useSearchParams()
 
   const [planId, setPlanId] = React.useState<PlanId>(initialPlanId)
   const plan = React.useMemo(() => plans.find((p) => p.id === planId) ?? plans[0], [planId, plans])
+  const [packageId, setPackageId] = React.useState<PackageId>(normalizePackageId(initialPackageId))
+  const pkg = React.useMemo(() => getPlanPackage(plan, packageId) ?? getPlanPackage(plan, "all")!, [plan, packageId])
+
+  const [selectedServices, setSelectedServices] = React.useState<ServiceKey[]>(() =>
+    packageIdToServices(normalizePackageId(initialPackageId))
+  )
+  const [rush12h, setRush12h] = React.useState<boolean>(() => (sp.get("rush") ?? "") === "1")
 
   const [method, setMethod] = React.useState<PaymentMethod>("card")
   const [isSubmitting, setIsSubmitting] = React.useState(false)
@@ -59,7 +111,17 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
     if (plans.some((p) => p.id === urlPlan)) {
       setPlanId(urlPlan as PlanId)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sp, plans])
+
+  React.useEffect(() => {
+    const urlPkg = sp.get("pkg")
+    const nextPkg = normalizePackageId(urlPkg)
+    setPackageId(nextPkg)
+    setSelectedServices(packageIdToServices(nextPkg))
+  }, [sp])
+
+  React.useEffect(() => {
+    setRush12h((sp.get("rush") ?? "") === "1")
   }, [sp])
 
   function updateCustomer<K extends keyof CustomerDetails>(key: K, value: CustomerDetails[K]) {
@@ -82,8 +144,57 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
     setPlanId(next)
     const nextParams = new URLSearchParams(sp.toString())
     nextParams.set("plan", next)
+    nextParams.set("pkg", packageId)
+    if (rush12h) nextParams.set("rush", "1")
+    else nextParams.delete("rush")
     router.replace(`${pathname}?${nextParams.toString()}`)
   }
+
+  function toggleService(service: ServiceKey) {
+    setSelectedServices((prev) => {
+      const s = new Set(prev)
+      if (s.has(service)) s.delete(service)
+      else s.add(service)
+      const next = Array.from(s) as ServiceKey[]
+      if (next.length === 0) return prev // prevent empty selection
+
+      const nextPkg = servicesToPackageId(next)
+      setPackageId(nextPkg)
+
+      const nextParams = new URLSearchParams(sp.toString())
+      nextParams.set("plan", planId)
+      nextParams.set("pkg", nextPkg)
+      if (rush12h) nextParams.set("rush", "1")
+      else nextParams.delete("rush")
+      router.replace(`${pathname}?${nextParams.toString()}`)
+      return next
+    })
+  }
+
+  function setAllCombined() {
+    const nextServices: ServiceKey[] = ["cover", "linkedin", "resume"]
+    setSelectedServices(nextServices)
+    const nextPkg: PackageId = "all"
+    setPackageId(nextPkg)
+    const nextParams = new URLSearchParams(sp.toString())
+    nextParams.set("plan", planId)
+    nextParams.set("pkg", nextPkg)
+    if (rush12h) nextParams.set("rush", "1")
+    else nextParams.delete("rush")
+    router.replace(`${pathname}?${nextParams.toString()}`)
+  }
+
+  function toggleRush(next: boolean) {
+    setRush12h(next)
+    const nextParams = new URLSearchParams(sp.toString())
+    nextParams.set("plan", planId)
+    nextParams.set("pkg", packageId)
+    if (next) nextParams.set("rush", "1")
+    else nextParams.delete("rush")
+    router.replace(`${pathname}?${nextParams.toString()}`)
+  }
+
+  const totalUsd = pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0)
 
   async function payWithCard() {
     const v = validate()
@@ -97,7 +208,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
       const res = await fetch("/api/checkout/stripe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ planId, customer }),
+        body: JSON.stringify({ planId, packageId, rush12h, customer }),
       })
       const data = (await res.json()) as { url?: string; error?: string }
       if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start card checkout.")
@@ -110,6 +221,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
   }
 
   const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? ""
+  type PayPalApproveData = { orderID: string }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -273,7 +385,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
                   isSubmitting && "opacity-60 pointer-events-none"
                 )}
               >
-                Pay {money(plan.priceUsd)} with Card <ShieldCheck className="h-5 w-5" />
+                Pay {money(totalUsd)} with Card <ShieldCheck className="h-5 w-5" />
               </button>
               <p className="mt-3 text-xs text-muted-foreground font-medium">
                 You’ll be redirected to a secure Stripe checkout page to complete your payment.
@@ -305,7 +417,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
                           const res = await fetch("/api/checkout/paypal/create-order", {
                             method: "POST",
                             headers: { "content-type": "application/json" },
-                            body: JSON.stringify({ planId, customer }),
+                            body: JSON.stringify({ planId, packageId, rush12h, customer }),
                           })
                           const data = (await res.json()) as { orderId?: string; error?: string }
                           if (!res.ok || !data.orderId) throw new Error(data.error ?? "Unable to create PayPal order.")
@@ -314,7 +426,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
                           setIsSubmitting(false)
                         }
                       }}
-                      onApprove={async (data: any) => {
+                      onApprove={async (data: PayPalApproveData) => {
                         setIsSubmitting(true)
                         try {
                           const res = await fetch("/api/checkout/paypal/capture-order", {
@@ -331,7 +443,7 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
                           setIsSubmitting(false)
                         }
                       }}
-                      onError={(err: any) => {
+                      onError={(err: unknown) => {
                         setError(err instanceof Error ? err.message : "PayPal error.")
                       }}
                     />
@@ -366,22 +478,91 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
           </select>
         </div>
 
+        <div className="mt-5">
+          <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+            Package breakdown
+          </label>
+          <div className="mt-3 rounded-2xl border border-border bg-background/40 p-4">
+            <div className="space-y-3">
+              <BreakdownRow
+                checked={selectedServices.includes("cover")}
+                label="Cover Letter"
+                priceUsd={plan.breakdown.find((b) => b.name === "Cover Letter")?.priceUsd ?? 0}
+                onChange={() => toggleService("cover")}
+              />
+              <BreakdownRow
+                checked={selectedServices.includes("linkedin")}
+                label="LinkedIn Profile Optimization"
+                priceUsd={plan.breakdown.find((b) => b.name === "LinkedIn Profile Optimization")?.priceUsd ?? 0}
+                onChange={() => toggleService("linkedin")}
+              />
+              <BreakdownRow
+                checked={selectedServices.includes("resume")}
+                label="Resume"
+                priceUsd={plan.breakdown.find((b) => b.name === "Resume")?.priceUsd ?? 0}
+                onChange={() => toggleService("resume")}
+              />
+            </div>
+
+            <div className="mt-4 border-t border-border/70 pt-4">
+              <button
+                type="button"
+                onClick={setAllCombined}
+                className={cn(
+                  "w-full rounded-xl border px-4 py-3 text-sm font-bold flex items-center justify-between transition-colors",
+                  packageId === "all" ? "border-primary bg-primary/5" : "border-border hover:bg-muted/40"
+                )}
+              >
+                <span className="uppercase tracking-widest text-muted-foreground text-xs">All combined</span>
+                <span className="text-foreground">{money(plan.priceUsd)}</span>
+              </button>
+
+              <label className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-border px-4 py-3 text-sm font-semibold hover:bg-muted/40 transition-colors cursor-pointer">
+                <span className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={rush12h}
+                    onChange={(e) => toggleRush(e.target.checked)}
+                    className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <span>
+                    12 hours delivery{" "}
+                    <span className="text-muted-foreground font-bold">(+{money(plan.rush12hFeeUsd)})</span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-sm font-bold">{plan.name}</div>
-              <div className="mt-1 text-xs text-muted-foreground font-semibold italic">"{plan.description}"</div>
+              <div className="text-sm font-bold">{plan.name} — {pkg.name}</div>
+              <div className="mt-1 text-xs text-muted-foreground font-semibold italic">
+                &ldquo;{plan.description}&rdquo;
+              </div>
             </div>
-            <div className="text-sm font-bold">{money(plan.priceUsd)}</div>
+            <div className="text-sm font-bold">{money(totalUsd)}</div>
           </div>
+          <div className="mt-3 flex items-center justify-between text-xs font-semibold text-muted-foreground">
+            <span>{plan.deliveryDays} days delivery</span>
+            <span>Revisions: {plan.revisions}</span>
+          </div>
+          {rush12h ? (
+            <div className="mt-1 flex items-center justify-between text-xs font-semibold text-muted-foreground">
+              <span>12 hours</span>
+              <span>+{money(plan.rush12hFeeUsd)}</span>
+            </div>
+          ) : null}
           <div className="mt-4 border-t border-border/70 pt-4 flex items-center justify-between">
             <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Total</div>
-            <div className="text-lg font-bold">{money(plan.priceUsd)}</div>
+            <div className="text-lg font-bold">{money(totalUsd)}</div>
           </div>
         </div>
 
         <ul className="mt-6 space-y-3 text-sm text-foreground/80 font-medium">
-          {plan.features.slice(0, 5).map((f) => (
+          {pkg.includes.slice(0, 5).map((f) => (
             <li key={f} className="flex items-start gap-3">
               <span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-primary/60" />
               <span>{f}</span>
@@ -390,6 +571,33 @@ export function CheckoutClient({ initialPlanId, plans }: Props) {
         </ul>
       </aside>
     </div>
+  )
+}
+
+function BreakdownRow({
+  checked,
+  label,
+  priceUsd,
+  onChange,
+}: {
+  checked: boolean
+  label: string
+  priceUsd: number
+  onChange: () => void
+}) {
+  return (
+    <label className="flex items-center justify-between gap-3 text-sm font-semibold cursor-pointer">
+      <span className="flex items-center gap-3">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+          className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+        />
+        <span>{label}</span>
+      </span>
+      <span className="text-foreground">{money(priceUsd)}</span>
+    </label>
   )
 }
 
@@ -416,10 +624,4 @@ function Field({
 
 const inputClass =
   "w-full rounded-[4px] border border-border bg-background/60 px-4 py-3 text-sm font-semibold text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 placeholder:text-muted-foreground/70"
-
-const methodCardBase =
-  "rounded-[4px] border p-4 transition-all duration-300 flex items-center justify-between"
-
-const iconWrapBase =
-  "h-11 w-11 rounded-[4px] border border-border flex items-center justify-center text-foreground"
 

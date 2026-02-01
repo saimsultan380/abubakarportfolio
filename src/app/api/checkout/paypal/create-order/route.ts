@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server"
-import { getPlanById } from "@/lib/plans"
+import { getPlanById, getPlanPackageById } from "@/lib/plans"
 import { getPayPalAccessToken, getPayPalBaseUrl } from "@/lib/paypal"
 
 export const runtime = "nodejs"
 
 type CreateOrderBody = {
   planId?: string
+  packageId?: string
+  rush12h?: boolean
   customer?: {
     fullName?: string
     email?: string
@@ -27,6 +29,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid plan." }, { status: 400 })
     }
 
+    const pkg = getPlanPackageById(planId, body.packageId?.toString() ?? null)
+    if (!pkg) {
+      return NextResponse.json({ error: "Invalid package." }, { status: 400 })
+    }
+
+    const rush12h = Boolean(body.rush12h)
+    const totalUsd = pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0)
+
     const customerEmail = body.customer?.email?.toString().trim() ?? ""
     if (!customerEmail) {
       return NextResponse.json({ error: "Email is required." }, { status: 400 })
@@ -44,12 +54,12 @@ export async function POST(req: Request) {
         intent: "CAPTURE",
         purchase_units: [
           {
-            reference_id: planId,
-            description: plan.name,
-            custom_id: planId,
+            reference_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}`,
+            description: `${plan.name} — ${pkg.name}${rush12h ? " (12h)" : ""}`,
+            custom_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}`,
             amount: {
               currency_code: "USD",
-              value: plan.priceUsd.toFixed(2),
+              value: totalUsd.toFixed(2),
             },
           },
         ],

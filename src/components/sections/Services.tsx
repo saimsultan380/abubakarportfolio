@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -84,10 +85,13 @@ export function Services() {
                     </div>
 
                     <div className="hidden md:block">
-                        <a href="#contact" className="group flex items-center gap-2 text-sm font-medium text-accent-cool hover:text-accent-cool/80 transition-colors">
-                            Book a consultation
+                        <Link
+                            href="/pricing"
+                            className="group flex items-center gap-2 text-sm font-medium text-accent-cool hover:text-accent-cool/80 transition-colors"
+                        >
+                            View all pricing
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
@@ -118,8 +122,7 @@ export function Services() {
                                 </p>
                             </div>
 
-                            <div className="mt-8 flex items-center justify-between text-sm font-medium pt-8 border-t border-border/50">
-                                <span className="text-muted-foreground group-hover:text-foreground transition-colors">Starting at $99</span>
+                            <div className="mt-8 flex items-center justify-end text-sm font-medium pt-8 border-t border-border/50">
                                 <div className={cn(
                                     "h-8 w-8 rounded-full border border-border flex items-center justify-center transition-all",
                                     service.accent === "primary" && "group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground",

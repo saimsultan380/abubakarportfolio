@@ -10,6 +10,7 @@ export default function CheckoutPage({
   searchParams: Record<string, string | string[] | undefined>
 }) {
   const rawPlan = Array.isArray(searchParams.plan) ? searchParams.plan[0] : searchParams.plan
+  const rawPkg = Array.isArray(searchParams.pkg) ? searchParams.pkg[0] : searchParams.pkg
   const selected = getPlanById(rawPlan) ?? PLANS[0]
 
   return (
@@ -28,7 +29,7 @@ export default function CheckoutPage({
             </div>
           }
         >
-          <CheckoutClient initialPlanId={selected.id} plans={PLANS} />
+          <CheckoutClient initialPlanId={selected.id} initialPackageId={rawPkg} plans={PLANS} />
         </Suspense>
       </div>
     </section>

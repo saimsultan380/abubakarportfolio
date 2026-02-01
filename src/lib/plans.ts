@@ -1,5 +1,14 @@
 export type PlanId = "entry" | "mid" | "executive"
 
+export type PackageId =
+  | "cover"
+  | "linkedin"
+  | "resume"
+  | "cover_linkedin"
+  | "cover_resume"
+  | "linkedin_resume"
+  | "all"
+
 export type PricingPlan = {
   id: PlanId
   name: string
@@ -64,6 +73,13 @@ export const PLANS: PricingPlan[] = [
   },
 ]
 
+export type PlanPackage = {
+  id: PackageId
+  name: string
+  priceUsd: number
+  includes: string[]
+}
+
 export function getPlanById(planId: string | undefined | null) {
   if (!planId) return null
   return PLANS.find((p) => p.id === planId) ?? null
@@ -75,3 +91,74 @@ export function planAmountCents(planId: string) {
   return Math.round(plan.priceUsd * 100)
 }
 
+function getBreakdownPrice(plan: PricingPlan, itemName: string) {
+  const found = plan.breakdown.find((b) => b.name.toLowerCase() === itemName.toLowerCase())
+  return found?.priceUsd ?? null
+}
+
+export function getPlanPackage(plan: PricingPlan, packageId: PackageId): PlanPackage | null {
+  const cover = getBreakdownPrice(plan, "Cover Letter")
+  const linkedin = getBreakdownPrice(plan, "LinkedIn Profile Optimization")
+  const resume = getBreakdownPrice(plan, "Resume")
+  if (cover == null || linkedin == null || resume == null) return null
+
+  switch (packageId) {
+    case "cover":
+      return { id: "cover", name: "Cover Letter", priceUsd: cover, includes: ["Cover Letter"] }
+    case "linkedin":
+      return {
+        id: "linkedin",
+        name: "LinkedIn Profile Optimization",
+        priceUsd: linkedin,
+        includes: ["LinkedIn Profile Optimization"],
+      }
+    case "resume":
+      return { id: "resume", name: "Resume/CV", priceUsd: resume, includes: ["Resume"] }
+    case "cover_linkedin":
+      return {
+        id: "cover_linkedin",
+        name: "Cover Letter + LinkedIn Optimization",
+        priceUsd: cover + linkedin,
+        includes: ["Cover Letter", "LinkedIn Profile Optimization"],
+      }
+    case "cover_resume":
+      return {
+        id: "cover_resume",
+        name: "Cover Letter + Resume/CV",
+        priceUsd: cover + resume,
+        includes: ["Cover Letter", "Resume"],
+      }
+    case "linkedin_resume":
+      return {
+        id: "linkedin_resume",
+        name: "LinkedIn Optimization + Resume/CV",
+        priceUsd: linkedin + resume,
+        includes: ["LinkedIn Profile Optimization", "Resume"],
+      }
+    case "all":
+      return {
+        id: "all",
+        name: "All in One",
+        priceUsd: plan.priceUsd,
+        includes: [...plan.features],
+      }
+    default:
+      return null
+  }
+}
+
+export function getPlanPackageById(planId: string | undefined | null, packageId: string | undefined | null) {
+  const plan = getPlanById(planId)
+  if (!plan) return null
+  const pkg = (packageId ?? "all") as PackageId
+  return getPlanPackage(plan, pkg)
+}
+
+export function packageAmountCents(planId: string, packageId: string | undefined | null) {
+  const plan = getPlanById(planId)
+  if (!plan) return null
+  const pkgId = (packageId ?? "all") as PackageId
+  const pkg = getPlanPackage(plan, pkgId)
+  if (!pkg) return null
+  return Math.round(pkg.priceUsd * 100)
+}

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { X, Upload, Briefcase, Mail, FileText } from "lucide-react"
+import { X, Upload, Briefcase, Mail, FileText, Phone } from "lucide-react"
 
 interface CVReviewModalProps {
     isOpen: boolean
@@ -11,7 +11,9 @@ interface CVReviewModalProps {
 export function CVReviewModal({ isOpen, onClose }: CVReviewModalProps) {
     const [cvFile, setCvFile] = React.useState<File | null>(null)
     const [targetRoles, setTargetRoles] = React.useState("")
+    const [phoneNumber, setPhoneNumber] = React.useState("")
     const [isDragging, setIsDragging] = React.useState(false)
+    const [fileError, setFileError] = React.useState<string>("")
     const fileInputRef = React.useRef<HTMLInputElement>(null)
 
     // Prevent body scroll when modal is open
@@ -26,10 +28,34 @@ export function CVReviewModal({ isOpen, onClose }: CVReviewModalProps) {
         }
     }, [isOpen])
 
+    // Close on Escape
+    React.useEffect(() => {
+        if (!isOpen) return
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") onClose()
+        }
+        window.addEventListener("keydown", onKeyDown)
+        return () => window.removeEventListener("keydown", onKeyDown)
+    }, [isOpen, onClose])
+
+    const validateFile = (file: File) => {
+        const okType =
+            file.type === "application/pdf" ||
+            file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if (!okType) return "Please upload a PDF or DOCX file."
+
+        const maxBytes = 10 * 1024 * 1024
+        if (file.size > maxBytes) return "File is too large. Max size is 10MB."
+
+        return ""
+    }
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
-            setCvFile(file)
+            const err = validateFile(file)
+            setFileError(err)
+            if (!err) setCvFile(file)
         }
     }
 
@@ -37,9 +63,10 @@ export function CVReviewModal({ isOpen, onClose }: CVReviewModalProps) {
         e.preventDefault()
         setIsDragging(false)
         const file = e.dataTransfer.files?.[0]
-        if (file && (file.type === "application/pdf" || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
-            setCvFile(file)
-        }
+        if (!file) return
+        const err = validateFile(file)
+        setFileError(err)
+        if (!err) setCvFile(file)
     }
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -54,12 +81,15 @@ export function CVReviewModal({ isOpen, onClose }: CVReviewModalProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        if (!cvFile || !targetRoles.trim()) return
+        if (!cvFile || !targetRoles.trim() || fileError) return
 
         const subject = "CV Review Request"
         const body = `Hello,
 
 I would like to request a professional CV review for my career transition.
+
+PHONE NUMBER:
+${phoneNumber.trim() || "N/A"}
 
 TARGET JOB ROLES:
 ${targetRoles.trim()}
@@ -92,16 +122,29 @@ Your target job roles and details have been pre-filled in the email body.`)
             // Reset form
             setCvFile(null)
             setTargetRoles("")
+            setPhoneNumber("")
+            setFileError("")
         }, 1000)
     }
 
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-background/90 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-2xl bg-card border border-border rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col scale-in-95 animate-in fill-mode-forwards duration-300 max-h-[95vh] sm:max-h-[90vh]">
+        <div
+            className="fixed inset-0 z-[9999] isolation-isolate flex items-start sm:items-center justify-center px-3 sm:px-4 md:px-6 pt-24 pb-6 sm:py-6 bg-background/90 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Submit your CV for review"
+            onMouseDown={(e) => {
+                if (e.target === e.currentTarget) onClose()
+            }}
+        >
+            <div
+                className="relative w-full max-w-2xl bg-card border border-border rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in fill-mode-forwards duration-300 max-h-[calc(100dvh-7rem)] sm:max-h-[90vh]"
+                onMouseDown={(e) => e.stopPropagation()}
+            >
                 {/* Header */}
-                <div className="flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 border-b border-border bg-muted/30">
+                <div className="sticky top-0 z-10 flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 border-b border-border bg-muted/30">
                     <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                         <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 flex-shrink-0">
                             <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
@@ -139,7 +182,7 @@ Your target job roles and details have been pre-filled in the email body.`)
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onClick={() => fileInputRef.current?.click()}
-                            className={`relative border-2 border-dashed rounded-lg sm:rounded-xl p-5 sm:p-6 md:p-8 transition-all cursor-pointer ${isDragging
+                            className={`relative border-2 border-dashed rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 transition-all cursor-pointer ${isDragging
                                     ? "border-primary bg-primary/5"
                                     : cvFile
                                         ? "border-green-500/50 bg-green-500/5"
@@ -169,6 +212,7 @@ Your target job roles and details have been pre-filled in the email body.`)
                                             onClick={(e) => {
                                                 e.stopPropagation()
                                                 setCvFile(null)
+                                                setFileError("")
                                             }}
                                             className="mt-2 sm:mt-3 text-[10px] sm:text-xs text-primary hover:underline"
                                         >
@@ -190,6 +234,11 @@ Your target job roles and details have been pre-filled in the email body.`)
                                 )}
                             </div>
                         </div>
+                        {fileError ? (
+                            <p className="text-[10px] sm:text-xs text-red-500">
+                                {fileError}
+                            </p>
+                        ) : null}
                     </div>
 
                     {/* Target Job Roles Section */}
@@ -201,7 +250,7 @@ Your target job roles and details have been pre-filled in the email body.`)
                                 <span className="text-red-500">*</span>
                             </span>
                             <p className="text-[10px] sm:text-xs text-muted-foreground mb-2 sm:mb-3">
-                                List the job titles or positions you're applying for
+                                List the job titles or positions you&apos;re applying for
                             </p>
                         </label>
                         <textarea
@@ -214,39 +263,43 @@ Your target job roles and details have been pre-filled in the email body.`)
                             className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg sm:rounded-xl border border-border bg-background text-sm sm:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
                         />
                         <p className="text-[10px] sm:text-xs text-muted-foreground">
-                            Be specific about the roles you're targeting to get tailored feedback
+                            Be specific about the roles you&apos;re targeting to get tailored feedback
                         </p>
                     </div>
 
-                    {/* Info Note */}
-                    <div className="rounded-lg sm:rounded-xl bg-blue-500/5 border border-blue-500/20 p-3 sm:p-4">
-                        <div className="flex items-start gap-2">
-                            <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                            <div className="space-y-1">
-                                <p className="text-[10px] sm:text-xs font-semibold text-foreground">
-                                    Sending to: resumesuplift@gmail.com
-                                </p>
-                                <p className="text-[10px] sm:text-xs text-muted-foreground">
-                                    Your email client will open with pre-filled information. Don't forget to attach your CV file before sending!
-                                </p>
-                            </div>
-                        </div>
+                    {/* Phone Number */}
+                    <div className="space-y-2 sm:space-y-3">
+                        <label htmlFor="phoneNumber" className="block">
+                            <span className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-foreground mb-2">
+                                <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+                                Phone Number
+                            </span>
+                            <p className="text-[10px] sm:text-xs text-muted-foreground mb-2 sm:mb-3">
+                                Optional (include country code if possible)
+                            </p>
+                        </label>
+                        <input
+                            id="phoneNumber"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            placeholder="e.g., +92 300 1234567"
+                            inputMode="tel"
+                            autoComplete="tel"
+                            className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg sm:rounded-xl border border-border bg-background text-sm sm:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                        />
                     </div>
 
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        disabled={!cvFile || !targetRoles.trim()}
-                        className="w-full h-11 sm:h-12 md:h-13 inline-flex items-center justify-center rounded-lg sm:rounded-xl bg-primary px-6 sm:px-8 text-sm sm:text-base font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        disabled={!cvFile || !targetRoles.trim() || !!fileError}
+                        className="w-full h-11 sm:h-12 inline-flex items-center justify-center rounded-lg sm:rounded-xl bg-primary px-6 sm:px-8 text-sm sm:text-base font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                         <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                         Send via Email
                     </button>
                 </form>
             </div>
-
-            {/* Click outside to close */}
-            <div className="absolute inset-0 -z-10" onClick={onClose} />
         </div>
     )
 }

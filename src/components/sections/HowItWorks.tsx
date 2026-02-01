@@ -60,14 +60,14 @@ export function HowItWorks() {
             <div className="container px-4 mx-auto relative z-10">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-6 border border-orange-200 dark:border-orange-500/20">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
                         Workflow
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black font-heading mb-6 tracking-tight text-foreground">
+                    <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
                         Your Roadmap to <br />
-                        <span className="text-orange-600 dark:text-orange-500">The Next Level.</span>
+                        <span className="text-primary">The Next Level.</span>
                     </h2>
-                    <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                         A streamlined, white-glove process designed for high-performing professionals.
                     </p>
                 </div>

@@ -113,6 +113,13 @@ export function Pricing() {
           <p className="pricing-subtitle text-lg text-muted-foreground">
             Transparent pricing. No hidden fees. 100% human-crafted.
           </p>
+          <Link
+            href="/pricing"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+          >
+            View all pricing
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
 
         {/* Cards */}
@@ -234,13 +241,13 @@ export function Pricing() {
           <p className="text-lg text-muted-foreground mb-4">
             Not sure which package is right for you?
           </p>
-          <a
-            href="#contact"
+          <Link
+            href="/pricing"
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
           >
-            Book a Consultation
+            Choose Your Package
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
