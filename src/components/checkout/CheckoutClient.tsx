@@ -1,11 +1,12 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { cn } from "@/lib/utils"
 import { getPlanPackage, type PackageId, type PricingPlan, type PlanId } from "@/lib/plans"
-import { Lock, ShieldCheck } from "lucide-react"
+import { Lock, ShieldCheck, FileText, PenLine } from "lucide-react"
 import { MastercardLogo, PaypalLogo, VisaLogo } from "./PaymentIcons"
 
 type Props = {
@@ -15,6 +16,9 @@ type Props = {
 }
 
 type PaymentMethod = "card" | "paypal"
+type ResumeIntent = "revamp" | "scratch" | ""
+
+const CHECKOUT_DRAFT_KEY = "resumes_uplift_checkout_draft"
 
 type CustomerDetails = {
   fullName: string
@@ -89,6 +93,11 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     packageIdToServices(normalizePackageId(initialPackageId))
   )
   const [rush12h, setRush12h] = React.useState<boolean>(() => (sp.get("rush") ?? "") === "1")
+  const [intent, setIntent] = React.useState<ResumeIntent>(() => {
+    const raw = (sp.get("intent") ?? "").toLowerCase()
+    if (raw === "revamp" || raw === "scratch") return raw
+    return ""
+  })
 
   const [method, setMethod] = React.useState<PaymentMethod>("card")
   const [isSubmitting, setIsSubmitting] = React.useState(false)
@@ -104,6 +113,20 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     postalCode: "",
     notes: "",
   })
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return
+    try {
+      const raw = sessionStorage.getItem(CHECKOUT_DRAFT_KEY)
+      if (!raw) return
+      const draft = JSON.parse(raw) as { customer?: CustomerDetails }
+      if (draft?.customer && typeof draft.customer === "object") {
+        setCustomer((prev) => ({ ...prev, ...draft.customer }))
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
 
   React.useEffect(() => {
     const urlPlan = sp.get("plan")
@@ -124,6 +147,12 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     setRush12h((sp.get("rush") ?? "") === "1")
   }, [sp])
 
+  React.useEffect(() => {
+    const raw = (sp.get("intent") ?? "").toLowerCase()
+    if (raw === "revamp" || raw === "scratch") setIntent(raw)
+    else setIntent("")
+  }, [sp])
+
   function updateCustomer<K extends keyof CustomerDetails>(key: K, value: CustomerDetails[K]) {
     setCustomer((prev) => ({ ...prev, [key]: value }))
   }
@@ -140,13 +169,22 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     return null
   }
 
+  function buildParams(next: { plan?: PlanId; pkg?: PackageId; rush?: boolean; intent?: ResumeIntent }) {
+    const nextParams = new URLSearchParams(sp.toString())
+    if (next.plan) nextParams.set("plan", next.plan)
+    if (next.pkg) nextParams.set("pkg", next.pkg)
+    const rushValue = typeof next.rush === "boolean" ? next.rush : rush12h
+    if (rushValue) nextParams.set("rush", "1")
+    else nextParams.delete("rush")
+    const intentValue = typeof next.intent === "string" ? next.intent : intent
+    if (intentValue) nextParams.set("intent", intentValue)
+    else nextParams.delete("intent")
+    return nextParams
+  }
+
   function onPlanChange(next: PlanId) {
     setPlanId(next)
-    const nextParams = new URLSearchParams(sp.toString())
-    nextParams.set("plan", next)
-    nextParams.set("pkg", packageId)
-    if (rush12h) nextParams.set("rush", "1")
-    else nextParams.delete("rush")
+    const nextParams = buildParams({ plan: next, pkg: packageId })
     router.replace(`${pathname}?${nextParams.toString()}`)
   }
 
@@ -161,11 +199,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
       const nextPkg = servicesToPackageId(next)
       setPackageId(nextPkg)
 
-      const nextParams = new URLSearchParams(sp.toString())
-      nextParams.set("plan", planId)
-      nextParams.set("pkg", nextPkg)
-      if (rush12h) nextParams.set("rush", "1")
-      else nextParams.delete("rush")
+      const nextParams = buildParams({ plan: planId, pkg: nextPkg })
       router.replace(`${pathname}?${nextParams.toString()}`)
       return next
     })
@@ -176,25 +210,20 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     setSelectedServices(nextServices)
     const nextPkg: PackageId = "all"
     setPackageId(nextPkg)
-    const nextParams = new URLSearchParams(sp.toString())
-    nextParams.set("plan", planId)
-    nextParams.set("pkg", nextPkg)
-    if (rush12h) nextParams.set("rush", "1")
-    else nextParams.delete("rush")
+    const nextParams = buildParams({ plan: planId, pkg: nextPkg })
     router.replace(`${pathname}?${nextParams.toString()}`)
   }
 
   function toggleRush(next: boolean) {
     setRush12h(next)
-    const nextParams = new URLSearchParams(sp.toString())
-    nextParams.set("plan", planId)
-    nextParams.set("pkg", packageId)
-    if (next) nextParams.set("rush", "1")
-    else nextParams.delete("rush")
+    const nextParams = buildParams({ plan: planId, pkg: packageId, rush: next })
     router.replace(`${pathname}?${nextParams.toString()}`)
   }
 
-  const totalUsd = pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0)
+  const selectedCount = selectedServices.length
+  const rushBaseFeeUsd =
+    selectedCount >= 2 ? 20 : selectedCount === 1 ? 10 : 0
+  const totalUsd = pkg.priceUsd + (rush12h ? rushBaseFeeUsd : 0)
 
   async function payWithCard() {
     const v = validate()
@@ -314,6 +343,71 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
             />
           </Field>
         </div>
+
+        {selectedServices.includes("resume") ? (
+          <div className="mt-10 rounded-3xl border border-border bg-background/40 p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-bold font-heading tracking-tight">Resume type</h3>
+                <p className="mt-2 text-sm text-muted-foreground font-medium">
+                  Choose how you want your resume handled. This opens the right form.
+                </p>
+              </div>
+              <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <FileText className="h-5 w-5" />
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem(
+                      CHECKOUT_DRAFT_KEY,
+                      JSON.stringify({ customer, planId, packageId, rush12h })
+                    )
+                  } catch {
+                    // ignore
+                  }
+                  const q = new URLSearchParams({ plan: planId, pkg: packageId })
+                  if (rush12h) q.set("rush", "1")
+                  router.push(`/resume-request?${q.toString()}`)
+                }}
+                className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm font-bold text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors text-left"
+              >
+                Resume from scratch
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <FileText className="h-4 w-4" />
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem(
+                      CHECKOUT_DRAFT_KEY,
+                      JSON.stringify({ customer, planId, packageId, rush12h })
+                    )
+                  } catch {
+                    // ignore
+                  }
+                  const q = new URLSearchParams({ plan: planId, pkg: packageId, intent: "revamp" })
+                  if (rush12h) q.set("rush", "1")
+                  router.push(`/resume-revamp?${q.toString()}`)
+                }}
+                className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm font-bold text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors text-left"
+              >
+                Resume revamp
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <PenLine className="h-4 w-4" />
+                </span>
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground font-medium">
+              Your checkout details are saved. Use &ldquo;Back to checkout&rdquo; on the form to return without losing your info.
+            </p>
+          </div>
+        ) : null}
 
         <div className="mt-10">
           <h3 className="text-lg font-bold font-heading tracking-tight">Payment method</h3>
@@ -436,7 +530,8 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                           })
                           const payload = (await res.json()) as { ok?: boolean; error?: string }
                           if (!res.ok || !payload.ok) throw new Error(payload.error ?? "Unable to capture PayPal payment.")
-                          router.push(`/checkout/success?provider=paypal&orderId=${encodeURIComponent(data.orderID)}`)
+                          const intentParam = intent ? `&intent=${encodeURIComponent(intent)}` : ""
+                          router.push(`/checkout/success?provider=paypal&orderId=${encodeURIComponent(data.orderID)}${intentParam}`)
                         } catch (e) {
                           setError(e instanceof Error ? e.message : "PayPal payment failed.")
                         } finally {
@@ -525,10 +620,12 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                     onChange={(e) => toggleRush(e.target.checked)}
                     className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
                   />
-                  <span>
-                    12 hours delivery{" "}
-                    <span className="text-muted-foreground font-bold">(+{money(plan.rush12hFeeUsd)})</span>
-                  </span>
+                    <span>
+                      12 hours delivery{" "}
+                      <span className="text-muted-foreground font-bold">
+                        (+{money(rushBaseFeeUsd)})
+                      </span>
+                    </span>
                 </span>
               </label>
             </div>
@@ -552,7 +649,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
           {rush12h ? (
             <div className="mt-1 flex items-center justify-between text-xs font-semibold text-muted-foreground">
               <span>12 hours</span>
-              <span>+{money(plan.rush12hFeeUsd)}</span>
+              <span>+{money(rushBaseFeeUsd)}</span>
             </div>
           ) : null}
           <div className="mt-4 border-t border-border/70 pt-4 flex items-center justify-between">

@@ -18,6 +18,10 @@ const services = [
         icon: FileText,
         colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
         accent: "primary",
+        action: {
+            label: "Resume from scratch",
+            href: "/resume-request",
+        },
     },
     {
         title: "Resume Revamp",
@@ -25,6 +29,10 @@ const services = [
         icon: Edit,
         colSpan: "col-span-1",
         accent: "accent-warm",
+        action: {
+            label: "Order resume revamp",
+            href: "/checkout?plan=entry&pkg=resume&intent=revamp",
+        },
     },
     {
         title: "Cover Letters",
@@ -122,7 +130,19 @@ export function Services() {
                                 </p>
                             </div>
 
-                            <div className="mt-8 flex items-center justify-end text-sm font-medium pt-8 border-t border-border/50">
+                            <div className="mt-8 flex items-center justify-between text-sm font-medium pt-8 border-t border-border/50">
+                                {service.action ? (
+                                    <Link
+                                        href={service.action.href}
+                                        className="text-sm font-semibold text-foreground hover:text-primary transition-colors"
+                                    >
+                                        {service.action.label}
+                                    </Link>
+                                ) : (
+                                    <span className="text-xs text-muted-foreground">
+                                        View details
+                                    </span>
+                                )}
                                 <div className={cn(
                                     "h-8 w-8 rounded-full border border-border flex items-center justify-center transition-all",
                                     service.accent === "primary" && "group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground",

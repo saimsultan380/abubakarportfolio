@@ -142,6 +142,7 @@ export default function PricingPage() {
                 if (!pkg) return null
                 const Icon = p.icon
                 const isAll = p.id === "all"
+                const hasResume = pkg.includes.some((inc) => inc.toLowerCase().includes("resume"))
                 return (
                   <div
                     key={p.id}
@@ -185,13 +186,32 @@ export default function PricingPage() {
                       ))}
                     </div>
 
-                    <Link
-                      href={`/checkout?plan=${plan.id}&pkg=${pkg.id}`}
-                      className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
-                    >
-                      Order Now
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    {hasResume ? (
+                      <div className="mt-6 grid grid-cols-1 gap-2">
+                        <Link
+                          href={`/resume-request?plan=${plan.id}&pkg=${pkg.id}`}
+                          className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border bg-background/70 px-6 text-sm font-semibold text-foreground hover:border-primary/40 hover:bg-muted/40 transition-colors"
+                        >
+                          Resume from scratch
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                        <Link
+                          href={`/checkout?plan=${plan.id}&pkg=${pkg.id}&intent=revamp`}
+                          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+                        >
+                          Resume revamp
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
+                    ) : (
+                      <Link
+                        href={`/checkout?plan=${plan.id}&pkg=${pkg.id}`}
+                        className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+                      >
+                        Order Now
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    )}
                   </div>
                 )
               })}

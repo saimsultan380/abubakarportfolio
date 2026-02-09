@@ -42,19 +42,19 @@ export function HeroVisual() {
 
           {/* Name & Title */}
           <div className="flex-1 min-w-0 pt-1">
+            <h3 className="text-xl sm:text-2xl font-bold font-heading text-foreground tracking-tight">
+              Muhammad Abu Bakar
+            </h3>
             <a
               href="https://www.linkedin.com/in/muhammad-abubakar-resumewriter?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center sm:justify-start gap-2 text-2xl font-bold font-heading text-foreground tracking-tight hover:text-primary transition-colors"
-              aria-label="Open Abubakar LinkedIn profile"
+              className="inline-flex items-center justify-center sm:justify-start gap-2 mt-0.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+              aria-label="Open LinkedIn profile"
             >
-              Muhammad Abu Bakar
-              <Linkedin className="h-5 w-5 text-primary" />
+              <span>Expert Writing Head</span>
+              <Linkedin className="h-4 w-4 shrink-0 text-primary" />
             </a>
-            <p className="text-sm font-semibold text-primary mt-0.5">
-              Expert Writing Head
-            </p>
             <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
@@ -63,19 +63,16 @@ export function HeroVisual() {
                 />
               ))}
               <span className="text-[10px] font-medium text-muted-foreground ml-1">
-                (500+ Hired)
+                Top Rated
               </span>
             </div>
           </div>
         </div>
 
-        {/* Divider with simple gradient */}
-        <div className="my-6 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
-        {/* Intro/Bio */}
-        <div className="relative z-10">
-          <p className="text-sm sm:text-[15px] text-muted-foreground leading-relaxed font-medium">
-            Certified Professional Resume Writer | LinkedIn Optimization Specialist | Cover Letter Expert | ATS-Compliant Resume Creator | Executive Career Branding | Job-Winning Resume Writer
+        {/* Credentials headline */}
+        <div className="relative z-10 mt-5">
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-medium">
+            Certified Professional Resume Writer · LinkedIn Optimization Specialist · Cover Letter Expert · ATS-Compliant Creator · Executive Career Branding · Job-Winning Resumes
           </p>
         </div>
 
