@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     siteName: 'Resumes Uplift',
     images: [
       {
-        url: '/brand/logo-new.png',
+        url: '/brand/new%20logo.png',
         width: 1200,
         height: 630,
         alt: 'Resumes Uplift - Professional Resume & CV Writing Service',
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ATS-Optimized Resumes & CVs That Land You Interviews',
     description: 'Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.',
-    images: ['/brand/logo-new.png'],
+    images: ['/brand/new%20logo.png'],
   },
   robots: {
     index: true,
@@ -77,19 +77,19 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    shortcut: ['/brand/logo-new.png'],
+    shortcut: ['/brand/new%20logo.png'],
     icon: [
-      { url: '/brand/logo-new.png', sizes: '32x32', type: 'image/png' },
-      { url: '/brand/logo-new.png', sizes: '16x16', type: 'image/png' },
+      { url: '/brand/new%20logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/brand/new%20logo.png', sizes: '16x16', type: 'image/png' },
     ],
     apple: [
-      { url: '/brand/logo-new.png' },
-      { url: '/brand/logo-new.png', sizes: '180x180', type: 'image/png' },
+      { url: '/brand/new%20logo.png' },
+      { url: '/brand/new%20logo.png', sizes: '180x180', type: 'image/png' },
     ],
     other: [
       {
         rel: 'apple-touch-icon-precomposed',
-        url: '/brand/logo-new.png',
+        url: '/brand/new%20logo.png',
       },
     ],
   },
@@ -153,7 +153,7 @@ export default function RootLayout({
                   "@id": "https://www.resumesuplift.com/#organization",
                   "name": "Resumes Uplift",
                   "url": "https://www.resumesuplift.com",
-                  "logo": "https://www.resumesuplift.com/brand/logo-new.png",
+                  "logo": "https://www.resumesuplift.com/brand/new%20logo.png",
                   "email": "resumesuplift@gmail.com",
                   "description": "Professional resume and CV writing service helping job seekers create ATS-optimized resumes that land interviews.",
                   "sameAs": []

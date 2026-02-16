@@ -149,18 +149,16 @@ export function Navbar() {
                         {/* Logo */}
                         <Link
                             href="/"
-                            className="group flex items-center gap-2.5 text-xl font-bold tracking-tight text-foreground nav-desktop-item"
+                            className="group flex items-center gap-3 text-xl font-bold tracking-tight text-foreground nav-desktop-item"
                         >
-                            <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
-                                <Image
-                                    src="/brand/logo-new.png"
-                                    alt="Resumes Uplift logo"
-                                    width={40}
-                                    height={40}
-                                    className="h-7 w-7 object-contain"
-                                    priority
-                                />
-                            </div>
+                            <Image
+                                src="/brand/new%20logo.png"
+                                alt="Resumes Uplift logo"
+                                width={56}
+                                height={56}
+                                className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
+                                priority
+                            />
                             <span>Resumes <span className="text-primary">Uplift</span></span>
                         </Link>
 
@@ -217,18 +215,16 @@ export function Navbar() {
                     <Link
                         href="/"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-foreground"
+                        className="flex items-center gap-3 text-xl font-bold tracking-tight text-foreground"
                     >
-                        <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
-                            <Image
-                                src="/brand/logo-new.png"
-                                alt="Resumes Uplift logo"
-                                width={40}
-                                height={40}
-                                className="h-7 w-7 object-contain"
-                                priority
-                            />
-                        </div>
+                        <Image
+                            src="/brand/new%20logo.png"
+                            alt="Resumes Uplift logo"
+                            width={56}
+                            height={56}
+                            className="h-12 w-auto object-contain"
+                            priority
+                        />
                         <span>Resumes <span className="text-primary">Uplift</span></span>
                     </Link>
                     <button

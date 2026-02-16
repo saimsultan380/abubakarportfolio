@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
 
 export function Footer() {
@@ -62,8 +63,17 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Middle: Big Text — shrinkable on small viewports */}
-          <div className="flex-1 min-h-[60px] flex items-center justify-center py-6 md:py-12 shrink">
+          {/* Middle: Logo + Big Text — shrinkable on small viewports */}
+          <div className="flex-1 min-h-[60px] flex flex-col items-center justify-center py-6 md:py-12 shrink gap-4">
+            <Link href="/" className="block transition-transform hover:scale-105">
+              <Image
+                src="/brand/new%20logo.png"
+                alt="Resumes Uplift"
+                width={120}
+                height={120}
+                className="h-16 w-auto sm:h-20 md:h-24 object-contain"
+              />
+            </Link>
             <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-primary hover:scale-105 max-w-full">
               Resumes Uplift
             </h1>

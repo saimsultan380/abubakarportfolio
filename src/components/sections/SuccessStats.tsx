@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Linkedin, Star, CheckCircle2 } from "lucide-react";
 
 export function SuccessStats() {
@@ -28,12 +29,13 @@ export function SuccessStats() {
 
               {/* Main Image Container */}
               <div className="relative flex-1 w-full h-full flex items-center justify-center mt-16 lg:mt-0">
-                 <div className="relative w-full max-w-md aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-background rotate-[-2deg] hover:rotate-0 transition-transform duration-700">
-                    <img
-                      src="https://www.resumeground.com/images/resume.webp"
-                      alt="Professional resume example"
-                      className="h-full w-full object-cover"
-                      loading="lazy"
+                 <div className="relative w-full max-w-md aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-background rotate-[-2deg] hover:rotate-0 transition-transform duration-700 bg-muted/50">
+                    <Image
+                      src="/brand/success%20image.jpeg"
+                      alt="Your Career, Your Story — Unforgettable - Resumes Uplift"
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute bottom-6 left-6 right-6 text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]">
                         <div className="flex gap-1 mb-2">

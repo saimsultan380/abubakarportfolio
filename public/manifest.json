@@ -9,13 +9,13 @@
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "/brand/logo-new.png",
+            "src": "/brand/new%20logo.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "/brand/logo-new.png",
+            "src": "/brand/new%20logo.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
@@ -34,7 +34,7 @@
             "url": "/samples",
             "icons": [
                 {
-                    "src": "/brand/logo-new.png",
+                    "src": "/brand/new%20logo.png",
                     "sizes": "96x96"
                 }
             ]

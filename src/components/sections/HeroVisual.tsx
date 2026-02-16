@@ -72,7 +72,9 @@ export function HeroVisual() {
         {/* Credentials headline */}
         <div className="relative z-10 mt-5">
           <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-medium">
-            Certified Professional Resume Writer · LinkedIn Optimization Specialist · Cover Letter Expert · ATS-Compliant Creator · Executive Career Branding · Job-Winning Resumes
+            Certified Professional Resume Writer · LinkedIn Optimization
+            Specialist · Cover Letter Expert · ATS-Compliant Creator · Executive
+            Career Branding · Job-Winning Resumes
           </p>
         </div>
 
