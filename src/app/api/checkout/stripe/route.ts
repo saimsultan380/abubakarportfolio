@@ -2,6 +2,7 @@ import Stripe from "stripe"
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { getPlanById, packageAmountCents, getPlanPackageById } from "@/lib/plans"
+import { getCouponDiscountUsd } from "@/lib/coupons"
 
 export const runtime = "nodejs"
 
@@ -19,6 +20,7 @@ type StripeCheckoutBody = {
   planId?: string
   packageId?: string
   rush12h?: boolean
+  couponCode?: string
   customer?: {
     fullName?: string
     email?: string
@@ -68,7 +70,8 @@ export async function POST(req: Request) {
 
     const rush12h = Boolean(body.rush12h)
     const rushFee = rush12h ? Math.round(plan.rush12hFeeUsd * 100) : 0
-    const amount = baseAmount + rushFee
+    const discountCents = Math.round(getCouponDiscountUsd(body.couponCode) * 100)
+    const amount = Math.max(50, baseAmount + rushFee - discountCents)
 
     const customerEmail = body.customer?.email?.toString().trim() ?? ""
     if (!customerEmail) {

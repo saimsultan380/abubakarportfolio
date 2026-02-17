@@ -144,7 +144,7 @@ export function Navbar() {
                         : "py-6 bg-transparent"
                 )}
             >
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto pl-5 pr-5 sm:pl-6 sm:pr-6 md:pl-8 md:pr-8">
                     <nav className="flex items-center justify-between">
                         {/* Logo */}
                         <Link

@@ -32,13 +32,13 @@ export function Hero() {
     }, { scope: containerRef })
 
     return (
-        <section ref={containerRef} className="relative pt-40 pb-20 md:pt-36 md:pb-32 lg:pt-44 overflow-hidden bg-background">
+        <section ref={containerRef} className="relative pt-40 pb-20 md:pt-36 md:pb-32 lg:pt-44 overflow-x-hidden overflow-y-visible bg-background">
             {/* Mesh Gradients */}
             <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] bg-primary/20 blur-[120px] rounded-full mix-blend-multiply opacity-20 animate-pulse" />
             <div className="absolute bottom-0 left-0 -z-10 h-[500px] w-[500px] bg-accent-cool/20 blur-[100px] rounded-full mix-blend-multiply opacity-30" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[400px] w-[400px] bg-accent-warm/15 blur-[100px] rounded-full mix-blend-multiply opacity-40" />
 
-            <div className="container px-4 mx-auto">
+            <div className="container mx-auto pl-5 pr-5 sm:pl-6 sm:pr-6 md:pl-8 md:pr-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                     {/* Left Column: Text */}

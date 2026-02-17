@@ -5,7 +5,7 @@ import { CheckCircle2, Linkedin, Star } from "lucide-react";
 
 export function HeroVisual() {
   return (
-    <div className="relative w-full max-w-[500px] mx-auto perspective-[1000px] group">
+    <div className="relative w-full max-w-[500px] mx-auto lg:ml-auto lg:mr-0 perspective-[1000px] group">
       {/* Background Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/20 blur-[100px] rounded-full opacity-50 pointer-events-none group-hover:opacity-70 transition-opacity duration-700" />
 
@@ -42,7 +42,7 @@ export function HeroVisual() {
 
           {/* Name & Title */}
           <div className="flex-1 min-w-0 pt-1">
-            <h3 className="text-xl sm:text-2xl font-bold font-heading text-foreground tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-bold font-heading text-foreground tracking-tight transition-colors hover:text-primary cursor-default">
               Muhammad Abu Bakar
             </h3>
             <a

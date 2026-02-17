@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { getPlanById, getPlanPackageById } from "@/lib/plans"
+import { getCouponDiscountUsd } from "@/lib/coupons"
 import { getPayPalAccessToken, getPayPalBaseUrl } from "@/lib/paypal"
 
 export const runtime = "nodejs"
@@ -8,6 +9,7 @@ type CreateOrderBody = {
   planId?: string
   packageId?: string
   rush12h?: boolean
+  couponCode?: string
   customer?: {
     fullName?: string
     email?: string
@@ -35,7 +37,8 @@ export async function POST(req: Request) {
     }
 
     const rush12h = Boolean(body.rush12h)
-    const totalUsd = pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0)
+    const discountUsd = getCouponDiscountUsd(body.couponCode)
+    const totalUsd = Math.max(0.01, pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0) - discountUsd)
 
     const customerEmail = body.customer?.email?.toString().trim() ?? ""
     if (!customerEmail) {

@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <div className="relative min-h-[480px] h-[min(800px,85vh)] md:min-h-[560px] md:h-[min(900px,88vh)]">
       <footer className="fixed bottom-0 left-0 right-0 w-full min-h-[480px] h-[min(800px,85vh)] md:min-h-[560px] md:h-[min(900px,88vh)] max-h-[95vh] bg-[#050505] text-[#e1e1e1] overflow-y-auto overflow-x-hidden">
-        <div className="min-h-full flex flex-col justify-between px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-12 gap-6 md:gap-8">
+        <div className="min-h-full flex flex-col justify-between pl-5 pr-5 sm:pl-6 sm:pr-6 md:pl-12 md:pr-12 py-6 sm:py-8 md:py-12 gap-6 md:gap-8">
           
           {/* Top Section: Nav & Links */}
           <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-6 shrink-0">
@@ -20,7 +20,7 @@ export function Footer() {
                   resumesuplift@gmail.com
                   <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
-                <a href="tel:+447478564745" className="text-lg sm:text-xl md:text-2xl lg:text-3xl hover:text-primary transition-colors flex items-center gap-2 md:gap-3 group">
+                <a href="https://wa.me/447478564745" target="_blank" rel="noopener noreferrer" className="text-lg sm:text-xl md:text-2xl lg:text-3xl hover:text-primary transition-colors flex items-center gap-2 md:gap-3 group">
                   +44 7478 564745
                   <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
@@ -54,9 +54,14 @@ export function Footer() {
                     </a>
                   </li>
                   <li>
-                    <Link href="#" className="text-base md:text-lg hover:text-primary transition-colors">
-                      Instagram
-                    </Link>
+                    <a
+                      href="https://www.facebook.com/share/1BAfxAm5tK/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-base md:text-lg hover:text-primary transition-colors"
+                    >
+                      Facebook
+                    </a>
                   </li>
                 </ul>
               </div>

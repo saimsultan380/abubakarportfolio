@@ -3,11 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { cn } from "@/lib/utils"
 import { getPlanPackage, type PackageId, type PricingPlan, type PlanId } from "@/lib/plans"
+import { getCouponDiscountUsd } from "@/lib/coupons"
 import { Lock, ShieldCheck, FileText, PenLine } from "lucide-react"
-import { MastercardLogo, PaypalLogo, VisaLogo } from "./PaymentIcons"
+import { MastercardLogo, VisaLogo } from "./PaymentIcons"
 
 type Props = {
   initialPlanId: PlanId
@@ -15,7 +15,7 @@ type Props = {
   plans: PricingPlan[]
 }
 
-type PaymentMethod = "card" | "paypal"
+type PaymentMethod = "card" | "direct"
 type ResumeIntent = "revamp" | "scratch" | ""
 
 const CHECKOUT_DRAFT_KEY = "resumes_uplift_checkout_draft"
@@ -98,8 +98,10 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     if (raw === "revamp" || raw === "scratch") return raw
     return ""
   })
+  const [couponCode, setCouponCode] = React.useState("")
+  const couponDiscountUsd = React.useMemo(() => getCouponDiscountUsd(couponCode), [couponCode])
 
-  const [method, setMethod] = React.useState<PaymentMethod>("card")
+  const [method, setMethod] = React.useState<PaymentMethod>("direct")
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
 
@@ -220,10 +222,9 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     router.replace(`${pathname}?${nextParams.toString()}`)
   }
 
-  const selectedCount = selectedServices.length
-  const rushBaseFeeUsd =
-    selectedCount >= 2 ? 20 : selectedCount === 1 ? 10 : 0
-  const totalUsd = pkg.priceUsd + (rush12h ? rushBaseFeeUsd : 0)
+  const rushFeeUsd = rush12h ? plan.rush12hFeeUsd : 0
+  const subtotalUsd = pkg.priceUsd + rushFeeUsd
+  const totalUsd = Math.max(0, subtotalUsd - couponDiscountUsd)
 
   async function payWithCard() {
     const v = validate()
@@ -237,7 +238,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
       const res = await fetch("/api/checkout/stripe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ planId, packageId, rush12h, customer }),
+        body: JSON.stringify({ planId, packageId, rush12h, customer, couponCode: couponCode.trim() || undefined }),
       })
       const data = (await res.json()) as { url?: string; error?: string }
       if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start card checkout.")
@@ -248,9 +249,6 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
       setIsSubmitting(false)
     }
   }
-
-  const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? ""
-  type PayPalApproveData = { orderID: string }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -415,10 +413,10 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
           <div className="mt-4 flex flex-col gap-3">
             <label
               className={cn(
-                "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
+                "relative flex items-center justify-between rounded-xl border p-4 transition-all duration-300",
                 method === "card"
                   ? "border-primary bg-primary/5 ring-1 ring-primary"
-                  : "border-border bg-background"
+                  : "border-border bg-background opacity-60 cursor-not-allowed pointer-events-none"
               )}
             >
               <div className="flex items-center gap-3">
@@ -427,7 +425,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                   name="payment_method"
                   value="card"
                   checked={method === "card"}
-                  onChange={() => setMethod("card")}
+                  disabled
                   className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
                 />
                 <div className="text-sm font-bold text-foreground">Pay with Card</div>
@@ -441,7 +439,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
             <label
               className={cn(
                 "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
-                method === "paypal"
+                method === "direct"
                   ? "border-primary bg-primary/5 ring-1 ring-primary"
                   : "border-border bg-background"
               )}
@@ -450,16 +448,63 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                 <input
                   type="radio"
                   name="payment_method"
-                  value="paypal"
-                  checked={method === "paypal"}
-                  onChange={() => setMethod("paypal")}
+                  value="direct"
+                  checked={method === "direct"}
+                  onChange={() => setMethod("direct")}
                   className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
                 />
-                <div className="text-sm font-bold text-foreground">PayPal</div>
+                <div className="text-sm font-bold text-foreground">Pay directly (Zelle, Apple Pay, Google Pay, PayPal)</div>
               </div>
-              <PaypalLogo className="h-5 w-auto" />
             </label>
           </div>
+
+          {method === "direct" && (
+            <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5 space-y-4">
+              <p className="text-sm text-foreground font-medium">
+                Thanks for trusting Resumes Uplift Services.
+              </p>
+              <p className="text-sm text-foreground font-medium">
+                To proceed, please complete the payment of <span className="font-bold text-primary">{money(totalUsd)}</span> using any of the methods below.
+                If you applied a coupon, please pay the discounted amount shown for your selected package.
+              </p>
+              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-4">Payment methods</p>
+              <ul className="space-y-2 text-sm font-medium text-foreground">
+                <li><span className="text-muted-foreground">Zelle:</span> shopwise@letshopdeals.com</li>
+                <li><span className="text-muted-foreground">Apple Pay:</span> +1 (916) 860-6134</li>
+                <li><span className="text-muted-foreground">Google Pay:</span> Zunairkhalid.zk@gmail.com</li>
+                <li><span className="text-muted-foreground">PayPal:</span> waseemhaiderjatoi@gmail.com <span className="text-muted-foreground text-xs">(Please send as Friends & Family)</span></li>
+              </ul>
+              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-4">Payment confirmation</p>
+              <p className="text-sm text-foreground font-medium">
+                Once the payment is completed, please send a screenshot of the transaction on WhatsApp and mention the sender name used for the payment.
+              </p>
+              <p className="text-sm text-foreground font-medium">
+                WhatsApp: +44 7478 564745
+              </p>
+              <p className="text-sm text-muted-foreground font-medium">
+                Your order will be started once payment is verified. You will be contacted via WhatsApp or LinkedIn for further details about your project.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  const v = validate()
+                  if (v) {
+                    setError(v)
+                    return
+                  }
+                  setError(null)
+                  const params = new URLSearchParams()
+                  params.set("provider", "direct")
+                  params.set("amount", totalUsd.toFixed(2))
+                  if (intent) params.set("intent", intent)
+                  router.push(`/checkout/success?${params.toString()}`)
+                }}
+                className="w-full h-12 rounded-2xl bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all flex items-center justify-center gap-2 mt-4"
+              >
+                Confirm order & get payment details
+              </button>
+            </div>
+          )}
 
           {error && (
             <div className="mt-5 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm font-semibold text-red-600 dark:text-red-400">
@@ -487,66 +532,6 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
             </div>
           )}
 
-          {method === "paypal" && (
-            <div className="mt-6">
-              {!paypalClientId ? (
-                <div className="rounded-2xl border border-border bg-background/40 p-4 text-sm text-muted-foreground font-semibold">
-                  PayPal is not configured yet. Add <code className="font-mono">NEXT_PUBLIC_PAYPAL_CLIENT_ID</code> to your environment.
-                </div>
-              ) : (
-                <PayPalScriptProvider options={{ clientId: paypalClientId, currency: "USD", intent: "capture" }}>
-                  <div className="rounded-2xl border border-border bg-background/40 p-4">
-                    <PayPalButtons
-                      style={{ layout: "vertical", shape: "rect" }}
-                      disabled={isSubmitting}
-                      createOrder={async () => {
-                        const v = validate()
-                        if (v) {
-                          setError(v)
-                          throw new Error(v)
-                        }
-                        setError(null)
-                        setIsSubmitting(true)
-                        try {
-                          const res = await fetch("/api/checkout/paypal/create-order", {
-                            method: "POST",
-                            headers: { "content-type": "application/json" },
-                            body: JSON.stringify({ planId, packageId, rush12h, customer }),
-                          })
-                          const data = (await res.json()) as { orderId?: string; error?: string }
-                          if (!res.ok || !data.orderId) throw new Error(data.error ?? "Unable to create PayPal order.")
-                          return data.orderId
-                        } finally {
-                          setIsSubmitting(false)
-                        }
-                      }}
-                      onApprove={async (data: PayPalApproveData) => {
-                        setIsSubmitting(true)
-                        try {
-                          const res = await fetch("/api/checkout/paypal/capture-order", {
-                            method: "POST",
-                            headers: { "content-type": "application/json" },
-                            body: JSON.stringify({ orderId: data.orderID }),
-                          })
-                          const payload = (await res.json()) as { ok?: boolean; error?: string }
-                          if (!res.ok || !payload.ok) throw new Error(payload.error ?? "Unable to capture PayPal payment.")
-                          const intentParam = intent ? `&intent=${encodeURIComponent(intent)}` : ""
-                          router.push(`/checkout/success?provider=paypal&orderId=${encodeURIComponent(data.orderID)}${intentParam}`)
-                        } catch (e) {
-                          setError(e instanceof Error ? e.message : "PayPal payment failed.")
-                        } finally {
-                          setIsSubmitting(false)
-                        }
-                      }}
-                      onError={(err: unknown) => {
-                        setError(err instanceof Error ? err.message : "PayPal error.")
-                      }}
-                    />
-                  </div>
-                </PayPalScriptProvider>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
@@ -623,7 +608,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                     <span>
                       12 hours delivery{" "}
                       <span className="text-muted-foreground font-bold">
-                        (+{money(rushBaseFeeUsd)})
+                        (+{money(plan.rush12hFeeUsd)})
                       </span>
                     </span>
                 </span>
@@ -648,13 +633,34 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
           </div>
           {rush12h ? (
             <div className="mt-1 flex items-center justify-between text-xs font-semibold text-muted-foreground">
-              <span>12 hours</span>
-              <span>+{money(rushBaseFeeUsd)}</span>
+              <span>Express 12 hours</span>
+              <span>+{money(plan.rush12hFeeUsd)}</span>
             </div>
           ) : null}
-          <div className="mt-4 border-t border-border/70 pt-4 flex items-center justify-between">
-            <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Total</div>
-            <div className="text-lg font-bold">{money(totalUsd)}</div>
+          <div className="mt-3">
+            <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Coupon</label>
+            <input
+              type="text"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              placeholder="Code"
+              className={cn(inputClass, "mt-1.5")}
+            />
+            {couponDiscountUsd > 0 && (
+              <p className="mt-1 text-xs font-semibold text-primary">−{money(couponDiscountUsd)} applied</p>
+            )}
+          </div>
+          <div className="mt-4 border-t border-border/70 pt-4 space-y-1">
+            {couponDiscountUsd > 0 && (
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Subtotal</span>
+                <span>{money(subtotalUsd)}</span>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Total</div>
+              <div className="text-lg font-bold">{money(totalUsd)}</div>
+            </div>
           </div>
         </div>
 

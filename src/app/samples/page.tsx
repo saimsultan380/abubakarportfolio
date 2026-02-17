@@ -8,15 +8,11 @@ import Image from "next/image";
 const samples = [
   { id: 1, name: "Sample Resume 1", filename: "Resumes Uplift Sample 1.jpg", type: "JPG" },
   { id: 2, name: "Sample Resume 2", filename: "Resumes Uplift Sample 2.jpg", type: "JPG" },
-  { id: 3, name: "Sample Resume 3", filename: "Resumes Uplift Sample 3.jpg", type: "JPG" },
-  { id: 4, name: "Sample Resume 4", filename: "Resumes Uplift Sample 4.jpg", type: "JPG" },
-  { id: 5, name: "Sample Resume 5", filename: "Resumes Uplift Sample 5.jpg", type: "JPG" },
-  { id: 6, name: "Sample Resume 6", filename: "Resumes Uplift Sample 6.jpeg", type: "JPEG" },
-  { id: 7, name: "Sample Resume 7", filename: "Resumes Uplift Sample 7.jpeg", type: "JPEG" },
-  { id: 8, name: "Sample Resume 8", filename: "Resumes Uplift Sample 8.jpeg", type: "JPEG" },
-  { id: 9, name: "Sample Resume 9", filename: "Resumes Uplift Sample 9.jpeg", type: "JPEG" },
-  { id: 10, name: "Sample Resume 10", filename: "Resumes Uplift Sample 10.jpeg", type: "JPEG" },
-  { id: 11, name: "Sample Resume 11", filename: "Resumes Uplift Sample 11.jpeg", type: "JPEG" },
+  { id: 3, name: "Sample Resume 3", filename: "Resumes Uplift Sample 6.jpeg", type: "JPEG" },
+  { id: 4, name: "Sample Resume 4", filename: "Resumes Uplift Sample 8.jpeg", type: "JPEG" },
+  { id: 5, name: "Sample Resume 5", filename: "Resumes Uplift Sample 9.jpeg", type: "JPEG" },
+  { id: 6, name: "Sample Resume 6", filename: "Resumes Uplift Sample 10.jpeg", type: "JPEG" },
+  { id: 7, name: "Sample Resume 7", filename: "Resumes Uplift Sample 11.jpeg", type: "JPEG" },
 ];
 
 // Modal Gallery Component

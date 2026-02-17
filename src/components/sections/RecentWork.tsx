@@ -112,7 +112,7 @@ export function RecentWork() {
                   href="#contact"
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-orange-600 px-8 text-base font-bold text-white shadow-lg shadow-orange-600/20 hover:bg-orange-700 hover:scale-105 active:scale-95 transition-all duration-300"
                 >
-                  Get My Audit
+                  Get My Free Audit
                   <ArrowRight className="h-5 w-5" />
                 </a>
               </div>

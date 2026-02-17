@@ -64,7 +64,7 @@ export default function PricingPage() {
         </div>
 
         {/* Level switcher */}
-        <div className="relative flex flex-wrap items-center justify-center gap-2 mb-10">
+        <div className="relative flex flex-wrap items-center justify-center gap-2 mb-6 sm:mb-8">
           {PLANS.map((p) => (
             <button
               key={p.id}
@@ -82,61 +82,56 @@ export default function PricingPage() {
           ))}
         </div>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-          {/* Plan summary */}
-          <aside className="lg:col-span-4 rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-7">
-            <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              {plan.name}
-            </div>
-            <h2 className="mt-2 text-2xl font-bold font-heading tracking-tight text-foreground">
-              {plan.description}
-            </h2>
-
-            <div className="mt-5 grid grid-cols-3 gap-2 text-center">
-              <div className="rounded-2xl border border-border bg-background/50 px-3 py-3">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Delivery</div>
-                <div className="mt-1 text-sm font-semibold text-foreground">{plan.deliveryDays} days</div>
+        {/* Plan summary — top bar (was sidebar) */}
+        <aside className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-4 sm:p-5 md:p-6 mb-6 sm:mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                {plan.name}
               </div>
-              <div className="rounded-2xl border border-border bg-background/50 px-3 py-3">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Rush (12h)</div>
-                <div className="mt-1 text-sm font-semibold text-foreground">{money(plan.rush12hFeeUsd)}</div>
+              <h2 className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl font-bold font-heading tracking-tight text-foreground leading-snug">
+                {plan.description}
+              </h2>
+              <div className="mt-4 sm:mt-5 grid grid-cols-3 gap-2 max-w-sm">
+                <div className="rounded-xl sm:rounded-2xl border border-border bg-background/50 px-2 py-2.5 sm:px-3 sm:py-3 text-center">
+                  <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Delivery</div>
+                  <div className="mt-0.5 text-xs sm:text-sm font-semibold text-foreground">{plan.deliveryDays} days</div>
+                </div>
+                <div className="rounded-xl sm:rounded-2xl border border-border bg-background/50 px-2 py-2.5 sm:px-3 sm:py-3 text-center">
+                  <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Rush (12h)</div>
+                  <div className="mt-0.5 text-xs sm:text-sm font-semibold text-foreground">{money(plan.rush12hFeeUsd)}</div>
+                </div>
+                <div className="rounded-xl sm:rounded-2xl border border-border bg-background/50 px-2 py-2.5 sm:px-3 sm:py-3 text-center">
+                  <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Revisions</div>
+                  <div className="mt-0.5 text-xs sm:text-sm font-semibold text-foreground truncate">{plan.revisions}</div>
+                </div>
               </div>
-              <div className="rounded-2xl border border-border bg-background/50 px-3 py-3">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Revisions</div>
-                <div className="mt-1 text-sm font-semibold text-foreground">{plan.revisions}</div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <div className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
-                Base items
-              </div>
-              <div className="space-y-2">
+              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/90">
                 {plan.breakdown.map((b) => (
-                  <div key={b.name} className="flex items-center justify-between gap-3">
-                    <span className="text-sm text-foreground/90">{b.name}</span>
-                    <span className="text-sm font-semibold text-foreground">{money(b.priceUsd)}</span>
-                  </div>
+                  <span key={b.name}>
+                    {b.name} {money(b.priceUsd)}
+                  </span>
                 ))}
               </div>
             </div>
+            <div className="mt-5 lg:mt-0 lg:shrink-0 flex flex-col items-stretch lg:items-end gap-3">
+              <Link
+                href={`/checkout?plan=${plan.id}&pkg=all`}
+                className="inline-flex h-11 sm:h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 sm:px-6 text-xs sm:text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+              >
+                All‑in‑One Checkout
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <p className="text-[11px] sm:text-xs text-muted-foreground text-center lg:text-right">
+                Prefer a smaller service? Choose a package below.
+              </p>
+            </div>
+          </div>
+        </aside>
 
-            <Link
-              href={`/checkout?plan=${plan.id}&pkg=all`}
-              className="mt-7 inline-flex w-full h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
-            >
-              All‑in‑One Checkout
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-
-            <p className="mt-3 text-xs text-muted-foreground text-center">
-              Prefer a smaller service? Choose a package on the right.
-            </p>
-          </aside>
-
-          {/* Packages */}
-          <div className="lg:col-span-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
+        {/* Packages — full width grid */}
+        <div className="relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
               {PACKAGE_ORDER.map((p) => {
                 const pkg = getPlanPackage(plan, p.id)
                 if (!pkg) return null
@@ -216,7 +211,6 @@ export default function PricingPage() {
                 )
               })}
             </div>
-          </div>
         </div>
       </div>
     </section>
