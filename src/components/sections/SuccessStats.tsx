@@ -70,14 +70,14 @@ export function SuccessStats() {
     startOnView: true,
     ref: sectionRef,
   });
-  const interviewsCount = useCountUp(98.5, {
+  const interviewsCount = useCountUp(80, {
     duration: 2000,
-    decimals: 1,
+    decimals: 0,
     suffix: "%",
     startOnView: true,
     ref: sectionRef,
   });
-  const marketsCount = useCountUp(10, {
+  const expertiseCount = useCountUp(100, {
     duration: 2000,
     suffix: "+",
     startOnView: true,
@@ -90,7 +90,7 @@ export function SuccessStats() {
     startOnView: true,
     ref: sectionRef,
   });
-  const deliveryCount = useCountUp(24, {
+  const deliveryCount = useCountUp(12, {
     duration: 2000,
     suffix: "h",
     startOnView: true,
@@ -190,7 +190,7 @@ export function SuccessStats() {
               {/* Stats Grid */}
               <div className="grid grid-cols-2 gap-y-8 gap-x-12 border-t border-border pt-8">
                 <div>
-                  <div className="text-3xl font-black text-foreground mb-1">
+                  <div className="text-3xl font-semibold tracking-tight text-foreground mb-1 tabular-nums">
                     {interviewsCount}
                   </div>
                   <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
@@ -199,16 +199,16 @@ export function SuccessStats() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-foreground mb-1">
-                    {marketsCount}
+                  <div className="text-3xl font-semibold tracking-tight text-foreground mb-1 tabular-nums">
+                    {expertiseCount}
                   </div>
                   <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                     <CheckCircle2 className="w-3 h-3 text-primary" />
-                    Global Markets
+                    Industry Expertise
                   </div>
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-foreground mb-1">
+                  <div className="text-3xl font-semibold tracking-tight text-foreground mb-1 tabular-nums">
                     {ratingCount}
                   </div>
                   <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
@@ -217,7 +217,7 @@ export function SuccessStats() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-foreground mb-1">
+                  <div className="text-3xl font-semibold tracking-tight text-foreground mb-1 tabular-nums">
                     {deliveryCount}
                   </div>
                   <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">

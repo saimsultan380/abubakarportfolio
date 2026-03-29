@@ -106,11 +106,26 @@ export function HowItWorks() {
         setActiveIndex(best)
     }, [])
 
-    const scrollToIndex = React.useCallback((i: number) => {
-        const el = scrollerRef.current
-        const child = el?.children[i] as HTMLElement | undefined
-        child?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
+    /** Scroll only the horizontal track — never scrollIntoView (that scrolls the page and yanks the viewport here). */
+    const scrollCarouselToIndex = React.useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
+        const container = scrollerRef.current
+        const child = container?.children[index] as HTMLElement | undefined
+        if (!container || !child) return
+        const cRect = container.getBoundingClientRect()
+        const chRect = child.getBoundingClientRect()
+        const delta = chRect.left + chRect.width / 2 - (cRect.left + cRect.width / 2)
+        const nextLeft = container.scrollLeft + delta
+        const max = Math.max(0, container.scrollWidth - container.clientWidth)
+        container.scrollTo({ left: Math.max(0, Math.min(nextLeft, max)), behavior })
     }, [])
+
+    function isProcessSectionInView(): boolean {
+        const section = sectionRef.current
+        if (!section) return false
+        const rect = section.getBoundingClientRect()
+        const vh = window.innerHeight
+        return rect.bottom > vh * 0.12 && rect.top < vh * 0.88
+    }
 
     React.useEffect(() => {
         if (!isMobileCarousel) return
@@ -124,20 +139,17 @@ export function HowItWorks() {
     React.useEffect(() => {
         if (!isMobileCarousel) return
         autoSlideRef.current = setInterval(() => {
+            if (!isProcessSectionInView()) return
             setActiveIndex((prev) => {
                 const next = (prev + 1) % steps.length
-                const el = scrollerRef.current
-                const child = el?.children[next] as HTMLElement | undefined
-                requestAnimationFrame(() =>
-                    child?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
-                )
+                requestAnimationFrame(() => scrollCarouselToIndex(next, "smooth"))
                 return next
             })
         }, AUTO_SLIDE_MS)
         return () => {
             if (autoSlideRef.current) clearInterval(autoSlideRef.current)
         }
-    }, [isMobileCarousel])
+    }, [isMobileCarousel, scrollCarouselToIndex])
 
     function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
         if (!isMobileCarousel || e.button !== 0) return
@@ -244,7 +256,7 @@ export function HowItWorks() {
                                 aria-label={`Go to step ${i + 1}`}
                                 onClick={() => {
                                     setActiveIndex(i)
-                                    scrollToIndex(i)
+                                    scrollCarouselToIndex(i, "smooth")
                                 }}
                                 className={cn(
                                     "h-2 rounded-full transition-all duration-300",
