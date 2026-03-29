@@ -18,10 +18,6 @@ const services = [
         icon: FileText,
         colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
         accent: "primary",
-        action: {
-            label: "Resume from scratch",
-            href: "/resume-request",
-        },
     },
     {
         title: "Resume Revamp",
@@ -29,10 +25,6 @@ const services = [
         icon: Edit,
         colSpan: "col-span-1",
         accent: "accent-warm",
-        action: {
-            label: "Order resume revamp",
-            href: "/checkout?plan=entry&pkg=resume&intent=revamp",
-        },
     },
     {
         title: "Cover Letters",
@@ -107,7 +99,7 @@ export function Services() {
                     {services.map((service, index) => (
                         <SpotlightCard
                             key={index}
-                            className={cn(service.colSpan, "service-card p-8 group h-full flex flex-col justify-between")}
+                            className={cn(service.colSpan, "service-card p-8 group h-full flex flex-col")}
                             spotlightColor="rgba(var(--primary-rgb), 0.1)"
                         >
                             <div>
@@ -128,29 +120,6 @@ export function Services() {
                                 <p className="text-muted-foreground leading-relaxed">
                                     {service.description}
                                 </p>
-                            </div>
-
-                            <div className="mt-8 flex items-center justify-between text-sm font-medium pt-8 border-t border-border/50">
-                                {service.action ? (
-                                    <Link
-                                        href={service.action.href}
-                                        className="text-sm font-semibold text-foreground hover:text-primary transition-colors"
-                                    >
-                                        {service.action.label}
-                                    </Link>
-                                ) : (
-                                    <span className="text-xs text-muted-foreground">
-                                        View details
-                                    </span>
-                                )}
-                                <div className={cn(
-                                    "h-8 w-8 rounded-full border border-border flex items-center justify-center transition-all",
-                                    service.accent === "primary" && "group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground",
-                                    service.accent === "accent-warm" && "group-hover:bg-accent-warm group-hover:border-accent-warm group-hover:text-white",
-                                    service.accent === "accent-cool" && "group-hover:bg-accent-cool group-hover:border-accent-cool group-hover:text-white"
-                                )}>
-                                    <ArrowRight className="h-4 w-4 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
-                                </div>
                             </div>
                         </SpotlightCard>
                     ))}
