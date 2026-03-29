@@ -16,10 +16,17 @@ const stripe =
       })
     : null
 
+function parseCheckoutQuantity(raw: unknown): number {
+  const n = typeof raw === "number" ? raw : Number.parseInt(String(raw ?? "1"), 10)
+  if (!Number.isFinite(n) || n < 1) return 1
+  return Math.min(99, Math.floor(n))
+}
+
 type StripeCheckoutBody = {
   planId?: string
   packageId?: string
   rush12h?: boolean
+  quantity?: number
   couponCode?: string
   customer?: {
     fullName?: string
@@ -69,9 +76,12 @@ export async function POST(req: Request) {
     }
 
     const rush12h = Boolean(body.rush12h)
-    const rushFee = rush12h ? Math.round(plan.rush12hFeeUsd * 100) : 0
+    const quantity = parseCheckoutQuantity(body.quantity)
+    const rushFeePerUnit = rush12h ? Math.round(plan.rush12hFeeUsd * 100) : 0
+    const perUnitCents = baseAmount + rushFeePerUnit
+    const grossCents = perUnitCents * quantity
     const discountCents = Math.round(getCouponDiscountUsd(body.couponCode) * 100)
-    const amount = Math.max(50, baseAmount + rushFee - discountCents)
+    const amount = Math.max(50, grossCents - discountCents)
 
     const customerEmail = body.customer?.email?.toString().trim() ?? ""
     if (!customerEmail) {
@@ -91,7 +101,7 @@ export async function POST(req: Request) {
             currency: "usd",
             unit_amount: amount,
             product_data: {
-              name: `${plan.name} — ${pkg.name}${rush12h ? " (12h)" : ""}`,
+              name: `${plan.name} — ${pkg.name}${quantity > 1 ? ` × ${quantity}` : ""}${rush12h ? " (12h / item)" : ""}`,
               description: plan.description,
             },
           },
@@ -101,6 +111,7 @@ export async function POST(req: Request) {
         planId,
         packageId: pkg.id,
         packageName: pkg.name,
+        quantity: String(quantity),
         rush12h: rush12h ? "1" : "0",
         fullName: body.customer?.fullName ?? "",
         phone: body.customer?.phone ?? "",

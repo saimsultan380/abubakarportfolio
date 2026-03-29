@@ -34,34 +34,18 @@ export default function CheckoutSuccessPage({
                 Order confirmed
               </div>
               <h1 className="mt-6 text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight">
-                Complete your payment
+                Next steps
               </h1>
               <p className="mt-4 text-foreground font-medium">
-                Thanks for trusting Resumes Uplift Services.
+                Thank you. Your order total is <span className="font-bold text-primary">{amountDisplay}</span>.
               </p>
-              <p className="mt-2 text-foreground font-medium">
-                To proceed, please complete the payment of <span className="font-bold text-primary">{amountDisplay}</span> using any of the methods below.
-                If you applied a coupon, please pay the discounted amount shown for your selected package.
+              <p className="mt-3 text-sm text-muted-foreground font-medium leading-relaxed">
+                We’ll contact you on WhatsApp shortly with secure payment instructions and to confirm your project
+                details.
               </p>
-              <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5 space-y-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Payment methods</p>
-                <ul className="space-y-2 text-sm font-medium text-foreground">
-                  <li><span className="text-muted-foreground">Zelle:</span> shopwise@letshopdeals.com</li>
-                  <li><span className="text-muted-foreground">Apple Pay:</span> +1 (916) 860-6134</li>
-                  <li><span className="text-muted-foreground">Google Pay:</span> Zunairkhalid.zk@gmail.com</li>
-                  <li><span className="text-muted-foreground">PayPal:</span> waseemhaiderjatoi@gmail.com <span className="text-muted-foreground text-xs">(Please send as Friends & Family)</span></li>
-                </ul>
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground pt-2">Payment confirmation</p>
-                <p className="text-sm text-foreground font-medium">
-                  Once the payment is completed, please send a screenshot of the transaction on WhatsApp and mention the sender name used for the payment.
-                </p>
-                <p className="text-sm text-foreground font-medium">
-                  WhatsApp: +44 7478 564745
-                </p>
-                <p className="text-sm text-muted-foreground font-medium">
-                  Your order will be started once payment is verified. You will be contacted via WhatsApp or LinkedIn for further details about your project.
-                </p>
-              </div>
+              <p className="mt-3 text-sm text-muted-foreground font-medium">
+                If you applied a coupon, use the discounted amount we confirm in that message.
+              </p>
             </>
           ) : (
             <>

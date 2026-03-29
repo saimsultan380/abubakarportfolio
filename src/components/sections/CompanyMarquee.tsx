@@ -4,20 +4,45 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Building2 } from "lucide-react";
 
-// Slugs verified against Simple Icons - use jsDelivr for reliability
-const COMPANIES = [
+/** Some majors were dropped from cdn.simpleicons.org; pin last known SVGs. */
+const SIMPLE_ICONS_PINNED =
+  "https://cdn.jsdelivr.net/npm/simple-icons@10.4.0/icons";
+
+// Slugs verified against Simple Icons (cdn.simpleicons.org). Optional iconUrl when
+// a brand is no longer on the live CDN.
+const COMPANIES: {
+  name: string;
+  slug: string;
+  iconUrl?: string;
+}[] = [
   { name: "Google", slug: "google" },
   { name: "Tesla", slug: "tesla" },
-  { name: "OpenAI", slug: "openai" },
-  { name: "Microsoft", slug: "microsoft" },
-  { name: "Amazon", slug: "amazon" },
+  {
+    name: "OpenAI",
+    slug: "openai",
+    iconUrl: `${SIMPLE_ICONS_PINNED}/openai.svg`,
+  },
+  {
+    name: "Microsoft",
+    slug: "microsoft",
+    iconUrl: `${SIMPLE_ICONS_PINNED}/microsoft.svg`,
+  },
+  {
+    name: "Amazon",
+    slug: "amazon",
+    iconUrl: `${SIMPLE_ICONS_PINNED}/amazon.svg`,
+  },
   { name: "Apple", slug: "apple" },
   { name: "Meta", slug: "meta" },
   { name: "Netflix", slug: "netflix" },
   { name: "Spotify", slug: "spotify" },
   { name: "Uber", slug: "uber" },
   { name: "Airbnb", slug: "airbnb" },
-  { name: "Salesforce", slug: "salesforce" },
+  {
+    name: "Salesforce",
+    slug: "salesforce",
+    iconUrl: `${SIMPLE_ICONS_PINNED}/salesforce.svg`,
+  },
   { name: "IBM", slug: "ibm" },
   { name: "Accenture", slug: "accenture" },
   { name: "Atlassian", slug: "atlassian" },
@@ -33,17 +58,18 @@ const COMPANIES = [
   { name: "SAP", slug: "sap" },
 ];
 
-// Use both CDNs - simpleicons for color, jsDelivr as fallback
-function getIconUrl(slug: string) {
-  return `https://cdn.simpleicons.org/${slug}`;
+function getIconUrl(slug: string, iconUrl?: string) {
+  return iconUrl ?? `https://cdn.simpleicons.org/${slug}`;
 }
 
 function CompanyLogo({
   name,
   slug,
+  iconUrl,
 }: {
   name: string;
   slug: string;
+  iconUrl?: string;
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -55,7 +81,7 @@ function CompanyLogo({
         </div>
       ) : (
         <img
-          src={getIconUrl(slug)}
+          src={getIconUrl(slug, iconUrl)}
           alt={name}
           className="h-8 w-8 object-contain min-w-8 grayscale hover:grayscale-0 opacity-80 hover:opacity-100 transition-all dark:invert dark:opacity-90 dark:hover:opacity-100"
           loading="lazy"

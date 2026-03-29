@@ -24,6 +24,9 @@ export function Footer() {
                   +44 7478 564745
                   <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal normal-case tracking-normal text-inherit">
+                  New York City Metropolitan Area
+                </p>
               </div>
             </div>
 

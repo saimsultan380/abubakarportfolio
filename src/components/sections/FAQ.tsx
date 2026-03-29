@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Plus, X, MessageCircle } from "lucide-react"
+import { Plus, X, MessageCircle, ChevronDown, ChevronUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
@@ -88,9 +88,22 @@ const faqs = [
     },
 ]
 
+const INITIAL_FAQ_COUNT = 4
+
 export function FAQ() {
     const [openIndex, setOpenIndex] = React.useState<number | null>(null)
+    const [showAllFaqs, setShowAllFaqs] = React.useState(false)
     const containerRef = React.useRef<HTMLDivElement>(null)
+    const hasMoreFaqs = faqs.length > INITIAL_FAQ_COUNT
+
+    function toggleShowAllFaqs() {
+        if (showAllFaqs) {
+            setOpenIndex((prev) =>
+                prev !== null && prev >= INITIAL_FAQ_COUNT ? null : prev
+            )
+        }
+        setShowAllFaqs((v) => !v)
+    }
 
     useGSAP(() => {
         // Staggered reveal for FAQ items
@@ -163,7 +176,10 @@ export function FAQ() {
 
                     {/* Right: Accordion List */}
                     <div className="lg:w-2/3 space-y-4">
-                        {faqs.map((faq, index) => (
+                        {faqs.map((faq, index) => {
+                            const isHidden = !showAllFaqs && index >= INITIAL_FAQ_COUNT
+                            if (isHidden) return null
+                            return (
                             <div
                                 key={index}
                                 className={cn(
@@ -207,7 +223,28 @@ export function FAQ() {
                                     </div>
                                 )}
                             </div>
-                        ))}
+                            )
+                        })}
+                        {hasMoreFaqs ? (
+                            <button
+                                type="button"
+                                onClick={toggleShowAllFaqs}
+                                aria-expanded={showAllFaqs}
+                                className="w-full flex items-center justify-center gap-2 rounded-2xl border border-primary/25 bg-primary/5 px-6 py-3.5 text-sm font-bold text-primary transition-colors hover:bg-primary/10 hover:border-primary/40"
+                            >
+                                {showAllFaqs ? (
+                                    <>
+                                        Show less
+                                        <ChevronUp className="h-4 w-4 shrink-0" aria-hidden />
+                                    </>
+                                ) : (
+                                    <>
+                                        Show more ({faqs.length - INITIAL_FAQ_COUNT} questions)
+                                        <ChevronDown className="h-4 w-4 shrink-0" aria-hidden />
+                                    </>
+                                )}
+                            </button>
+                        ) : null}
                     </div>
 
                 </div>

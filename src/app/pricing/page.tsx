@@ -2,17 +2,27 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { PLANS, getPlanPackage, type PackageId, type PlanId } from "@/lib/plans"
+import {
+  PLANS,
+  REVISIONS_ALL_IN_ONE,
+  REVISIONS_PARTIAL_PACKAGE,
+  getPlanPackage,
+  type PackageId,
+  type PlanId,
+} from "@/lib/plans"
 import { ArrowRight, Check, FileText, Linkedin, Sparkles, Layers, FileSignature } from "lucide-react"
 
-const PACKAGE_ORDER: { id: PackageId; icon: React.ElementType }[] = [
-  { id: "cover", icon: FileSignature },
-  { id: "linkedin", icon: Linkedin },
-  { id: "resume", icon: FileText },
-  { id: "cover_linkedin", icon: Layers },
-  { id: "cover_resume", icon: Layers },
-  { id: "all", icon: Sparkles },
-]
+/** 4th card: Resume + LinkedIn; same grid for every tier. */
+function packageOrder(): { id: PackageId; icon: React.ElementType }[] {
+  return [
+    { id: "cover", icon: FileSignature },
+    { id: "linkedin", icon: Linkedin },
+    { id: "resume", icon: FileText },
+    { id: "linkedin_resume", icon: Layers },
+    { id: "cover_resume", icon: Layers },
+    { id: "all", icon: Sparkles },
+  ]
+}
 
 function money(amountUsd: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(amountUsd)
@@ -39,6 +49,12 @@ function planLabel(id: PlanId) {
 export default function PricingPage() {
   const [selected, setSelected] = React.useState<PlanId>("entry")
   const plan = React.useMemo(() => PLANS.find((p) => p.id === selected) ?? PLANS[0], [selected])
+  const breakdownSum = React.useMemo(
+    () => plan.breakdown.reduce((s, b) => s + b.priceUsd, 0),
+    [plan]
+  )
+  const allInOnePrice = plan.priceUsd
+  const bundleSavingsUsd = Math.max(0, breakdownSum - allInOnePrice)
 
   return (
     <section className="min-h-screen pt-24 md:pt-32 pb-16 bg-background relative overflow-hidden">
@@ -82,49 +98,112 @@ export default function PricingPage() {
           ))}
         </div>
 
-        {/* Plan summary — top bar (was sidebar) */}
-        <aside className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-4 sm:p-5 md:p-6 mb-6 sm:mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-            <div className="flex-1 min-w-0">
-              <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                {plan.name}
-              </div>
-              <h2 className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl font-bold font-heading tracking-tight text-foreground leading-snug">
-                {plan.description}
-              </h2>
-              <div className="mt-4 sm:mt-5 grid grid-cols-3 gap-2 max-w-sm">
-                <div className="rounded-xl sm:rounded-2xl border border-border bg-background/50 px-2 py-2.5 sm:px-3 sm:py-3 text-center">
-                  <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Delivery</div>
-                  <div className="mt-0.5 text-xs sm:text-sm font-semibold text-foreground">{plan.deliveryDays} days</div>
+        {/* Plan summary — tier details + All in One total */}
+        <aside className="relative mb-6 sm:mb-8 overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-card shadow-sm shadow-black/5 dark:shadow-black/20">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent" />
+          <div className="relative p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
+              <div className="min-w-0 flex-1 space-y-5">
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-primary sm:text-xs">
+                    {plan.name}
+                  </div>
+                  <h2 className="mt-2 font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl md:text-3xl leading-snug">
+                    {plan.description}
+                  </h2>
                 </div>
-                <div className="rounded-xl sm:rounded-2xl border border-border bg-background/50 px-2 py-2.5 sm:px-3 sm:py-3 text-center">
-                  <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Rush (12h)</div>
-                  <div className="mt-0.5 text-xs sm:text-sm font-semibold text-foreground">{money(plan.rush12hFeeUsd)}</div>
+
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 max-w-lg">
+                  <div className="rounded-2xl border border-border/80 bg-background/60 px-2 py-3 text-center sm:px-3 sm:py-3.5">
+                    <div className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground sm:text-[10px]">
+                      Delivery
+                    </div>
+                    <div className="mt-1 text-sm font-bold text-foreground sm:text-base">
+                      {plan.deliveryDays} days
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-border/80 bg-background/60 px-2 py-3 text-center sm:px-3 sm:py-3.5">
+                    <div className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground sm:text-[10px]">
+                      Rush (12h)
+                    </div>
+                    <div className="mt-1 text-sm font-bold text-foreground sm:text-base">
+                      {money(plan.rush12hFeeUsd)}
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-border/80 bg-background/60 px-2 py-3 text-center sm:px-3 sm:py-3.5">
+                    <div className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground sm:text-[10px]">
+                      Revisions
+                    </div>
+                    <div className="mt-1 text-[10px] font-semibold leading-tight text-foreground sm:text-xs">
+                      <span className="block">{REVISIONS_ALL_IN_ONE}</span>
+                      <span className="mt-0.5 block text-[9px] font-medium text-muted-foreground">
+                        All in One · {REVISIONS_PARTIAL_PACKAGE} others
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="rounded-xl sm:rounded-2xl border border-border bg-background/50 px-2 py-2.5 sm:px-3 sm:py-3 text-center">
-                  <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Revisions</div>
-                  <div className="mt-0.5 text-xs sm:text-sm font-semibold text-foreground truncate">{plan.revisions}</div>
+
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2.5 sm:text-xs">
+                    À la carte (reference)
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {plan.breakdown.map((b) => (
+                      <span
+                        key={b.name}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
+                      >
+                        <span className="max-w-[140px] truncate sm:max-w-none">{b.name}</span>
+                        <span className="text-primary tabular-nums">{money(b.priceUsd)}</span>
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Items total{" "}
+                    <span className="font-semibold text-foreground tabular-nums">{money(breakdownSum)}</span>
+                    {bundleSavingsUsd > 0 ? (
+                      <>
+                        {" "}
+                        · All in One{" "}
+                        <span className="font-semibold text-primary tabular-nums">{money(allInOnePrice)}</span>
+                      </>
+                    ) : null}
+                  </p>
                 </div>
               </div>
-              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/90">
-                {plan.breakdown.map((b) => (
-                  <span key={b.name}>
-                    {b.name} {money(b.priceUsd)}
-                  </span>
-                ))}
+
+              <div className="flex flex-col justify-between gap-5 rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:p-6 lg:max-w-sm lg:flex-1 lg:border-2">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-primary sm:text-xs">
+                    All in One total
+                  </p>
+                  <p className="mt-2 font-heading text-4xl font-bold tracking-tight text-foreground tabular-nums sm:text-5xl">
+                    {money(allInOnePrice)}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-muted-foreground">USD · full bundle checkout</p>
+                  {bundleSavingsUsd > 0 ? (
+                    <p className="mt-3 inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                      Save {money(bundleSavingsUsd)} vs buying items separately
+                    </p>
+                  ) : (
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Includes resume, cover letter &amp; LinkedIn optimization.
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Link
+                    href={`/checkout?plan=${plan.id}&pkg=all`}
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/25 transition-colors hover:bg-primary/90"
+                  >
+                    All‑in‑One Checkout
+                    <ArrowRight className="h-4 w-4 shrink-0" />
+                  </Link>
+                  <p className="text-center text-[11px] text-muted-foreground sm:text-xs">
+                    Prefer a smaller service? Pick a package in the grid below.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="mt-5 lg:mt-0 lg:shrink-0 flex flex-col items-stretch lg:items-end gap-3">
-              <Link
-                href={`/checkout?plan=${plan.id}&pkg=all`}
-                className="inline-flex h-11 sm:h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 sm:px-6 text-xs sm:text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
-              >
-                All‑in‑One Checkout
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <p className="text-[11px] sm:text-xs text-muted-foreground text-center lg:text-right">
-                Prefer a smaller service? Choose a package below.
-              </p>
             </div>
           </div>
         </aside>
@@ -132,7 +211,7 @@ export default function PricingPage() {
         {/* Packages — full width grid */}
         <div className="relative">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-              {PACKAGE_ORDER.map((p) => {
+              {packageOrder().map((p) => {
                 const pkg = getPlanPackage(plan, p.id)
                 if (!pkg) return null
                 const Icon = p.icon
@@ -179,6 +258,14 @@ export default function PricingPage() {
                           {includeLabel(inc)}
                         </span>
                       ))}
+                    </div>
+
+                    <div className="mt-4 border-t border-border/60 pt-4 text-xs font-semibold text-muted-foreground space-y-1">
+                      <p>{plan.deliveryDays} days delivery</p>
+                      <p>
+                        Revisions:{" "}
+                        {isAll ? REVISIONS_ALL_IN_ONE : REVISIONS_PARTIAL_PACKAGE}
+                      </p>
                     </div>
 
                     {hasResume ? (

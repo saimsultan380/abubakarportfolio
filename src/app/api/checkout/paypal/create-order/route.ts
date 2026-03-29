@@ -5,10 +5,17 @@ import { getPayPalAccessToken, getPayPalBaseUrl } from "@/lib/paypal"
 
 export const runtime = "nodejs"
 
+function parseCheckoutQuantity(raw: unknown): number {
+  const n = typeof raw === "number" ? raw : Number.parseInt(String(raw ?? "1"), 10)
+  if (!Number.isFinite(n) || n < 1) return 1
+  return Math.min(99, Math.floor(n))
+}
+
 type CreateOrderBody = {
   planId?: string
   packageId?: string
   rush12h?: boolean
+  quantity?: number
   couponCode?: string
   customer?: {
     fullName?: string
@@ -37,8 +44,10 @@ export async function POST(req: Request) {
     }
 
     const rush12h = Boolean(body.rush12h)
+    const quantity = parseCheckoutQuantity(body.quantity)
     const discountUsd = getCouponDiscountUsd(body.couponCode)
-    const totalUsd = Math.max(0.01, pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0) - discountUsd)
+    const perUnitUsd = pkg.priceUsd + (rush12h ? plan.rush12hFeeUsd : 0)
+    const totalUsd = Math.max(0.01, perUnitUsd * quantity - discountUsd)
 
     const customerEmail = body.customer?.email?.toString().trim() ?? ""
     if (!customerEmail) {
@@ -57,9 +66,9 @@ export async function POST(req: Request) {
         intent: "CAPTURE",
         purchase_units: [
           {
-            reference_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}`,
-            description: `${plan.name} — ${pkg.name}${rush12h ? " (12h)" : ""}`,
-            custom_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}`,
+            reference_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}:q${quantity}`,
+            description: `${plan.name} — ${pkg.name}${quantity > 1 ? ` × ${quantity}` : ""}${rush12h ? " (12h / item)" : ""}`,
+            custom_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}:q${quantity}`,
             amount: {
               currency_code: "USD",
               value: totalUsd.toFixed(2),

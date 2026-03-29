@@ -17,57 +17,62 @@ export type PricingPlan = {
   description: string
   deliveryDays: number
   rush12hFeeUsd: number
-  revisions: string
   breakdown: { name: string; priceUsd: number }[]
   features: string[]
+}
+
+/** Revisions for any package except full All in One */
+export const REVISIONS_PARTIAL_PACKAGE = "2"
+/** Revisions for All in One (all tiers) */
+export const REVISIONS_ALL_IN_ONE = "Unlimited"
+
+export function getRevisionsForPackage(packageId: PackageId): string {
+  return packageId === "all" ? REVISIONS_ALL_IN_ONE : REVISIONS_PARTIAL_PACKAGE
 }
 
 export const PLANS: PricingPlan[] = [
   {
     id: "entry",
     name: "Entry Level",
-    priceUsd: 150,
+    priceUsd: 200,
     currency: "USD",
     description: "Perfect for students, fresh graduates, and early-career professionals",
     deliveryDays: 2,
-    rush12hFeeUsd: 20,
-    revisions: "2",
+    rush12hFeeUsd: 50,
     breakdown: [
-      { name: "Resume", priceUsd: 70 },
-      { name: "Cover Letter", priceUsd: 40 },
-      { name: "LinkedIn Profile Optimization", priceUsd: 40 },
+      { name: "Resume", priceUsd: 100 },
+      { name: "Cover Letter", priceUsd: 50 },
+      { name: "LinkedIn Profile Optimization", priceUsd: 60 },
     ],
     features: ["Resume", "Cover Letter", "LinkedIn Profile Optimization"],
   },
   {
     id: "mid",
     name: "Mid Level",
-    priceUsd: 200,
+    priceUsd: 260,
     currency: "USD",
     description: "Ideal for professionals ready for growth, promotions, and better roles",
-    deliveryDays: 2,
-    rush12hFeeUsd: 40,
-    revisions: "5",
+    deliveryDays: 3,
+    rush12hFeeUsd: 70,
     breakdown: [
-      { name: "Resume", priceUsd: 100 },
-      { name: "Cover Letter", priceUsd: 50 },
-      { name: "LinkedIn Profile Optimization", priceUsd: 50 },
+      { name: "Resume", priceUsd: 130 },
+      { name: "Cover Letter", priceUsd: 70 },
+      { name: "LinkedIn Profile Optimization", priceUsd: 80 },
     ],
     features: ["Resume", "Cover Letter", "LinkedIn Profile Optimization"],
   },
   {
     id: "executive",
     name: "Executive Level",
-    priceUsd: 270,
+    priceUsd: 320,
     currency: "USD",
     description: "Best for managers, directors, and executives who want to lead with authority",
-    deliveryDays: 2,
-    rush12hFeeUsd: 50,
-    revisions: "Unlimited",
+    deliveryDays: 4,
+    rush12hFeeUsd: 100,
     breakdown: [
-      { name: "Resume", priceUsd: 150 },
-      { name: "Cover Letter", priceUsd: 60 },
-      { name: "LinkedIn Profile Optimization", priceUsd: 60 },
+      { name: "Resume", priceUsd: 180 },
+      { name: "Cover Letter", priceUsd: 80 },
+      { name: "LinkedIn Profile Optimization", priceUsd: 90 },
     ],
     features: ["Resume", "Cover Letter", "LinkedIn Profile Optimization"],
   },
@@ -131,7 +136,7 @@ export function getPlanPackage(plan: PricingPlan, packageId: PackageId): PlanPac
     case "linkedin_resume":
       return {
         id: "linkedin_resume",
-        name: "Resume & LinkedIn Profile Optimization",
+        name: "Resume + LinkedIn Optimization",
         priceUsd: linkedin + resume,
         includes: ["LinkedIn Profile Optimization", "Resume"],
       }

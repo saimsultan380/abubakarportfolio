@@ -4,9 +4,16 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { getPlanPackage, type PackageId, type PricingPlan, type PlanId } from "@/lib/plans"
+import {
+  getPlanPackage,
+  getRevisionsForPackage,
+  type PackageId,
+  type PricingPlan,
+  type PlanId,
+} from "@/lib/plans"
 import { getCouponDiscountUsd } from "@/lib/coupons"
-import { Lock, ShieldCheck, FileText, PenLine } from "lucide-react"
+import { SHOW_DIRECT_PAYMENT } from "@/lib/checkout-flags"
+import { Lock, ShieldCheck, FileText, PenLine, Minus, Plus } from "lucide-react"
 import { MastercardLogo, VisaLogo } from "./PaymentIcons"
 
 type Props = {
@@ -33,6 +40,15 @@ type CustomerDetails = {
 
 function money(amountUsd: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amountUsd)
+}
+
+const QTY_MIN = 1
+const QTY_MAX = 99
+
+function parseCheckoutQty(raw: string | null | undefined): number {
+  const n = Number.parseInt(String(raw ?? "1"), 10)
+  if (!Number.isFinite(n) || n < QTY_MIN) return QTY_MIN
+  return Math.min(QTY_MAX, n)
 }
 
 function normalizePackageId(raw: string | null | undefined): PackageId {
@@ -101,7 +117,19 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
   const [couponCode, setCouponCode] = React.useState("")
   const couponDiscountUsd = React.useMemo(() => getCouponDiscountUsd(couponCode), [couponCode])
 
-  const [method, setMethod] = React.useState<PaymentMethod>("direct")
+  const qtyParam = sp.get("qty")
+  const [quantity, setQuantity] = React.useState(() => parseCheckoutQty(qtyParam))
+  React.useEffect(() => {
+    setQuantity(parseCheckoutQty(qtyParam))
+  }, [qtyParam])
+
+  const [method, setMethod] = React.useState<PaymentMethod>(() =>
+    SHOW_DIRECT_PAYMENT ? "direct" : "card"
+  )
+
+  React.useEffect(() => {
+    if (!SHOW_DIRECT_PAYMENT && method === "direct") setMethod("card")
+  }, [method])
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
 
@@ -171,7 +199,13 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     return null
   }
 
-  function buildParams(next: { plan?: PlanId; pkg?: PackageId; rush?: boolean; intent?: ResumeIntent }) {
+  function buildParams(next: {
+    plan?: PlanId
+    pkg?: PackageId
+    rush?: boolean
+    intent?: ResumeIntent
+    qty?: number
+  }) {
     const nextParams = new URLSearchParams(sp.toString())
     if (next.plan) nextParams.set("plan", next.plan)
     if (next.pkg) nextParams.set("pkg", next.pkg)
@@ -181,7 +215,17 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     const intentValue = typeof next.intent === "string" ? next.intent : intent
     if (intentValue) nextParams.set("intent", intentValue)
     else nextParams.delete("intent")
+    const q = typeof next.qty === "number" ? next.qty : quantity
+    if (q > QTY_MIN) nextParams.set("qty", String(q))
+    else nextParams.delete("qty")
     return nextParams
+  }
+
+  function commitQuantity(nextQty: number) {
+    const q = Math.min(QTY_MAX, Math.max(QTY_MIN, Math.round(nextQty)))
+    setQuantity(q)
+    const nextParams = buildParams({ plan: planId, pkg: packageId, qty: q })
+    router.replace(`${pathname}?${nextParams.toString()}`)
   }
 
   function onPlanChange(next: PlanId) {
@@ -222,8 +266,8 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     router.replace(`${pathname}?${nextParams.toString()}`)
   }
 
-  const rushFeeUsd = rush12h ? plan.rush12hFeeUsd : 0
-  const subtotalUsd = pkg.priceUsd + rushFeeUsd
+  const rushPerUnitUsd = rush12h ? plan.rush12hFeeUsd : 0
+  const subtotalUsd = pkg.priceUsd * quantity + rushPerUnitUsd * quantity
   const totalUsd = Math.max(0, subtotalUsd - couponDiscountUsd)
 
   async function payWithCard() {
@@ -238,7 +282,14 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
       const res = await fetch("/api/checkout/stripe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ planId, packageId, rush12h, customer, couponCode: couponCode.trim() || undefined }),
+        body: JSON.stringify({
+          planId,
+          packageId,
+          rush12h,
+          quantity,
+          customer,
+          couponCode: couponCode.trim() || undefined,
+        }),
       })
       const data = (await res.json()) as { url?: string; error?: string }
       if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start card checkout.")
@@ -362,13 +413,14 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                   try {
                     sessionStorage.setItem(
                       CHECKOUT_DRAFT_KEY,
-                      JSON.stringify({ customer, planId, packageId, rush12h })
+                      JSON.stringify({ customer, planId, packageId, rush12h, quantity })
                     )
                   } catch {
                     // ignore
                   }
                   const q = new URLSearchParams({ plan: planId, pkg: packageId })
                   if (rush12h) q.set("rush", "1")
+                  if (quantity > QTY_MIN) q.set("qty", String(quantity))
                   router.push(`/resume-request?${q.toString()}`)
                 }}
                 className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm font-bold text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors text-left"
@@ -384,13 +436,14 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                   try {
                     sessionStorage.setItem(
                       CHECKOUT_DRAFT_KEY,
-                      JSON.stringify({ customer, planId, packageId, rush12h })
+                      JSON.stringify({ customer, planId, packageId, rush12h, quantity })
                     )
                   } catch {
                     // ignore
                   }
                   const q = new URLSearchParams({ plan: planId, pkg: packageId, intent: "revamp" })
                   if (rush12h) q.set("rush", "1")
+                  if (quantity > QTY_MIN) q.set("qty", String(quantity))
                   router.push(`/resume-revamp?${q.toString()}`)
                 }}
                 className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm font-bold text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors text-left"
@@ -416,7 +469,9 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                 "relative flex items-center justify-between rounded-xl border p-4 transition-all duration-300",
                 method === "card"
                   ? "border-primary bg-primary/5 ring-1 ring-primary"
-                  : "border-border bg-background opacity-60 cursor-not-allowed pointer-events-none"
+                  : SHOW_DIRECT_PAYMENT
+                    ? "border-border bg-background opacity-60 cursor-not-allowed pointer-events-none"
+                    : "border-border bg-background"
               )}
             >
               <div className="flex items-center gap-3">
@@ -425,8 +480,9 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                   name="payment_method"
                   value="card"
                   checked={method === "card"}
-                  disabled
-                  className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                  disabled={SHOW_DIRECT_PAYMENT}
+                  onChange={() => setMethod("card")}
+                  className="h-4 w-4 border-gray-300 text-primary focus:ring-primary disabled:opacity-50"
                 />
                 <div className="text-sm font-bold text-foreground">Pay with Card</div>
               </div>
@@ -436,53 +492,43 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
               </div>
             </label>
 
-            <label
-              className={cn(
-                "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
-                method === "direct"
-                  ? "border-primary bg-primary/5 ring-1 ring-primary"
-                  : "border-border bg-background"
-              )}
-            >
-              <div className="flex items-center gap-3">
-                <input
-                  type="radio"
-                  name="payment_method"
-                  value="direct"
-                  checked={method === "direct"}
-                  onChange={() => setMethod("direct")}
-                  className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
-                />
-                <div className="text-sm font-bold text-foreground">Pay directly (Zelle, Apple Pay, Google Pay, PayPal)</div>
-              </div>
-            </label>
+            {SHOW_DIRECT_PAYMENT ? (
+              <label
+                className={cn(
+                  "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
+                  method === "direct"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary"
+                    : "border-border bg-background"
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    value="direct"
+                    checked={method === "direct"}
+                    onChange={() => setMethod("direct")}
+                    className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <div className="text-sm font-bold text-foreground">
+                    Pay directly (Zelle, Apple Pay, Google Pay, PayPal)
+                  </div>
+                </div>
+              </label>
+            ) : null}
           </div>
 
-          {method === "direct" && (
+          {method === "direct" && SHOW_DIRECT_PAYMENT ? (
             <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5 space-y-4">
               <p className="text-sm text-foreground font-medium">
-                Thanks for trusting Resumes Uplift Services.
-              </p>
-              <p className="text-sm text-foreground font-medium">
-                To proceed, please complete the payment of <span className="font-bold text-primary">{money(totalUsd)}</span> using any of the methods below.
-                If you applied a coupon, please pay the discounted amount shown for your selected package.
-              </p>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-4">Payment methods</p>
-              <ul className="space-y-2 text-sm font-medium text-foreground">
-                <li><span className="text-muted-foreground">Zelle:</span> shopwise@letshopdeals.com</li>
-                <li><span className="text-muted-foreground">Apple Pay:</span> +1 (916) 860-6134</li>
-                <li><span className="text-muted-foreground">Google Pay:</span> Zunairkhalid.zk@gmail.com</li>
-                <li><span className="text-muted-foreground">PayPal:</span> waseemhaiderjatoi@gmail.com <span className="text-muted-foreground text-xs">(Please send as Friends & Family)</span></li>
-              </ul>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-4">Payment confirmation</p>
-              <p className="text-sm text-foreground font-medium">
-                Once the payment is completed, please send a screenshot of the transaction on WhatsApp and mention the sender name used for the payment.
-              </p>
-              <p className="text-sm text-foreground font-medium">
-                WhatsApp: +44 7478 564745
+                Order total: <span className="font-bold text-primary">{money(totalUsd)}</span>
+                {couponDiscountUsd > 0 ? (
+                  <span className="text-muted-foreground"> (after any coupon you applied)</span>
+                ) : null}
               </p>
               <p className="text-sm text-muted-foreground font-medium">
-                Your order will be started once payment is verified. You will be contacted via WhatsApp or LinkedIn for further details about your project.
+                After you confirm, our team will contact you on WhatsApp with secure payment instructions for your
+                package.
               </p>
               <button
                 type="button"
@@ -501,10 +547,10 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                 }}
                 className="w-full h-12 rounded-2xl bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all flex items-center justify-center gap-2 mt-4"
               >
-                Confirm order & get payment details
+                Confirm order
               </button>
             </div>
-          )}
+          ) : null}
 
           {error && (
             <div className="mt-5 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm font-semibold text-red-600 dark:text-red-400">
@@ -608,33 +654,73 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
                     <span>
                       12 hours delivery{" "}
                       <span className="text-muted-foreground font-bold">
-                        (+{money(plan.rush12hFeeUsd)})
+                        (+{money(plan.rush12hFeeUsd)} / item)
                       </span>
                     </span>
                 </span>
               </label>
+
+              <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-border px-4 py-3">
+                <span className="text-sm font-semibold text-foreground">Quantity</span>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    aria-label="Decrease quantity"
+                    disabled={quantity <= QTY_MIN}
+                    onClick={() => commitQuantity(quantity - 1)}
+                    className={cn(
+                      "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground transition-colors",
+                      quantity <= QTY_MIN
+                        ? "cursor-not-allowed opacity-40"
+                        : "hover:border-primary/40 hover:bg-primary/5"
+                    )}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="min-w-[2.25rem] text-center text-sm font-bold tabular-nums">{quantity}</span>
+                  <button
+                    type="button"
+                    aria-label="Increase quantity"
+                    disabled={quantity >= QTY_MAX}
+                    onClick={() => commitQuantity(quantity + 1)}
+                    className={cn(
+                      "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground transition-colors",
+                      quantity >= QTY_MAX
+                        ? "cursor-not-allowed opacity-40"
+                        : "hover:border-primary/40 hover:bg-primary/5"
+                    )}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5">
           <div className="flex items-start justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <div className="text-sm font-bold">{plan.name} — {pkg.name}</div>
               <div className="mt-1 text-xs text-muted-foreground font-semibold italic">
                 &ldquo;{plan.description}&rdquo;
               </div>
+              <div className="mt-2 text-xs font-semibold text-muted-foreground">
+                {quantity} × {money(pkg.priceUsd)} per package
+              </div>
             </div>
-            <div className="text-sm font-bold">{money(totalUsd)}</div>
+            <div className="shrink-0 text-right">
+              <div className="text-sm font-bold">{money(totalUsd)}</div>
+            </div>
           </div>
           <div className="mt-3 flex items-center justify-between text-xs font-semibold text-muted-foreground">
             <span>{plan.deliveryDays} days delivery</span>
-            <span>Revisions: {plan.revisions}</span>
+            <span>Revisions: {getRevisionsForPackage(packageId)}</span>
           </div>
           {rush12h ? (
             <div className="mt-1 flex items-center justify-between text-xs font-semibold text-muted-foreground">
-              <span>Express 12 hours</span>
-              <span>+{money(plan.rush12hFeeUsd)}</span>
+              <span>Express 12 hours (all items)</span>
+              <span>+{money(rushPerUnitUsd * quantity)}</span>
             </div>
           ) : null}
           <div className="mt-3">

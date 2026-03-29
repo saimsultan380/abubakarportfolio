@@ -1,6 +1,6 @@
 /**
  * Coupon codes and their discount in USD (flat dollar amount off).
- * Code lookup is case-insensitive.
+ * Amounts run $10 → $150 in $5 steps. Lookup is case-insensitive.
  */
 const COUPONS: Record<string, number> = {
   c10zerna: 10,
@@ -20,9 +20,18 @@ const COUPONS: Record<string, number> = {
   Drnjdteo: 80,
   "244XS6GT": 85,
   "8xaerel4": 90,
-  z78b6wqa: 100,
-  ydne6skm: 110,
-  Z48RQ8YA: 120,
+  z78b6wqa: 95,
+  ydne6skm: 100,
+  Z48RQ8YA: 105,
+  KIijwr78: 110,
+  m9k2pwx7: 115,
+  n4r8qbs3: 120,
+  v7h3cj9k: 125,
+  w2f6nx8m: 130,
+  p8d4LzK2: 135,
+  q3s9HtW7: 140,
+  x6b1YnR4: 145,
+  k5m7VqP9: 150,
 }
 
 export function getCouponDiscountUsd(code: string | undefined | null): number {

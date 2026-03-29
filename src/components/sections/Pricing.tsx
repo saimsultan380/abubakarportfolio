@@ -6,7 +6,12 @@ import { Check, Rocket, Shield, Zap, ArrowRight, Sparkles } from "lucide-react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { PLANS, type PlanId } from "@/lib/plans"
+import {
+  PLANS,
+  REVISIONS_ALL_IN_ONE,
+  REVISIONS_PARTIAL_PACKAGE,
+  type PlanId,
+} from "@/lib/plans"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -127,6 +132,8 @@ export function Pricing() {
           {PLANS.map((plan) => {
             const meta = planMeta[plan.id]
             const Icon = meta.icon
+            const breakdownSum = plan.breakdown.reduce((s, b) => s + b.priceUsd, 0)
+            const bundleSavingsUsd = Math.max(0, breakdownSum - plan.priceUsd)
 
             return (
               <div
@@ -189,8 +196,16 @@ export function Pricing() {
                       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-muted-foreground">
                         <span>{plan.deliveryDays} days delivery</span>
                         <span>12 hours: +${plan.rush12hFeeUsd}</span>
-                        <span>Revisions: {plan.revisions}</span>
+                        <span>Revisions: {REVISIONS_ALL_IN_ONE}</span>
                       </div>
+                      <p className="mt-2 text-[10px] font-medium text-muted-foreground leading-snug">
+                        Other packages: {REVISIONS_PARTIAL_PACKAGE} revisions · same delivery window
+                      </p>
+                      {bundleSavingsUsd > 0 ? (
+                        <p className="mt-2.5 inline-flex w-full items-center justify-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-center text-[11px] font-semibold leading-tight text-primary sm:text-xs">
+                          Save ${bundleSavingsUsd} vs buying items separately
+                        </p>
+                      ) : null}
                     </div>
 
                     <div>
