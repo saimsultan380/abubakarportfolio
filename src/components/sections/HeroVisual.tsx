@@ -6,7 +6,7 @@ import Image from "next/image";
 import { CheckCircle2, Linkedin, Star, X, UserRound } from "lucide-react";
 
 const TEAM_INTRO_PARAGRAPHS = [
-  "Muhammad Abu Bakar is a Certified Professional Resume Writer and ATS Optimization Specialist dedicated to helping professionals get noticed and get hired. With over 7 years of experience in resume writing, LinkedIn optimization, and executive career branding, he has supported more than 2,000 clients across 50 plus industries in securing interviews, increasing recruiter engagement, and advancing their careers with confidence.",
+  "Muhammad Abu Bakar is a Certified Professional Resume Writer and ATS Optimization Specialist dedicated to helping professionals get noticed and get hired. With over 7 years of experience in resume writing, LinkedIn optimization, and executive career branding, he has supported more than 2,000 clients across 80+ industries in securing interviews, increasing recruiter engagement, and advancing their careers with confidence.",
   "He specializes in ATS optimized resumes, executive CV writing, custom cover letters, and LinkedIn profile optimization tailored to each client's target role and industry. His approach combines strategic keyword integration, achievement focused storytelling, modern resume formatting, and in depth understanding of applicant tracking systems to ensure every document performs effectively in today's competitive job market.",
   "Muhammad has helped clients increase interview callbacks by up to 70 to 80 percent, improve LinkedIn visibility by more than two times, and generate significantly more recruiter messages within weeks. From entry level professionals to senior executives, he creates career documents that position clients as top candidates and align their experience with employer expectations.",
   "Through Resumes Uplift, his mission is to transform professional backgrounds into powerful personal brands that open doors to better opportunities, stronger offers, and long term career growth.",
@@ -60,9 +60,19 @@ function TeamIntroModal({
             <div className="min-w-0">
               <h2
                 id="team-intro-title"
-                className="font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl"
+                className="font-heading tracking-tight text-foreground"
               >
-                About Muhammad Abu Bakar
+                <span className="flex flex-col gap-0.5 sm:hidden">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    About
+                  </span>
+                  <span className="text-lg font-semibold leading-snug">
+                    Muhammad Abu Bakar
+                  </span>
+                </span>
+                <span className="hidden text-lg font-bold sm:block sm:text-xl">
+                  About Muhammad Abu Bakar
+                </span>
               </h2>
               <p className="text-xs text-muted-foreground sm:text-sm">
                 Expert Writing Head · Resumes Uplift
@@ -92,7 +102,7 @@ function TeamIntroModal({
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
 

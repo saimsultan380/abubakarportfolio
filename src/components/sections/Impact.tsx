@@ -106,7 +106,7 @@ export function Impact() {
             trigger: ".transformations-grid",
             start: "top 80%",
           },
-        }
+        },
       );
 
       gsap.fromTo(
@@ -121,10 +121,10 @@ export function Impact() {
             trigger: sectionRef.current,
             start: "top 75%",
           },
-        }
+        },
       );
     },
-    { scope: sectionRef }
+    { scope: sectionRef },
   );
 
   return (
@@ -178,7 +178,7 @@ export function Impact() {
                         </div>
                       ))}
                       <div className="h-12 w-12 rounded-full bg-primary border-2 border-zinc-900 flex items-center justify-center text-[10px] font-bold text-white">
-                        500+
+                        800+
                       </div>
                     </div>
                     <div className="text-left">
@@ -231,7 +231,7 @@ export function Impact() {
                 "transformation-card group relative flex flex-col rounded-2xl bg-card border transition-all duration-300 overflow-hidden text-left",
                 item.accent === "highlight"
                   ? "border-primary/40 shadow-xl shadow-primary/10 scale-[1.02] z-10 ring-1 ring-primary/20"
-                  : "border-border shadow-sm hover:shadow-lg hover:-translate-y-1"
+                  : "border-border shadow-sm hover:shadow-lg hover:-translate-y-1",
               )}
             >
               {/* Header */}
@@ -242,7 +242,7 @@ export function Impact() {
                       "h-12 w-12 rounded-xl flex items-center justify-center",
                       item.accent === "highlight"
                         ? "bg-primary/10 text-primary"
-                        : "bg-zinc-100 dark:bg-zinc-800 text-foreground"
+                        : "bg-zinc-100 dark:bg-zinc-800 text-foreground",
                     )}
                   >
                     <item.icon className="h-6 w-6" />
@@ -252,7 +252,7 @@ export function Impact() {
                       "text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase",
                       item.accent === "highlight"
                         ? "bg-primary/10 text-primary"
-                        : "bg-zinc-100 dark:bg-zinc-800 text-muted-foreground"
+                        : "bg-zinc-100 dark:bg-zinc-800 text-muted-foreground",
                     )}
                   >
                     {item.category}
@@ -319,7 +319,7 @@ export function Impact() {
                   "mt-8 p-6 border-t",
                   item.accent === "highlight"
                     ? "bg-primary/5 border-primary/10"
-                    : "bg-zinc-50 dark:bg-zinc-900/50 border-border"
+                    : "bg-zinc-50 dark:bg-zinc-900/50 border-border",
                 )}
               >
                 <div className="flex items-center justify-between">
@@ -337,7 +337,7 @@ export function Impact() {
                         "text-3xl font-black font-heading leading-none mb-1",
                         item.accent === "highlight"
                           ? "text-primary"
-                          : "text-foreground"
+                          : "text-foreground",
                       )}
                     >
                       {item.result.metric}

@@ -64,7 +64,7 @@ function useCountUp(
 export function SuccessStats() {
   const sectionRef = React.useRef<HTMLElement>(null);
 
-  const liveCount = useCountUp(500, {
+  const liveCount = useCountUp(800, {
     duration: 2000,
     suffix: "+",
     startOnView: true,

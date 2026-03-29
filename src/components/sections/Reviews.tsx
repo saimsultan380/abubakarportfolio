@@ -1,16 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Image from "next/image"
-import { Star, ChevronLeft, ChevronRight } from "lucide-react"
-import { useGSAP } from "@gsap/react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import * as React from "react";
+import Image from "next/image";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 // Client review screenshot images from /public/brand/
 const REVIEW_SCREENSHOT_FILES = [
+  "WhatsApp Image 2026-03-29 at 6.12.45 PM.jpeg",
+  "WhatsApp Image 2026-03-29 at 6.12.44 PM.jpeg",
+  "WhatsApp Image 2026-03-29 at 6.12.42 PM.jpeg",
+  "WhatsApp Image 2026-03-29 at 6.12.43 PM.jpeg",
   "WhatsApp Image 2026-02-17 at 6.48.38 AM.jpeg",
   "WhatsApp Image 2026-02-17 at 6.48.39 AM (1).jpeg",
   "WhatsApp Image 2026-02-17 at 6.48.39 AM.jpeg",
@@ -24,173 +28,192 @@ const REVIEW_SCREENSHOT_FILES = [
   "WhatsApp Image 2026-02-17 at 6.48.43 AM.jpeg",
   "WhatsApp Image 2026-02-17 at 6.48.44 AM (1).jpeg",
   "WhatsApp Image 2026-02-17 at 6.48.44 AM.jpeg",
-]
+];
 
 export function Reviews() {
-  const sectionRef = React.useRef<HTMLElement>(null)
-  const trackRef = React.useRef<HTMLDivElement>(null)
-  const isInViewRef = React.useRef(false)
-  const isPausedRef = React.useRef(false)
-  const intervalRef = React.useRef<number | null>(null)
-  const resumeTimeoutRef = React.useRef<number | null>(null)
+  const sectionRef = React.useRef<HTMLElement>(null);
+  const trackRef = React.useRef<HTMLDivElement>(null);
+  const isInViewRef = React.useRef(false);
+  const isPausedRef = React.useRef(false);
+  const intervalRef = React.useRef<number | null>(null);
+  const resumeTimeoutRef = React.useRef<number | null>(null);
 
-  useGSAP(() => {
-    gsap.from(".reviews-header", {
-      scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-      y: 24,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power3.out",
-    })
-    gsap.from(".review-slide", {
-      scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-      y: 24,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.05,
-      ease: "power3.out",
-    })
-  }, { scope: sectionRef })
+  useGSAP(
+    () => {
+      gsap.from(".reviews-header", {
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        y: 24,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power3.out",
+      });
+      gsap.from(".review-slide", {
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        y: 24,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.05,
+        ease: "power3.out",
+      });
+    },
+    { scope: sectionRef },
+  );
 
   const getStepInfo = React.useCallback(() => {
-    const el = trackRef.current
-    if (!el) return null
-    const slides = Array.from(el.querySelectorAll<HTMLElement>("[data-review-slide]"))
-    if (!slides.length) return null
-    const cs = window.getComputedStyle(el)
-    const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0
-    const step = (slides[0]?.getBoundingClientRect().width || el.clientWidth) + gap
-    if (!step) return null
-    const maxIndex = Math.max(0, slides.length - 1)
-    const currentIndex = Math.round(el.scrollLeft / step)
-    return { el, step, maxIndex, currentIndex }
-  }, [])
+    const el = trackRef.current;
+    if (!el) return null;
+    const slides = Array.from(
+      el.querySelectorAll<HTMLElement>("[data-review-slide]"),
+    );
+    if (!slides.length) return null;
+    const cs = window.getComputedStyle(el);
+    const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0;
+    const step =
+      (slides[0]?.getBoundingClientRect().width || el.clientWidth) + gap;
+    if (!step) return null;
+    const maxIndex = Math.max(0, slides.length - 1);
+    const currentIndex = Math.round(el.scrollLeft / step);
+    return { el, step, maxIndex, currentIndex };
+  }, []);
 
   const stopAutoPlay = React.useCallback(() => {
     if (intervalRef.current != null) {
-      window.clearInterval(intervalRef.current)
-      intervalRef.current = null
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  }, [])
+  }, []);
 
   const startAutoPlay = React.useCallback(() => {
-    if (!isInViewRef.current || isPausedRef.current) return
-    if (intervalRef.current != null) return
+    if (!isInViewRef.current || isPausedRef.current) return;
+    if (intervalRef.current != null) return;
 
     intervalRef.current = window.setInterval(() => {
-      if (!isInViewRef.current || isPausedRef.current) return
-      const info = getStepInfo()
-      if (!info) return
-      const { el, step, maxIndex, currentIndex } = info
-      const nextIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1
-      const targetLeft = Math.round(nextIndex * step)
+      if (!isInViewRef.current || isPausedRef.current) return;
+      const info = getStepInfo();
+      if (!info) return;
+      const { el, step, maxIndex, currentIndex } = info;
+      const nextIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+      const targetLeft = Math.round(nextIndex * step);
       try {
-        el.scrollTo({ left: targetLeft, behavior: "smooth" })
+        el.scrollTo({ left: targetLeft, behavior: "smooth" });
       } catch {
-        el.scrollLeft = targetLeft
+        el.scrollLeft = targetLeft;
       }
-    }, 4200)
-  }, [getStepInfo])
+    }, 4200);
+  }, [getStepInfo]);
 
-  const scheduleResume = React.useCallback((delayMs: number) => {
-    stopAutoPlay()
-    isPausedRef.current = true
-    if (resumeTimeoutRef.current != null) {
-      window.clearTimeout(resumeTimeoutRef.current)
-      resumeTimeoutRef.current = null
-    }
-    resumeTimeoutRef.current = window.setTimeout(() => {
-      isPausedRef.current = false
-      resumeTimeoutRef.current = null
-      startAutoPlay()
-    }, delayMs)
-  }, [startAutoPlay, stopAutoPlay])
+  const scheduleResume = React.useCallback(
+    (delayMs: number) => {
+      stopAutoPlay();
+      isPausedRef.current = true;
+      if (resumeTimeoutRef.current != null) {
+        window.clearTimeout(resumeTimeoutRef.current);
+        resumeTimeoutRef.current = null;
+      }
+      resumeTimeoutRef.current = window.setTimeout(() => {
+        isPausedRef.current = false;
+        resumeTimeoutRef.current = null;
+        startAutoPlay();
+      }, delayMs);
+    },
+    [startAutoPlay, stopAutoPlay],
+  );
 
   const scrollByCards = (dir: -1 | 1) => {
-    const el = trackRef.current
-    if (!el) return
+    const el = trackRef.current;
+    if (!el) return;
 
-    const slides = Array.from(el.querySelectorAll<HTMLElement>("[data-review-slide]"))
-    if (!slides.length) return
+    const slides = Array.from(
+      el.querySelectorAll<HTMLElement>("[data-review-slide]"),
+    );
+    if (!slides.length) return;
 
-    const cs = window.getComputedStyle(el)
-    const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0
-    const step = (slides[0]?.getBoundingClientRect().width || el.clientWidth) + gap
-    if (!step) return
+    const cs = window.getComputedStyle(el);
+    const gap = Number.parseFloat(cs.columnGap || cs.gap || "0") || 0;
+    const step =
+      (slides[0]?.getBoundingClientRect().width || el.clientWidth) + gap;
+    if (!step) return;
 
-    const maxIndex = Math.max(0, slides.length - 1)
-    const currentIndex = Math.round(el.scrollLeft / step)
-    const nextIndex = Math.max(0, Math.min(maxIndex, currentIndex + dir))
-    const targetLeft = Math.round(nextIndex * step)
+    const maxIndex = Math.max(0, slides.length - 1);
+    const currentIndex = Math.round(el.scrollLeft / step);
+    const nextIndex = Math.max(0, Math.min(maxIndex, currentIndex + dir));
+    const targetLeft = Math.round(nextIndex * step);
 
     try {
-      el.scrollTo({ left: targetLeft, behavior: "smooth" })
+      el.scrollTo({ left: targetLeft, behavior: "smooth" });
     } catch {
-      el.scrollLeft = targetLeft
+      el.scrollLeft = targetLeft;
     }
 
-    scheduleResume(7000)
-  }
+    scheduleResume(7000);
+  };
 
   React.useEffect(() => {
-    if (typeof window === "undefined") return
-    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
-    if (prefersReducedMotion) return
+    if (typeof window === "undefined") return;
+    const prefersReducedMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    )?.matches;
+    if (prefersReducedMotion) return;
 
-    const sectionEl = sectionRef.current
-    if (!sectionEl) return
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
 
     const io = new IntersectionObserver(
       (entries) => {
-        const entry = entries[0]
-        isInViewRef.current = !!entry?.isIntersecting
-        if (isInViewRef.current) startAutoPlay()
-        else stopAutoPlay()
+        const entry = entries[0];
+        isInViewRef.current = !!entry?.isIntersecting;
+        if (isInViewRef.current) startAutoPlay();
+        else stopAutoPlay();
       },
-      { threshold: 0.25 }
-    )
-    io.observe(sectionEl)
+      { threshold: 0.25 },
+    );
+    io.observe(sectionEl);
 
     return () => {
-      io.disconnect()
-      stopAutoPlay()
-      if (resumeTimeoutRef.current != null) window.clearTimeout(resumeTimeoutRef.current)
-    }
-  }, [startAutoPlay, stopAutoPlay])
+      io.disconnect();
+      stopAutoPlay();
+      if (resumeTimeoutRef.current != null)
+        window.clearTimeout(resumeTimeoutRef.current);
+    };
+  }, [startAutoPlay, stopAutoPlay]);
 
   React.useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
+    const el = trackRef.current;
+    if (!el) return;
 
     const onPointerEnter = () => {
-      stopAutoPlay()
-      isPausedRef.current = true
-    }
+      stopAutoPlay();
+      isPausedRef.current = true;
+    };
     const onPointerLeave = () => {
-      isPausedRef.current = false
-      startAutoPlay()
-    }
-    const onTouchStart = () => scheduleResume(9000)
-    const onWheel = () => scheduleResume(5000)
-    const onScroll = () => scheduleResume(3000)
+      isPausedRef.current = false;
+      startAutoPlay();
+    };
+    const onTouchStart = () => scheduleResume(9000);
+    const onWheel = () => scheduleResume(5000);
+    const onScroll = () => scheduleResume(3000);
 
-    el.addEventListener("pointerenter", onPointerEnter)
-    el.addEventListener("pointerleave", onPointerLeave)
-    el.addEventListener("touchstart", onTouchStart, { passive: true })
-    el.addEventListener("wheel", onWheel, { passive: true })
-    el.addEventListener("scroll", onScroll, { passive: true })
+    el.addEventListener("pointerenter", onPointerEnter);
+    el.addEventListener("pointerleave", onPointerLeave);
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("wheel", onWheel, { passive: true });
+    el.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      el.removeEventListener("pointerenter", onPointerEnter)
-      el.removeEventListener("pointerleave", onPointerLeave)
-      el.removeEventListener("touchstart", onTouchStart)
-      el.removeEventListener("wheel", onWheel)
-      el.removeEventListener("scroll", onScroll)
-    }
-  }, [scheduleResume, startAutoPlay, stopAutoPlay])
+      el.removeEventListener("pointerenter", onPointerEnter);
+      el.removeEventListener("pointerleave", onPointerLeave);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("scroll", onScroll);
+    };
+  }, [scheduleResume, startAutoPlay, stopAutoPlay]);
 
   return (
-    <section ref={sectionRef} id="reviews" className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="reviews"
+      className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
+    >
       <div className="container px-4 mx-auto mb-10 md:mb-14">
         <div className="reviews-header text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-4">
@@ -202,7 +225,8 @@ export function Reviews() {
             <span className="text-primary">with us.</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Real screenshots from WhatsApp, LinkedIn, and messages from happy clients.
+            Real screenshots from WhatsApp, LinkedIn, and messages from happy
+            clients.
           </p>
         </div>
       </div>
@@ -255,5 +279,5 @@ export function Reviews() {
         </p>
       </div>
     </section>
-  )
+  );
 }
