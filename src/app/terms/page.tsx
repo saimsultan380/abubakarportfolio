@@ -1,5 +1,10 @@
 export const metadata = {
   title: "Terms of Service",
+  description: "Read the Resumes Uplift terms of service governing the use of our professional resume and CV writing services.",
+  alternates: {
+    canonical: "https://resumesuplift.com/terms/",
+  },
+  robots: { index: false, follow: false },
 }
 
 export default function TermsPage() {

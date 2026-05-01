@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { CompanyMarquee } from "@/components/sections/CompanyMarquee";
 import { Services } from "@/components/sections/Services";
@@ -9,6 +10,15 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
+
+export const metadata: Metadata = {
+  title: "ATS-Optimized Resumes & CVs That Land You Interviews",
+  description:
+    "Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry. Professional CV writing service with proven results.",
+  alternates: {
+    canonical: "https://resumesuplift.com/",
+  },
+};
 
 export default function Home() {
   return (

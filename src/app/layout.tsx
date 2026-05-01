@@ -18,7 +18,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.resumesuplift.com'),
+  metadataBase: new URL('https://resumesuplift.com'),
   title: {
     default: "ATS-Optimized Resumes & CVs That Land You Interviews",
     template: "%s | Resumes Uplift"
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.resumesuplift.com',
+    url: 'https://resumesuplift.com/',
     title: 'ATS-Optimized Resumes & CVs That Land You Interviews',
     description: 'Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.',
     siteName: 'Resumes Uplift',
@@ -64,6 +64,9 @@ export const metadata: Metadata = {
     title: 'ATS-Optimized Resumes & CVs That Land You Interviews',
     description: 'Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.',
     images: ['/brand/new%20logo.png'],
+  },
+  alternates: {
+    canonical: "https://resumesuplift.com/",
   },
   robots: {
     index: true,
@@ -114,10 +117,10 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "ProfessionalService",
-                  "@id": "https://www.resumesuplift.com/#service",
+                  "@id": "https://resumesuplift.com/#service",
                   "name": "Resumes Uplift",
                   "description": "Professional ATS-optimized resume and CV writing service that helps job seekers land more interviews.",
-                  "url": "https://www.resumesuplift.com",
+                  "url": "https://resumesuplift.com/",
                   "email": "resumesuplift@gmail.com",
                   "priceRange": "$$",
                   "areaServed": {
@@ -150,26 +153,26 @@ export default function RootLayout({
                 },
                 {
                   "@type": "Organization",
-                  "@id": "https://www.resumesuplift.com/#organization",
+                  "@id": "https://resumesuplift.com/#organization",
                   "name": "Resumes Uplift",
-                  "url": "https://www.resumesuplift.com",
-                  "logo": "https://www.resumesuplift.com/brand/new%20logo.png",
+                  "url": "https://resumesuplift.com/",
+                  "logo": "https://resumesuplift.com/brand/new%20logo.png",
                   "email": "resumesuplift@gmail.com",
                   "description": "Professional resume and CV writing service helping job seekers create ATS-optimized resumes that land interviews.",
                   "sameAs": []
                 },
                 {
                   "@type": "WebSite",
-                  "@id": "https://www.resumesuplift.com/#website",
-                  "url": "https://www.resumesuplift.com",
+                  "@id": "https://resumesuplift.com/#website",
+                  "url": "https://resumesuplift.com/",
                   "name": "Resumes Uplift",
                   "description": "Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.",
                   "publisher": {
-                    "@id": "https://www.resumesuplift.com/#organization"
+                    "@id": "https://resumesuplift.com/#organization"
                   },
                   "potentialAction": {
                     "@type": "SearchAction",
-                    "target": "https://www.resumesuplift.com/?s={search_term_string}",
+                    "target": "https://resumesuplift.com/?s={search_term_string}",
                     "query-input": "required name=search_term_string"
                   }
                 }

@@ -1,5 +1,10 @@
 export const metadata = {
   title: "Privacy Policy",
+  description: "Read the Resumes Uplift privacy policy to understand how we collect, use, and protect your personal information.",
+  alternates: {
+    canonical: "https://resumesuplift.com/privacy/",
+  },
+  robots: { index: false, follow: false },
 }
 
 export default function PrivacyPage() {
