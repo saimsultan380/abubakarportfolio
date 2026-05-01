@@ -225,13 +225,13 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     const q = Math.min(QTY_MAX, Math.max(QTY_MIN, Math.round(nextQty)))
     setQuantity(q)
     const nextParams = buildParams({ plan: planId, pkg: packageId, qty: q })
-    router.replace(`${pathname}?${nextParams.toString()}`)
+    router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
   }
 
   function onPlanChange(next: PlanId) {
     setPlanId(next)
     const nextParams = buildParams({ plan: next, pkg: packageId })
-    router.replace(`${pathname}?${nextParams.toString()}`)
+    router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
   }
 
   function toggleService(service: ServiceKey) {
@@ -246,7 +246,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
       setPackageId(nextPkg)
 
       const nextParams = buildParams({ plan: planId, pkg: nextPkg })
-      router.replace(`${pathname}?${nextParams.toString()}`)
+      router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
       return next
     })
   }
@@ -257,13 +257,13 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     const nextPkg: PackageId = "all"
     setPackageId(nextPkg)
     const nextParams = buildParams({ plan: planId, pkg: nextPkg })
-    router.replace(`${pathname}?${nextParams.toString()}`)
+    router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
   }
 
   function toggleRush(next: boolean) {
     setRush12h(next)
     const nextParams = buildParams({ plan: planId, pkg: packageId, rush: next })
-    router.replace(`${pathname}?${nextParams.toString()}`)
+    router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
   }
 
   const rushPerUnitUsd = rush12h ? plan.rush12hFeeUsd : 0
