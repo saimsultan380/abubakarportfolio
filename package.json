@@ -13,6 +13,7 @@
     "@paypal/react-paypal-js": "^8.9.2",
     "clsx": "^2.1.1",
     "docx-preview": "^0.3.7",
+    "framer-motion": "^13.2.0",
     "gsap": "^3.14.2",
     "lucide-react": "^0.563.0",
     "mammoth": "^1.11.0",

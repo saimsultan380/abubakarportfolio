@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbsForPath } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Resume Samples — ATS-Optimized CV Examples",
@@ -15,6 +17,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SamplesLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default function SamplesLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <BreadcrumbJsonLd items={getBreadcrumbsForPath("/samples/")} />
+      {children}
+    </>
+  );
 }

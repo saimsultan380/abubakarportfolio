@@ -212,19 +212,19 @@ export function Reviews() {
     <section
       ref={sectionRef}
       id="reviews"
-      className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
+      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
     >
-      <div className="container px-4 mx-auto mb-10 md:mb-14">
+      <div className="container px-4 mx-auto mb-6 md:mb-8">
         <div className="reviews-header text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-3">
             <Star className="h-3 w-3 fill-current" />
             Client Reviews
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-2 tracking-tight text-foreground">
             What clients shared <br />
             <span className="text-primary">with us.</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-sm sm:text-base">
             Real screenshots from WhatsApp, LinkedIn, and messages from happy
             clients.
           </p>

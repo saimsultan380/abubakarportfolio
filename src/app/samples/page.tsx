@@ -199,7 +199,7 @@ export default function SamplesPage() {
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Back to Home
           </Link>
-          <h1 className="text-5xl md:text-6xl font-black font-heading mb-8 tracking-tighter text-foreground">
+          <h1 className="text-5xl md:text-6xl font-bold font-heading mb-8 tracking-tighter text-foreground">
             The <span className="text-primary italic">Uplift</span> Gallery
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -227,7 +227,7 @@ export default function SamplesPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/10 to-transparent opacity-70" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                  <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/80">
+                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/80">
                     View Sample
                   </span>
                   <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-white shadow-xl translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
@@ -242,7 +242,7 @@ export default function SamplesPage() {
                   {sample.name}
                 </h3>
                 <div className="flex items-center gap-3">
-                  <span className="bg-primary/10 text-primary text-[10px] font-black px-3 py-1.5 rounded-full border border-primary/20 uppercase tracking-widest leading-none">
+                  <span className="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1.5 rounded-full border border-primary/20 uppercase tracking-widest leading-none">
                     {sample.type}
                   </span>
                   <span className="flex items-center gap-2 uppercase tracking-[0.1em] text-[10px] font-bold text-muted-foreground">

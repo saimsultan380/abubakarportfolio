@@ -4,7 +4,7 @@ import * as React from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ClipboardCheck, Target, Pencil, Rocket, ArrowRight } from "lucide-react"
+import { ClipboardCheck, Target, Pencil, Rocket, CheckCircle2, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -12,26 +12,32 @@ gsap.registerPlugin(ScrollTrigger)
 const steps = [
     {
         number: "01",
-        title: "Onboarding & Audit",
-        description: "Upload your current documents. I perform a clinical audit of your existing CV against ATS standards.",
-        icon: ClipboardCheck,
-    },
-    {
-        number: "02",
-        title: "Market Alignment",
-        description: "I research your target industry and senior-level keywords to ensure your profile ranks at the top.",
+        title: "Research & Analysis",
+        description: "Our team of experts studies your career background, industry, and target role. This helps us identify the right keywords and skills to highlight in your resume.",
         icon: Target,
     },
     {
-        number: "03",
-        title: "The Crafting Phase",
-        description: "Your new CV is built line-by-line. No generic AI bullet points; every sentence is a career win.",
+        number: "02",
+        title: "Resume Drafting",
+        description: "Your ATS-friendly resume gets written from scratch, with a focus on achievements, measurable results, and job-specific keywords that match your target position.",
         icon: Pencil,
     },
     {
+        number: "03",
+        title: "ATS Optimization Check",
+        description: "Your resume runs through ATS resume checkers to confirm proper formatting, keyword placement, and compatibility with applicant tracking systems used by employers.",
+        icon: CheckCircle2,
+    },
+    {
         number: "04",
-        title: "Launch & Hired",
-        description: "Receive your final ATS-optimized package, plus a LinkedIn guide to boost search visibility.",
+        title: "Revisions",
+        description: "After this, we refine the resume based on your feedback, working closely with you until every detail reflects your goals and career story accurately.",
+        icon: ClipboardCheck,
+    },
+    {
+        number: "05",
+        title: "Final Delivery",
+        description: "Finally, your finished, ATS-friendly resume in your preferred format, ready to send to recruiters and apply for jobs with confidence.",
         icon: Rocket,
     },
 ]
@@ -207,19 +213,19 @@ export function HowItWorks() {
         <section
             id="process"
             ref={sectionRef}
-            className="relative overflow-hidden bg-zinc-50 py-20 text-center md:py-28 dark:bg-black/40 md:text-left"
+            className="relative overflow-hidden bg-zinc-50 py-12 md:py-16 text-center dark:bg-black/40 md:text-left"
         >
             <div className="container relative z-10 mx-auto px-4">
-                <div className="mx-auto mb-12 max-w-3xl text-center md:mb-20">
-                    <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
-                        Workflow
+                <div className="mx-auto mb-8 max-w-3xl text-center md:mb-10">
+                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
+                        Our Process
                     </div>
                     <h2 className="mb-6 font-heading text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-                        Your Roadmap to <br />
-                        <span className="text-primary">The Next Level.</span>
+                        How Our Resume Writing <br />
+                        <span className="text-primary">Process Works</span>
                     </h2>
                     <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                        A streamlined, white-glove process designed for high-performing professionals.
+                        A simple, transparent 5-step process designed to get you hired faster.
                     </p>
                 </div>
 
@@ -268,7 +274,7 @@ export function HowItWorks() {
                 </div>
 
                 {/* Desktop: grid */}
-                <div className="relative hidden gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
+                <div className="relative hidden gap-6 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                     {steps.map((step, index) => (
                         <div key={index} className="process-card-desktop">
                             <StepCard step={step} />
@@ -278,10 +284,10 @@ export function HowItWorks() {
 
                 <div className="mt-12 flex justify-center md:mt-16">
                     <a
-                        href="#contact"
-                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-orange-600 px-8 text-base font-bold text-white shadow-lg shadow-orange-600/20 transition-all duration-300 hover:scale-105 hover:bg-orange-700 active:scale-95"
+                        href="/pricing"
+                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-primary px-8 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 hover:scale-105 hover:bg-primary/90 active:scale-95"
                     >
-                        Ready to see the difference?
+                        Hire a Resume Writer
                         <ArrowRight className="h-5 w-5" />
                     </a>
                 </div>

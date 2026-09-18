@@ -13,36 +13,36 @@ gsap.registerPlugin(ScrollTrigger)
 
 const services = [
     {
-        title: "ATS Optimized CV/Resume Writing",
-        description: "Built from scratch with keywords that pass Automated Tracking Systems and catch recruiter attention.",
+        title: "ATS Resume/CV Writing",
+        description: "Get a professional ATS-friendly resume writing service built to pass tracking systems. As expert resume writers, our team writes ATS CVs and resumes that land more interviews.",
         icon: FileText,
         colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
         accent: "primary",
     },
     {
-        title: "Resume Revamp",
-        description: "Modernize your existing resume with a clean, professional layout that highlights your achievements.",
-        icon: Edit,
-        colSpan: "col-span-1",
-        accent: "accent-warm",
-    },
-    {
-        title: "Cover Letters",
-        description: "Persuasive, tailored cover letters that tell your story.",
+        title: "Cover Letter Writing",
+        description: "A strong cover letter builds your first impression fast. Our experts write personalized, keyword-rich cover letters that complement your resume and boost response rates.",
         icon: PenTool,
         colSpan: "col-span-1",
         accent: "accent-cool",
     },
     {
-        title: "LinkedIn Optimization",
-        description: "Full profile overhaul to increase visibility, search ranking, and connection requests.",
+        title: "Resume Revamp",
+        description: "Outdated resume not getting you interview calls? We revamp your existing CV with modern formatting, stronger content, and ATS-friendly keywords for better results.",
+        icon: Edit,
+        colSpan: "col-span-1",
+        accent: "accent-warm",
+    },
+    {
+        title: "LinkedIn Profile Optimization",
+        description: "Recruiters search LinkedIn daily. We optimize your profile with targeted keywords, a compelling summary & services, and a professional structure that increases recruiter visibility instantly.",
         icon: Linkedin,
         colSpan: "col-span-1",
         accent: "primary",
     },
     {
-        title: "Career-Specific CVs",
-        description: "Strategically written resumes for Tech, Finance, Healthcare, and Executive roles.",
+        title: "Career-Specific CV Writing",
+        description: "Every industry needs a different approach. Being expert CV writers, we provide you with career-specific CVs according to your field, experience level, and target job role for maximum impact.",
         icon: Briefcase,
         colSpan: "col-span-1 md:col-span-2 lg:col-span-1",
         accent: "accent-warm",
@@ -67,21 +67,18 @@ export function Services() {
     }, { scope: sectionRef })
 
     return (
-        <section id="services" ref={sectionRef} className="py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
+        <section id="services" ref={sectionRef} className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
             <div className="container px-4 mx-auto relative z-10">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                     <div className="max-w-2xl">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-warm/10 text-accent-warm text-xs font-medium mb-4 border border-accent-warm/20">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-warm/10 text-accent-warm text-xs font-medium mb-3 border border-accent-warm/20">
                             <Star className="h-3 w-3 fill-accent-warm" />
-                            Premium Services
+                            What We Offer
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
-                            Get Noticed.{" "}
-                            <span className="text-primary">Get Hired.</span>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-2 tracking-tight text-foreground">
+                            Our Core{" "}
+                            <span className="text-primary">Services</span>
                         </h2>
-                        <p className="text-lg text-muted-foreground">
-                            Strategic career documents crafted to bypass bots and impress humans.
-                        </p>
                     </div>
 
                     <div className="hidden md:block">
@@ -99,7 +96,7 @@ export function Services() {
                     {services.map((service, index) => (
                         <SpotlightCard
                             key={index}
-                            className={cn(service.colSpan, "service-card p-8 group h-full flex flex-col")}
+                            className={cn(service.colSpan, "service-card p-6 sm:p-7 group h-full flex flex-col")}
                             spotlightColor="rgba(var(--primary-rgb), 0.1)"
                         >
                             <div>

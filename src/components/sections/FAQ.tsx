@@ -129,33 +129,33 @@ export function FAQ() {
     }, { scope: containerRef })
 
     return (
-        <section id="faq" ref={containerRef} className="py-24 md:py-32 bg-zinc-50 dark:bg-black/40 relative border-t border-border/50">
+        <section id="faq" ref={containerRef} className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative border-t border-border/50">
             <div className="container px-4 mx-auto">
-                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
                     {/* Sticky Sidebar: Title */}
                     <div className="lg:w-1/3">
-                        <div className="lg:sticky lg:top-32 p-6 rounded-3xl bg-secondary/20 border border-border/50 backdrop-blur-sm">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6">
+                        <div className="lg:sticky lg:top-28 p-6 rounded-3xl bg-secondary/20 border border-border/50 backdrop-blur-sm">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4">
                                 <MessageCircle className="h-3 w-3" />
                                 FAQ
                             </div>
 
-                            <h2 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-3">
                                 Frequently Asked <br />
                                 Questions
                             </h2>
 
-                            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                            <p className="text-sm sm:text-base text-muted-foreground mb-5 leading-relaxed">
                                 Can&apos;t find the answer you&apos;re looking for? Chat with our team directly.
                             </p>
 
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-background ring-2 ring-border">
+                                <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-background ring-2 ring-border bg-card flex items-center justify-center">
                                     <img
-                                        src="/brand/WhatsApp%20Image%202026-01-31%20at%2012.05.58%20AM.jpeg"
-                                        alt="Abubakar"
-                                        className="h-full w-full object-cover"
+                                        src="/brand/new%20logo.png"
+                                        alt="Resumes Uplift"
+                                        className="h-full w-full object-contain p-1"
                                     />
                                 </div>
                                 <div>

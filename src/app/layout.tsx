@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google"; // Using Outfit for headings/editorial feel
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingActions } from "@/components/FloatingActions";
+import { SiteGraphJsonLd } from "@/components/seo/JsonLd";
+import { SITE_URL } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -13,17 +15,18 @@ const inter = Inter({
 });
 
 const outfit = Outfit({
-  variable: "--font-heading", // Naming it font-heading which mapped to nothing in globals yet, but I can add it or just use it directly
+  variable: "--font-heading",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://resumesuplift.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "ATS-Optimized Resumes & CVs That Land You Interviews",
-    template: "%s | Resumes Uplift"
+    default: "Best ATS Friendly Resume & CV Writing Services to Get Hired",
+    template: "%s | Resumes Uplift",
   },
-  description: "Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry. Professional CV writing service with proven results.",
+  description:
+    "Hire a certified professional ATS Resume & CV writer. Book our ATS-friendly Resume writing services that help you get hired and win interviews. Get more Jobs",
   keywords: [
     "ATS resume",
     "ATS-optimized CV",
@@ -35,7 +38,7 @@ export const metadata: Metadata = {
     "LinkedIn profile optimization",
     "resume templates",
     "CV formatting",
-    "recruiter-approved resumes"
+    "recruiter-approved resumes",
   ],
   authors: [{ name: "Resumes Uplift" }],
   creator: "Resumes Uplift",
@@ -44,61 +47,54 @@ export const metadata: Metadata = {
     google: "3lT3phbyzEO6yh8nkCSIfsnzWpAhfxIhU_WNM2r60sQ",
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://resumesuplift.com/',
-    title: 'ATS-Optimized Resumes & CVs That Land You Interviews',
-    description: 'Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.',
-    siteName: 'Resumes Uplift',
+    type: "website",
+    locale: "en_US",
+    // Do NOT set a sitewide url/canonical here — each page sets its own
+    siteName: "Resumes Uplift",
     images: [
       {
-        url: '/brand/new%20logo.png',
+        url: "/brand/new%20logo.png",
         width: 1200,
         height: 630,
-        alt: 'Resumes Uplift - Professional Resume & CV Writing Service',
-      }
+        alt: "Resumes Uplift - Professional Resume & CV Writing Service",
+      },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'ATS-Optimized Resumes & CVs That Land You Interviews',
-    description: 'Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.',
-    images: ['/brand/new%20logo.png'],
+    card: "summary_large_image",
+    images: ["/brand/new%20logo.png"],
   },
-  alternates: {
-    canonical: "https://resumesuplift.com/",
-  },
+  // No sitewide canonical — child pages must set their own unique URL
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   icons: {
-    shortcut: ['/brand/new%20logo.png'],
+    shortcut: ["/brand/new%20logo.png"],
     icon: [
-      { url: '/brand/new%20logo.png', sizes: '32x32', type: 'image/png' },
-      { url: '/brand/new%20logo.png', sizes: '16x16', type: 'image/png' },
+      { url: "/brand/new%20logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/new%20logo.png", sizes: "16x16", type: "image/png" },
     ],
     apple: [
-      { url: '/brand/new%20logo.png' },
-      { url: '/brand/new%20logo.png', sizes: '180x180', type: 'image/png' },
+      { url: "/brand/new%20logo.png" },
+      { url: "/brand/new%20logo.png", sizes: "180x180", type: "image/png" },
     ],
     other: [
       {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/brand/new%20logo.png',
+        rel: "apple-touch-icon-precomposed",
+        url: "/brand/new%20logo.png",
       },
     ],
   },
-  manifest: '/manifest.json',
+  manifest: "/manifest.json",
 };
-
 
 export default function RootLayout({
   children,
@@ -108,85 +104,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* JSON-LD Schema Markup */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "ProfessionalService",
-                  "@id": "https://resumesuplift.com/#service",
-                  "name": "Resumes Uplift",
-                  "description": "Professional ATS-optimized resume and CV writing service that helps job seekers land more interviews.",
-                  "url": "https://resumesuplift.com/",
-                  "email": "resumesuplift@gmail.com",
-                  "priceRange": "$$",
-                  "areaServed": {
-                    "@type": "Place",
-                    "name": "Worldwide"
-                  },
-                  "serviceType": ["Resume Writing", "CV Optimization", "ATS Resume Review", "LinkedIn Profile Optimization", "Career Coaching"],
-                  "hasOfferCatalog": {
-                    "@type": "OfferCatalog",
-                    "name": "Resume Services",
-                    "itemListElement": [
-                      {
-                        "@type": "Offer",
-                        "itemOffered": {
-                          "@type": "Service",
-                          "name": "Professional Resume Writing",
-                          "description": "ATS-optimized resume writing tailored to your target role"
-                        }
-                      },
-                      {
-                        "@type": "Offer",
-                        "itemOffered": {
-                          "@type": "Service",
-                          "name": "CV Review & Optimization",
-                          "description": "Expert review and optimization of your existing CV"
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  "@type": "Organization",
-                  "@id": "https://resumesuplift.com/#organization",
-                  "name": "Resumes Uplift",
-                  "url": "https://resumesuplift.com/",
-                  "logo": "https://resumesuplift.com/brand/new%20logo.png",
-                  "email": "resumesuplift@gmail.com",
-                  "description": "Professional resume and CV writing service helping job seekers create ATS-optimized resumes that land interviews.",
-                  "sameAs": []
-                },
-                {
-                  "@type": "WebSite",
-                  "@id": "https://resumesuplift.com/#website",
-                  "url": "https://resumesuplift.com/",
-                  "name": "Resumes Uplift",
-                  "description": "Get more interviews with ATS-optimized, recruiter-approved resumes tailored to your role and industry.",
-                  "publisher": {
-                    "@id": "https://resumesuplift.com/#organization"
-                  },
-                  "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://resumesuplift.com/?s={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                  }
-                }
-              ]
-            })
-          }}
-        />
+        <SiteGraphJsonLd />
       </head>
       <body
         suppressHydrationWarning
         className={cn(
           inter.variable,
           outfit.variable,
-          "min-h-screen bg-background font-sans antialiased"
+          "min-h-screen bg-background font-sans antialiased",
         )}
       >
         <ThemeProvider
@@ -206,4 +131,3 @@ export default function RootLayout({
     </html>
   );
 }
-

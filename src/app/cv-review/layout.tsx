@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbsForPath } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Free CV Review — Get Expert Feedback on Your Resume",
@@ -15,6 +17,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CvReviewLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default function CvReviewLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <BreadcrumbJsonLd items={getBreadcrumbsForPath("/cv-review/")} />
+      {children}
+    </>
+  );
 }

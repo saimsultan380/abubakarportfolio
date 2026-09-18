@@ -4,26 +4,32 @@ import * as React from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ArrowRight, CheckCircle2, FileText, Search, Sparkles, Target } from "lucide-react"
+import { ArrowRight, Check, X, Sparkles, FileText } from "lucide-react"
+import Link from "next/link"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const deliverables = [
-  {
-    title: "ATS Audit Snapshot",
-    description: "Keyword match, missing skills, and quick wins to improve screening results.",
-    icon: Search,
-  },
-  {
-    title: "Stronger Impact Bullets",
-    description: "Rewritten examples that turn responsibilities into measurable outcomes.",
-    icon: Target,
-  },
-  {
-    title: "Clean, Recruiter-Friendly Format",
-    description: "Structure that’s easy to scan and safe for ATS parsing.",
-    icon: FileText,
-  },
+const templateFeatures = [
+  "Standard fonts and clean structure",
+  "Keyword-rich content that matches job descriptions",
+  "No graphics, icons, or tables",
+  "Clear and scannable sections for easy reading",
+]
+
+const templateBenefits = [
+  "Passes ATS filters with ease",
+  "Leaves a strong impression on recruiters",
+  "Works for both local and global job markets",
+]
+
+const comparisonRows = [
+  { others: "Same template for every client", us: "Custom ATS and standard formats" },
+  { others: "Stuff resumes with buzzwords", us: "Naturally beats ATS, no keyword stuffing" },
+  { others: "Copy-paste job descriptions", us: "100% human-written content" },
+  { others: "AI-generated content", us: "Experts across 90+ industries" },
+  { others: "Ignore client feedback", us: "One-on-one live session with your writer" },
+  { others: "No industry-specific expertise", us: "Career-specific resumes for every industry" },
+  { others: "Slow Resume Delivery Time", us: "Fast Delivery within 24 hours" },
 ]
 
 export function RecentWork() {
@@ -58,109 +64,118 @@ export function RecentWork() {
 
   return (
     <section
-      id="work"
+      id="templates"
       ref={containerRef}
-      className="relative py-24 md:py-32 bg-zinc-50 dark:bg-black/40 overflow-hidden"
+      className="relative py-12 md:py-16 bg-background overflow-hidden"
     >
+      {/* Background accents */}
+      <div className="absolute top-0 left-0 -z-10 h-[350px] w-[350px] bg-primary/5 blur-[120px] rounded-full" />
+      <div className="absolute bottom-0 right-0 -z-10 h-[250px] w-[250px] bg-accent-cool/5 blur-[100px] rounded-full" />
+
       <div className="container px-4 mx-auto relative z-10">
         {/* Header */}
-        <header className="work-header text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
-            <Sparkles className="h-3.5 w-3.5" />
-            Free Resume Audit
+        <header className="work-header text-center max-w-3xl mx-auto mb-8 md:mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3 border border-primary/20">
+            <FileText className="h-3.5 w-3.5" />
+            Templates & Samples
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
-            See exactly what you&apos;ll{" "}
-            <span className="text-primary">get</span>.
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-2">
+            ATS Friendly Resume{" "}
+            <span className="text-primary">Templates and Samples</span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Before you order, I can review your current CV and share a clear snapshot of what to fix to start getting interviews.
-          </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-          {/* Left: What you get */}
-          <div className="work-card-anim h-full">
-            <div className="h-full rounded-[1rem] border border-border/60 bg-white dark:bg-zinc-900/50 p-8 md:p-12 shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-500">
-              <h3 className="text-3xl font-bold font-heading tracking-tight text-foreground mb-4">
-                What you&apos;ll receive
-              </h3>
-              <p className="text-muted-foreground text-lg mb-10">
-                A practical, actionable review (not generic feedback) so you know exactly what to improve.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                {deliverables.map((d, idx) => {
-                  const Icon = d.icon
-                  return (
-                    <div key={idx} className="flex flex-col">
-                      <div className="h-14 w-14 rounded-2xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 flex items-center justify-center mb-4">
-                        <Icon className="h-7 w-7" />
-                      </div>
-                      <h4 className="font-bold text-foreground mb-2">{d.title}</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{d.description}</p>
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="flex flex-col items-start sm:flex-row gap-6 sm:items-center sm:justify-between pt-8 border-t border-border/50">
-                <div className="text-sm text-muted-foreground font-medium">
-                  <span className="font-bold text-foreground">Tip:</span> Send your current CV + target job title.
+        {/* Templates Section */}
+        <div className="work-card-anim mb-12">
+          <div className="rounded-2xl border border-border/60 bg-card p-6 md:p-8 shadow-xl shadow-black/5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              {/* Left: Description */}
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-warm/10 text-accent-warm text-xs font-bold uppercase tracking-widest mb-6 border border-accent-warm/20">
+                  <Sparkles className="h-3 w-3" />
+                  ATS-Friendly Minimalist
                 </div>
-                <a
-                  href="#contact"
-                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-orange-600 px-8 text-base font-bold text-white shadow-lg shadow-orange-600/20 hover:bg-orange-700 hover:scale-105 active:scale-95 transition-all duration-300"
-                >
-                  Get My Free Audit
-                  <ArrowRight className="h-5 w-5" />
-                </a>
-              </div>
-            </div>
-          </div>
+                <h3 className="text-2xl md:text-3xl font-bold font-heading text-foreground mb-4">
+                  ATS-Friendly Minimalist Resume Templates
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                  Every template is designed with minimal colors and a clean layout for full ATS compatibility. You can choose between photo and non-photo versions. They suit both local and international hiring standards.
+                </p>
 
-          {/* Right: Preview */}
-          <div className="work-card-anim h-full">
-            <div className="h-full rounded-[1rem] border border-border/60 bg-white dark:bg-zinc-900/50 p-8 md:p-12 shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-500">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-6 border border-orange-100 dark:border-orange-500/20">
-                <Sparkles className="h-3 w-3" />
-                Preview
-              </div>
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-sm font-bold uppercase tracking-widest text-foreground mb-4">What Makes It ATS-Optimized:</h4>
+                    <ul className="space-y-3">
+                      {templateFeatures.map((feat, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                            <Check className="h-3 w-3 stroke-[3]" />
+                          </span>
+                          <span className="text-sm text-foreground/80 font-medium leading-snug">{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              <h3 className="text-2xl font-bold font-heading text-foreground mb-8">
-                Example of what I fix
-              </h3>
-
-              <div className="space-y-6">
-                {/* Before */}
-                <div className="rounded-2xl border border-border bg-zinc-50 dark:bg-zinc-900/50 p-6">
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/70 mb-3">
-                    Before
-                  </p>
-                  <p className="text-lg text-muted-foreground font-serif italic">
-                    “Responsible for managing projects and team tasks.”
-                  </p>
-                </div>
-
-                {/* After */}
-                <div className="relative rounded-2xl border border-orange-200 dark:border-orange-500/30 bg-white dark:bg-zinc-900 p-6 shadow-xl shadow-orange-500/5 scale-[1.02] transform">
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-orange-600 dark:text-orange-400 mb-3">
-                    After
-                  </p>
-                  <div className="flex items-start gap-4">
-                    <div className="mt-1 h-6 w-6 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-500" />
-                    </div>
-                    <p className="text-lg text-foreground font-medium leading-relaxed">
-                      “Led a <span className="font-bold text-foreground bg-orange-100 dark:bg-orange-500/20 px-1 rounded">6‑person team</span> to deliver 12 projects on time, improving stakeholder satisfaction by <span className="font-bold text-foreground bg-orange-100 dark:bg-orange-500/20 px-1 rounded">30%</span>.”
-                    </p>
+                  <div>
+                    <h4 className="text-sm font-bold uppercase tracking-widest text-foreground mb-4">Benefits:</h4>
+                    <ul className="space-y-3">
+                      {templateBenefits.map((ben, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-cool/10 text-accent-cool">
+                            <Check className="h-3 w-3 stroke-[3]" />
+                          </span>
+                          <span className="text-sm text-foreground/80 font-medium leading-snug">{ben}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
+
+                <div className="mt-8">
+                  <Link
+                    href="/samples"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-105 transition-all"
+                  >
+                    View ATS Resume Samples
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
 
-              <p className="mt-8 text-sm font-medium text-muted-foreground text-center">
-                You’ll get role‑specific keywords, a cleaner structure, and stronger impact statements.
-              </p>
+              {/* Right: Comparison Table */}
+              <div>
+                <h4 className="text-lg font-bold font-heading text-foreground mb-6">
+                  Here&apos;s How Resume Uplift Stacks Up Against Other Resume Writing Services
+                </h4>
+                <div className="rounded-2xl border border-border overflow-hidden">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-2 bg-muted/60 border-b border-border">
+                    <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-muted-foreground">Others</div>
+                    <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-primary">Resume Uplift</div>
+                  </div>
+                  {/* Table Rows */}
+                  {comparisonRows.map((row, i) => (
+                    <div
+                      key={i}
+                      className={`grid grid-cols-2 border-b border-border/50 last:border-0 transition-colors hover:bg-muted/30 ${i % 2 === 0 ? "bg-background" : "bg-muted/20"}`}
+                    >
+                      <div className="px-4 py-3.5 flex items-start gap-2.5">
+                        <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-red-500/10 text-red-500">
+                          <X className="h-2.5 w-2.5 stroke-[3]" />
+                        </span>
+                        <span className="text-xs text-muted-foreground font-medium leading-snug">{row.others}</span>
+                      </div>
+                      <div className="px-4 py-3.5 flex items-start gap-2.5 border-l border-border/50">
+                        <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <Check className="h-2.5 w-2.5 stroke-[3]" />
+                        </span>
+                        <span className="text-xs text-foreground font-semibold leading-snug">{row.us}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

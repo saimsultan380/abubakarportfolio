@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { AREA_LINKS } from "@/lib/areas";
 
 export function Footer() {
   return (
@@ -45,18 +46,43 @@ export function Footer() {
                   Menu
                 </h3>
                 <ul className="space-y-2 md:space-y-3">
-                  {["Home", "Services", "Work", "Process", "FAQ"].map(
-                    (item) => (
-                      <li key={item}>
-                        <Link
-                          href={`#${item.toLowerCase()}`}
-                          className="text-base md:text-lg hover:text-primary transition-colors"
-                        >
-                          {item}
-                        </Link>
-                      </li>
-                    ),
-                  )}
+                  {[
+                    { label: "Home", href: "/" },
+                    { label: "Cover Letter", href: "/cover-letter" },
+                    { label: "Resume Revamp", href: "/resume-rewriting" },
+                    { label: "Career-Specific CV", href: "/career-specific-cv" },
+                    { label: "LinkedIn Optimization", href: "/linkedin-optimization" },
+                    { label: "Services", href: "/#services" },
+                    { label: "Samples", href: "/samples" },
+                    { label: "Process", href: "/#process" },
+                    { label: "FAQ", href: "/#faq" },
+                  ].map((item) => (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        className="text-base md:text-lg hover:text-primary transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4 md:space-y-6">
+                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">
+                  Areas
+                </h3>
+                <ul className="space-y-2 md:space-y-3">
+                  {AREA_LINKS.map((area) => (
+                    <li key={area.href}>
+                      <Link
+                        href={area.href}
+                        className="text-base md:text-lg hover:text-primary transition-colors"
+                      >
+                        {area.name}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="space-y-4 md:space-y-6">
@@ -103,7 +129,7 @@ export function Footer() {
                 className="h-16 w-auto sm:h-20 md:h-24 object-contain"
               />
             </Link>
-            <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-primary hover:scale-105 max-w-full">
+            <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-bold tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-primary hover:scale-105 max-w-full">
               Resumes Uplift
             </h1>
           </div>
@@ -115,13 +141,13 @@ export function Footer() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
               <Link
-                href="/privacy"
+                href="/privacy/"
                 className="hover:text-white transition-colors"
               >
                 Privacy
               </Link>
               <Link
-                href="/terms"
+                href="/terms/"
                 className="hover:text-white transition-colors"
               >
                 Terms

@@ -130,20 +130,20 @@ export function Impact() {
   return (
     <section
       ref={sectionRef}
-      className="py-16 md:py-24 bg-zinc-50 dark:bg-black/40 relative overflow-hidden text-center md:text-left"
+      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden text-center md:text-left"
     >
       <div className="container px-4 mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-start mb-12 md:mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-8 md:mb-10">
           {/* Left: Text Content */}
           <div className="lg:col-span-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest mb-6 mx-auto lg:mx-0">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest mb-3 mx-auto lg:mx-0">
               <TrendingUp className="h-3 w-3" />
               SUCCESS STORIES
             </div>
-            <h2 className="text-4xl md:text-6xl font-black font-heading mb-6 tracking-tight text-foreground leading-[1.1]">
+            <h2 className="text-3xl md:text-5xl font-bold font-heading mb-3 tracking-tight text-foreground leading-[1.1]">
               Real <span className="text-primary">Transformations</span>
             </h2>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               From &ldquo;Ghosted&rdquo; to &ldquo;Hired&rdquo; see how
               data-backed strategies deliver results.
             </p>
@@ -202,7 +202,7 @@ export function Impact() {
                   <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
                     ATS Score
                   </p>
-                  <p className="text-2xl font-black text-foreground">98%</p>
+                  <p className="text-2xl font-bold text-foreground">98%</p>
                 </div>
               </div>
 
@@ -215,7 +215,7 @@ export function Impact() {
                   <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
                     Interview Rate
                   </p>
-                  <p className="text-2xl font-black text-foreground">+250%</p>
+                  <p className="text-2xl font-bold text-foreground">+250%</p>
                 </div>
               </div>
             </div>
@@ -334,7 +334,7 @@ export function Impact() {
                   <div className="text-right">
                     <div
                       className={cn(
-                        "text-3xl font-black font-heading leading-none mb-1",
+                        "text-3xl font-bold font-heading leading-none mb-1",
                         item.accent === "highlight"
                           ? "text-primary"
                           : "text-foreground",

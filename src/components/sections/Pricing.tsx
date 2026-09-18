@@ -102,25 +102,25 @@ export function Pricing() {
     <section
       id="pricing"
       ref={containerRef}
-      className="relative py-24 md:py-32 overflow-hidden border-t border-border/50 bg-zinc-50 dark:bg-black/40"
+      className="relative py-12 md:py-16 overflow-hidden border-t border-border/50 bg-zinc-50 dark:bg-black/40"
     >
       <div className="container relative z-10 px-4 mx-auto">
         {/* Header */}
-        <div className="max-w-2xl mx-auto text-center mb-16 md:mb-20">
-          <div className="pricing-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
+        <div className="max-w-2xl mx-auto text-center mb-8 md:mb-10">
+          <div className="pricing-badge inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3 border border-primary/20">
             <Sparkles className="h-3.5 w-3.5" />
             Investment
           </div>
-          <h2 className="pricing-title text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-6">
+          <h2 className="pricing-title text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-2">
             Invest in your{" "}
             <span className="text-primary">future self.</span>
           </h2>
-          <p className="pricing-subtitle text-lg text-muted-foreground">
+          <p className="pricing-subtitle text-sm sm:text-base text-muted-foreground">
             Transparent pricing. No hidden fees. 100% human-crafted.
           </p>
           <Link
             href="/pricing"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+            className="mt-3 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
           >
             View all pricing
             <ArrowRight className="h-4 w-4" />
@@ -128,7 +128,7 @@ export function Pricing() {
         </div>
 
         {/* Cards */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch max-w-6xl mx-auto">
           {PLANS.map((plan) => {
             const meta = planMeta[plan.id]
             const Icon = meta.icon
@@ -140,12 +140,12 @@ export function Pricing() {
                 key={plan.id}
                 className="pricing-card group relative flex flex-col rounded-2xl border border-border bg-card transition-all duration-300 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
               >
-                <div className="p-6 md:p-8 flex flex-col flex-1">
+                <div className="p-5 md:p-6 flex flex-col flex-1">
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors mb-5">
                     <Icon className="h-5 w-5" />
                   </div>
 
-                  <h3 className="text-xl font-extrabold font-heading tracking-tight text-foreground mb-0.5">
+                  <h3 className="text-xl font-bold font-heading tracking-tight text-foreground mb-0.5">
                     {plan.name}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-5">
@@ -154,7 +154,7 @@ export function Pricing() {
 
                   <div className="flex items-baseline gap-1 mb-1">
                     <span className="text-base font-semibold text-muted-foreground">$</span>
-                    <span className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground">
+                    <span className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground">
                       {plan.priceUsd}
                     </span>
                   </div>
@@ -189,7 +189,7 @@ export function Pricing() {
                         <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                           All combined
                         </span>
-                        <span className="text-base font-extrabold text-foreground">
+                        <span className="text-base font-bold text-foreground">
                           ${plan.priceUsd}
                         </span>
                       </div>

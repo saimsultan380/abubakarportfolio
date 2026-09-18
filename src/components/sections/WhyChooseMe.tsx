@@ -4,7 +4,7 @@ import * as React from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CheckCircle, Clock, Search, UserCheck } from "lucide-react";
+import { Clock, Search, UserCheck, Shield, TrendingUp, RefreshCw } from "lucide-react";
 import { GradientBorderCard } from "@/components/ui/GradientBorderCard";
 import { cn } from "@/lib/utils";
 
@@ -12,32 +12,46 @@ gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
-    title: "100% Human-Written",
+    title: "Certified Resume Writers",
     description:
-      "No AI generators. Every sentence is crafted to highlight your unique value.",
+      "Trained and certified in professional resume writing standards worldwide.",
     icon: UserCheck,
     accent: "primary",
   },
   {
-    title: "ATS-Friendly Formats",
+    title: "100% ATS-Friendly Guarantee",
     description:
-      "Clean layouts ensuring your CV passes the bots and reaches the recruiter.",
-    icon: Search,
+      "Every resume passes applicant tracking systems used by top employers.",
+    icon: Shield,
     accent: "accent-cool",
   },
   {
-    title: "Industry-Specific Strategy",
+    title: "Proven Track Record",
     description:
-      "Keywords and phrasing tailored to your target role and sector.",
-    icon: CheckCircle,
+      "Our hundreds of clients got hired faster with ATS-optimized resumes.",
+    icon: TrendingUp,
     accent: "accent-warm",
+  },
+  {
+    title: "100% Human-Written",
+    description:
+      "No AI content, 100% human Resume/CV writing with proper optimization.",
+    icon: Search,
+    accent: "primary",
+  },
+  {
+    title: "Unlimited Revisions",
+    description:
+      "Clients' satisfaction matters to us. Hence, edits continue until it's perfect.",
+    icon: RefreshCw,
+    accent: "accent-cool",
   },
   {
     title: "Fast Turnaround",
     description:
-      "Get your new CV in as little as 48 hours without compromising quality.",
+      "Get your new CV or Resume within 24 hours, without compromising quality.",
     icon: Clock,
-    accent: "primary",
+    accent: "accent-warm",
   },
 ];
 
@@ -87,24 +101,24 @@ export function WhyChooseMe() {
   return (
     <section
       ref={containerRef}
-      className="py-24 bg-zinc-50 dark:bg-black/40 relative z-10 overflow-hidden"
+      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative z-10 overflow-hidden"
     >
       <div className="container px-4 mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Image */}
-          <div className="trust-image relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[800px] border border-border/50 shadow-2xl">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+          <div className="trust-image relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[540px] border border-border/50 shadow-2xl">
+            <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1288&auto=format&fit=crop"
+              src="/THE%20DIFFERENCE-IMAGE.jpeg"
               alt="Professional Career Coach"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute bottom-0 left-0 p-8 z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold mb-4">
+            <div className="absolute bottom-0 left-0 p-6 z-20">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold mb-3">
                 <UserCheck className="h-3 w-3" />
                 Expert Guidance
               </div>
-              <blockquote className="text-white text-xl md:text-2xl font-bold font-heading leading-tight max-w-md">
+              <blockquote className="text-white text-lg md:text-xl font-bold font-heading leading-tight max-w-md">
                 &ldquo;Your career story deserves to be told with power,
                 precision, and purpose.&rdquo;
               </blockquote>
@@ -113,22 +127,21 @@ export function WhyChooseMe() {
 
           {/* Right: Content */}
           <div className="trust-content">
-            <div className="mb-12">
-              <span className="inline-block px-3 py-1 rounded-full bg-accent-cool/10 border border-accent-cool/20 text-accent-cool text-xs font-bold tracking-wide mb-4">
+            <div className="mb-6">
+              <span className="inline-block px-3 py-1 rounded-full bg-accent-cool/10 border border-accent-cool/20 text-accent-cool text-xs font-bold tracking-wide mb-3">
                 THE DIFFERENCE
               </span>
-              <h2 className="text-3xl md:text-5xl font-bold font-heading mb-6 tracking-tight text-foreground">
-                Why Trust Me With Your{" "}
-                <span className="text-primary">Career?</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-3 tracking-tight text-foreground">
+                Why Trust{" "}
+                <span className="text-primary">Us</span> With Your Career?
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Most resume writers just fix grammar. I rebuild your
-                professional narrative to position you as the high-value
-                candidate companies are fighting for.
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                We provide career-winning resumes and CVs built by certified
+                professionals who know what recruiters and ATS systems are looking for.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {features.map((feature, index) => (
                 <div key={index} className="trust-card">
                   <GradientBorderCard className="h-full p-6 flex flex-col items-start text-left hover:bg-muted/50 transition-colors">

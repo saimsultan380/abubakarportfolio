@@ -30,7 +30,7 @@ export default function CheckoutSuccessPage({
         <div className="rounded-2xl sm:rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-6 sm:p-8 md:p-10">
           {isDirectPayment ? (
             <>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-black uppercase tracking-widest border border-primary/20">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest border border-primary/20">
                 Order confirmed
               </div>
               <h1 className="mt-6 text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight">
@@ -49,7 +49,7 @@ export default function CheckoutSuccessPage({
             </>
           ) : (
             <>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-black uppercase tracking-widest border border-primary/20">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest border border-primary/20">
                 Payment successful
               </div>
               <h1 className="mt-6 text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight">

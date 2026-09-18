@@ -1,3 +1,5 @@
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbsForPath } from "@/lib/seo";
 export const metadata = {
   title: "Privacy Policy",
   description: "Read the Resumes Uplift privacy policy to understand how we collect, use, and protect your personal information.",
@@ -9,7 +11,9 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen pt-24 md:pt-32 pb-16 bg-background">
+    <>
+      <BreadcrumbJsonLd items={getBreadcrumbsForPath("/privacy/")} />
+      <main className="min-h-screen pt-24 md:pt-32 pb-16 bg-background">
       <div className="container px-4 mx-auto max-w-3xl">
         <header className="mb-10">
           <h1 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground">
@@ -107,6 +111,7 @@ export default function PrivacyPage() {
         </section>
       </div>
     </main>
+    </>
   )
 }
 
