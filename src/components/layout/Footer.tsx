@@ -71,11 +71,11 @@ export function Footer() {
                 <ul className="space-y-2 md:space-y-3">
                   {[
                     { label: "Home", href: "/" },
-                    { label: "Cover Letter", href: "/cover-letter" },
-                    { label: "Resume Revamp", href: "/resume-rewriting" },
-                    { label: "Career-Specific CV", href: "/career-specific-cv" },
-                    { label: "LinkedIn Optimization", href: "/linkedin-optimization" },
                     { label: "Services", href: "/#services" },
+                    { label: "Resume Revamp", href: "/resume-rewriting" },
+                    { label: "Career CV", href: "/career-specific-cv" },
+                    { label: "LinkedIn", href: "/linkedin-optimization" },
+                    { label: "Cover Letter", href: "/cover-letter" },
                     { label: "Samples", href: "/samples" },
                     { label: "Process", href: "/#process" },
                     { label: "FAQ", href: "/#faq" },

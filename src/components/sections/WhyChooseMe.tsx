@@ -109,7 +109,7 @@ export function WhyChooseMe() {
           <div className="trust-image relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[540px] border border-border/50 shadow-2xl">
             <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
             <img
-              src="/THE%20DIFFERENCE-IMAGE.png"
+              src="/THE%20DIFFERENCE-IMAGE.jpeg"
               alt="Professional Career Coach"
               className="w-full h-full object-cover object-top"
             />
