@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Building2, CheckCircle2, MapPin } from "lucide-react";
+import { ArrowRight, Building2, CheckCircle2 } from "lucide-react";
 import { CONTACT } from "@/lib/contact";
 
 export function AboutUs() {
@@ -28,26 +27,12 @@ export function AboutUs() {
               About Us
             </div>
 
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden">
-              <Image
-                src="/brand/new%20logo.png"
-                alt={`${CONTACT.legalName} logo`}
-                width={64}
-                height={64}
-                className="h-12 w-auto object-contain"
-              />
-            </div>
-
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-3 leading-[1.1]">
               {CONTACT.legalName}
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               Professional ATS resume writing, CV writing, cover letters, and
               LinkedIn optimization — built to get you hired.
-            </p>
-            <p className="inline-flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4 text-primary shrink-0" />
-              {CONTACT.addressLine1}, {CONTACT.addressLine2}
             </p>
           </div>
 

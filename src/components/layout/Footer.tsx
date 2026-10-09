@@ -50,12 +50,14 @@ export function Footer() {
                   <span className="whitespace-nowrap">{CONTACT.phoneDisplay}</span>
                   <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
-                <div className="flex items-start gap-3 md:gap-4 text-base sm:text-lg md:text-xl font-normal normal-case tracking-normal text-white/70 leading-snug">
-                  <MapPin className="h-5 w-5 md:h-6 md:w-6 shrink-0 text-primary mt-1" aria-hidden />
+                <div className="flex items-start gap-3 md:gap-4 text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal normal-case tracking-normal leading-snug">
+                  <MapPin className="h-5 w-5 md:h-6 md:w-6 shrink-0 text-primary mt-1.5" aria-hidden />
                   <p>
                     {CONTACT.addressLine1}
                     <br />
                     {CONTACT.addressLine2}
+                    <br />
+                    {CONTACT.addressLine3}
                   </p>
                 </div>
               </div>
