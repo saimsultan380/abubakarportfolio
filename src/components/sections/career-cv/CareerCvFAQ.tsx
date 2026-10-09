@@ -10,7 +10,7 @@ const faqs = [
     a: "A professionally written CV presents your experience clearly, highlights your achievements, and shows employers the value you bring. It gives you a stronger chance of getting noticed and securing more interviews.",
   },
   {
-    q: "How does the Resume Uplift process work?",
+    q: "How does the Resumes Uplift process work?",
     a: "We start by learning about your background, career goals, and target roles. After reviewing your information, we create a personalized CV that reflects your experience and the expectations of your industry.",
   },
   {
@@ -30,7 +30,7 @@ const faqs = [
     a: "Yes. We also offer resume writing, LinkedIn profile optimisation, cover letters, personal statements, and other career documents to support your job search.",
   },
   {
-    q: "What makes Resume Uplift different?",
+    q: "What makes Resumes Uplift different?",
     a: "Every CV is written from scratch after understanding your career goals. We don't use generic templates or AI-generated content. Our focus is on creating a CV that reflects your experience and speaks to your target employers.",
   },
   {

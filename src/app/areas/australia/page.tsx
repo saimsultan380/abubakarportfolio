@@ -42,15 +42,15 @@ export default function AustraliaAreaPage() {
       <BreadcrumbJsonLd items={getBreadcrumbsForPath("/areas/australia/")} />
       <AusHero />
       <AusWhyMatters />
-      <AusProfessional />
-      <AusOtherServices />
       <Pricing />
       <Reviews />
+      <AusProfessional />
+      <AusOtherServices />
+      <AusProcess />
       <AusSamples />
       <AusAtsKeyword />
       <AusCareerAndIndustries />
       <AusStrongFormat />
-      <AusProcess />
       <AusCitiesAndWhy />
       <AusFAQ />
       <AusCTA />

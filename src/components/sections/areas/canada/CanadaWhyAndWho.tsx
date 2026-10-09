@@ -50,7 +50,7 @@ export function CanadaWhyAndWho() {
                 achievements related to the position.
               </p>
               <p className="font-semibold text-foreground">
-                That is the approach we take at Resume Uplift. Instead of
+                That is the approach we take at Resumes Uplift. Instead of
                 treating your resume as a generic document, we structure it
                 around your experience, target role, and career goals.
               </p>
@@ -73,7 +73,7 @@ export function CanadaWhyAndWho() {
               <span className="text-primary">Canada?</span>
             </h2>
             <p className="text-sm text-muted-foreground mb-5">
-              Resume Uplift can help job seekers at different stages of their
+              Resumes Uplift can help job seekers at different stages of their
               careers, including:
             </p>
             <ul className="space-y-2.5 mb-5">
@@ -123,7 +123,7 @@ export function CanadaWhyAndWho() {
               experienced manager or executive.
             </p>
             <p className="font-semibold text-foreground">
-              Resume Uplift tailors the content according to your career level,
+              Resumes Uplift tailors the content according to your career level,
               professional background, and target position rather than forcing
               every applicant into the same template.
             </p>

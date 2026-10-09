@@ -55,7 +55,7 @@ export function UsaComparison() {
               Their Way
             </div>
             <div className="px-4 sm:px-6 py-4 text-center font-bold font-heading text-primary border-l border-border/70">
-              Resume Uplift&apos;s Way
+              Resumes Uplift&apos;s Way
             </div>
           </div>
 

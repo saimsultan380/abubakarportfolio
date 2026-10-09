@@ -152,7 +152,7 @@ export function LinkedInFAQ() {
             Our certified career consultants are available on WhatsApp to discuss your profile goals.
           </p>
           <Link
-            href="https://wa.me/447478564745"
+            href="https://wa.me/18103809944"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] transition-all"

@@ -83,7 +83,7 @@ export function UsaOptimize() {
       <div className="container px-4 mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-3">
-            How Resume Uplift Optimizes Your Resume for the{" "}
+            How Resumes Uplift Optimizes Your Resume for the{" "}
             <span className="text-primary">US Job Market</span>
           </h2>
         </div>

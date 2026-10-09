@@ -137,7 +137,7 @@ export function CanadaStrongAndCities() {
               Hire Our Team
             </Link>
             <Link
-              href="https://wa.me/447478564745"
+              href="https://wa.me/18103809944"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-11 items-center justify-center rounded-xl border border-input bg-card px-6 text-sm font-medium hover:bg-accent transition-all"

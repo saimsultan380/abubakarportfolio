@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
+import { AboutUs } from "@/components/sections/AboutUs";
 import { TrustedATS } from "@/components/sections/TrustedATS";
 import { CompanyMarquee } from "@/components/sections/CompanyMarquee";
 import { Services } from "@/components/sections/Services";
@@ -39,6 +40,7 @@ export default function Home() {
     <>
       <BreadcrumbJsonLd items={[]} />
       <Hero />
+      <AboutUs />
       <TrustedATS />
       <CompanyMarquee />
       <Services />

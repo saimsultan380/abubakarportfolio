@@ -41,11 +41,11 @@ export default function CanadaAreaPage() {
       <BreadcrumbJsonLd items={getBreadcrumbsForPath("/areas/canada/")} />
       <CanadaHero />
       <CanadaProfessional />
-      <CanadaCovers />
-      <CanadaOtherServices />
-      <CanadaProcess />
       <Pricing />
       <Reviews />
+      <CanadaCovers />
+      <CanadaProcess />
+      <CanadaOtherServices />
       <CanadaSamples />
       <CanadaWhyAndWho />
       <CanadaStrongAndCities />

@@ -64,7 +64,7 @@ export function CoverLetterTrust() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
-              href="https://wa.me/447478564745"
+              href="https://wa.me/18103809944"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-xl bg-primary px-6 text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02]"

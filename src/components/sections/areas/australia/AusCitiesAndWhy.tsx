@@ -90,7 +90,7 @@ export function AusCitiesAndWhy() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-4">
-              Why Choose <span className="text-primary">Resume Uplift?</span>
+              Why Choose <span className="text-primary">Resumes Uplift?</span>
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-2">
               You do not need another resume filled with generic phrases.

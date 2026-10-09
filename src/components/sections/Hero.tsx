@@ -37,7 +37,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative pt-24 pb-10 md:pt-28 md:pb-12 lg:pt-32 lg:pb-14 overflow-hidden bg-background"
+      className="relative pt-24 pb-10 md:pt-28 md:pb-12 lg:pt-32 lg:pb-14 overflow-hidden bg-background border-b border-border"
     >
       {/* Mesh Gradients */}
       <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] bg-primary/20 blur-[120px] rounded-full mix-blend-multiply opacity-20 animate-pulse" />

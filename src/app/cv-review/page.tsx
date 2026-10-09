@@ -246,14 +246,14 @@ Your target job roles and details have been pre-filled in the email body.`);
               </p>
             </div>
 
-            {/* WhatsApp Number (UK) */}
+            {/* WhatsApp Number */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <MessageCircle className="h-4 w-4 text-primary" />
                 WhatsApp Number <span className="text-red-500">*</span>
               </div>
               <p className="text-xs text-muted-foreground">
-                UK format: include country code +44
+                Include country code, e.g. +1
               </p>
               <input
                 value={whatsappNumber}

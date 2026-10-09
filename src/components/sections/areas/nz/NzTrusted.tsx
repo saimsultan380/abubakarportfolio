@@ -28,7 +28,7 @@ export function NzTrusted() {
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-3 leading-[1.15]">
-            Resume Uplift: Trusted{" "}
+            Resumes Uplift: Trusted{" "}
             <span className="text-primary">ATS Resume Writing</span> Services in
             New Zealand
           </h2>
@@ -62,7 +62,7 @@ export function NzTrusted() {
               See ATS Resume Samples
             </Link>
             <Link
-              href="https://wa.me/447478564745"
+              href="https://wa.me/18103809944"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-xl bg-primary px-6 text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90"

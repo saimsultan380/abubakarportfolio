@@ -56,7 +56,7 @@ export function UkHero() {
               Most resumes and CVs never reach a human. They&apos;re filtered
               out by ATS software before a recruiter opens the file, often
               because of formatting the applicant never thought to check.
-              Resume Uplift builds resumes that pass UK employer screening
+              Resumes Uplift builds resumes that pass UK employer screening
               systems and still read well once a person picks them up.
             </p>
 

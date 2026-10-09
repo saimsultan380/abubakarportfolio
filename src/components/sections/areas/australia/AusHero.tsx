@@ -92,7 +92,7 @@ export function AusHero() {
             </p>
 
             <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-              At Resume Uplift, we create ATS-friendly resumes for Australian
+              At Resumes Uplift, we create ATS-friendly resumes for Australian
               job seekers with clear structure, relevant keywords,
               achievement-focused experience and a professional Australian
               resume style.

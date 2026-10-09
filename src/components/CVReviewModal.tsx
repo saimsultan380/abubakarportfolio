@@ -299,7 +299,7 @@ Your target job roles and details have been pre-filled in the email body.`);
             </p>
           </div>
 
-          {/* WhatsApp Number (UK) */}
+          {/* WhatsApp Number */}
           <div className="space-y-2 sm:space-y-3">
             <label htmlFor="whatsappNumber" className="block">
               <span className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-foreground mb-2">
@@ -308,7 +308,7 @@ Your target job roles and details have been pre-filled in the email body.`);
                 <span className="text-red-500">*</span>
               </span>
               <p className="text-[10px] sm:text-xs text-muted-foreground mb-2 sm:mb-3">
-                UK format: include country code +44
+                Include country code, e.g. +1
               </p>
             </label>
             <input

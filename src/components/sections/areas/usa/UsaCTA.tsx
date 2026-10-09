@@ -81,7 +81,7 @@ export function UsaCTA() {
             </Link>
 
             <Link
-              href="https://wa.me/447478564745"
+              href="https://wa.me/18103809944"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-14 items-center justify-center px-6 rounded-full border border-border bg-card text-sm sm:text-base font-bold text-foreground hover:border-primary/40 hover:text-primary transition-colors"

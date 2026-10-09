@@ -87,7 +87,7 @@ export function ResumeRewritingHero() {
 
             <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
               <Link
-                href="https://wa.me/447478564745"
+                href="https://wa.me/18103809944"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-primary px-7 text-sm sm:text-base font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02]"
@@ -96,7 +96,7 @@ export function ResumeRewritingHero() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="https://wa.me/447478564745"
+                href="https://wa.me/18103809944"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-input bg-card px-5 text-sm sm:text-base font-medium transition-all hover:bg-accent hover:text-accent-foreground"

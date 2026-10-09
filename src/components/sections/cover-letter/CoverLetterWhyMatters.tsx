@@ -111,7 +111,7 @@ export function CoverLetterWhyMatters() {
 
         <div className="flex justify-center">
           <Link
-            href="https://wa.me/447478564745"
+            href="https://wa.me/18103809944"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-105 transition-all"

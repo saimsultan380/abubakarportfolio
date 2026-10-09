@@ -165,7 +165,7 @@ export function FAQ() {
                             </div>
 
                             <a
-                                href="https://wa.me/447478564745"
+                                href="https://wa.me/18103809944"
                                 className="w-full inline-flex h-12 items-center justify-center px-6 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 font-bold uppercase tracking-widest text-xs shadow-lg shadow-primary/20 group"
                             >
                                 Ask on WhatsApp

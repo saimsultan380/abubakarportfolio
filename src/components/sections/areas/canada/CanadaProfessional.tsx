@@ -32,7 +32,7 @@ export function CanadaProfessional() {
               make it difficult for an employer to see its value quickly.
             </p>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
-              Resume Uplift helps turn your existing experience into a clear,
+              Resumes Uplift helps turn your existing experience into a clear,
               professional career document built around the roles you want to
               pursue.
             </p>

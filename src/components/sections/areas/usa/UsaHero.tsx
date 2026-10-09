@@ -54,7 +54,7 @@ export function UsaHero() {
 
             <p className="text-sm sm:text-base text-muted-foreground mb-4 max-w-3xl mx-auto leading-relaxed">
               Professional ATS-friendly Resume Writing services by certified ATS
-              resume writers in the USA. Resume Uplift optimizes your ATS resume
+              resume writers in the USA. Resumes Uplift optimizes your ATS resume
               and increases your chances of being hired and receiving interview
               calls in the USA marketplace.
             </p>

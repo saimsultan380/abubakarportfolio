@@ -146,13 +146,13 @@ export function RecentWork() {
               {/* Right: Comparison Table */}
               <div>
                 <h4 className="text-lg font-bold font-heading text-foreground mb-6">
-                  Here&apos;s How Resume Uplift Stacks Up Against Other Resume Writing Services
+                  Here&apos;s How Resumes Uplift Stacks Up Against Other Resume Writing Services
                 </h4>
                 <div className="rounded-2xl border border-border overflow-hidden">
                   {/* Table Header */}
                   <div className="grid grid-cols-2 bg-muted/60 border-b border-border">
                     <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-muted-foreground">Others</div>
-                    <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-primary">Resume Uplift</div>
+                    <div className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-primary">Resumes Uplift</div>
                   </div>
                   {/* Table Rows */}
                   {comparisonRows.map((row, i) => (

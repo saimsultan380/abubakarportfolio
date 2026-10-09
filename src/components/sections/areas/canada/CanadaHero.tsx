@@ -67,7 +67,7 @@ export function CanadaHero() {
             </p>
 
             <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-              At Resume Uplift, we create professionally written, ATS-friendly
+              At Resumes Uplift, we create professionally written, ATS-friendly
               resumes according to your target role and the Canadian job market.
               Whether you are a recent graduate, experienced professional,
               career changer, or newcomer to Canada, we focus on making your

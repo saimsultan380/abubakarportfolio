@@ -147,10 +147,10 @@ export function Navbar() {
 
     const navLinks = [
         { name: "Services", href: "/#services", icon: Briefcase },
-        { name: "Cover Letter", href: "/cover-letter", icon: PenTool },
         { name: "Resume Revamp", href: "/resume-rewriting", icon: Edit },
         { name: "Career CV", href: "/career-specific-cv", icon: Target },
         { name: "LinkedIn", href: "/linkedin-optimization", icon: Linkedin },
+        { name: "Cover Letter", href: "/cover-letter", icon: PenTool },
     ]
 
     return (

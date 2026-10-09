@@ -20,7 +20,7 @@ export function CanadaWhyChoose() {
       <div className="container px-4 mx-auto relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-8">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-4">
-            Why Choose Resume Uplift for Resume Writing in{" "}
+            Why Choose Resumes Uplift for Resume Writing in{" "}
             <span className="text-primary">Canada?</span>
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-2">
@@ -29,7 +29,7 @@ export function CanadaWhyChoose() {
             understand.
           </p>
           <p className="text-sm font-semibold text-foreground">
-            Resume Uplift combines:
+            Resumes Uplift combines:
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export function CanadaWhyChoose() {
             Hire Resume Writer
           </Link>
           <Link
-            href="https://wa.me/447478564745"
+            href="https://wa.me/18103809944"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-12 items-center justify-center rounded-xl border border-input bg-card px-6 text-sm font-medium hover:bg-accent transition-all"

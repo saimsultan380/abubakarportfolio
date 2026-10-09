@@ -33,7 +33,7 @@ export function UkDiyComparison() {
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-3">
             DIY Resume vs. ATS-Optimised Resume from{" "}
-            <span className="text-primary">Resume Uplift</span>
+            <span className="text-primary">Resumes Uplift</span>
           </h2>
         </div>
 
@@ -48,7 +48,7 @@ export function UkDiyComparison() {
                   DIY Resume
                 </th>
                 <th className="px-4 sm:px-6 py-4 text-sm font-bold font-heading text-primary">
-                  ATS-Optimised Resume from Resume Uplift
+                  ATS-Optimised Resume from Resumes Uplift
                 </th>
               </tr>
             </thead>

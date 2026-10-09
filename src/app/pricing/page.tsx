@@ -183,7 +183,7 @@ export default function PricingPage() {
                   <p className="mt-1 text-xs font-medium text-muted-foreground">USD · full bundle checkout</p>
                   {bundleSavingsUsd > 0 ? (
                     <p className="mt-3 inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                      Save {money(bundleSavingsUsd)} vs buying items separately
+                      Save {money(bundleSavingsUsd)} vs ordering items separately
                     </p>
                   ) : (
                     <p className="mt-3 text-xs text-muted-foreground">

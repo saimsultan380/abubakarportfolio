@@ -66,7 +66,7 @@ export function NzHero() {
             </p>
 
             <p className="text-sm sm:text-base text-muted-foreground mb-7 max-w-3xl mx-auto leading-relaxed">
-              Resume Uplift writes ATS-friendly resumes and CVs built for
+              Resumes Uplift writes ATS-friendly resumes and CVs built for
               exactly how New Zealand hiring software reads and ranks
               candidates.
             </p>

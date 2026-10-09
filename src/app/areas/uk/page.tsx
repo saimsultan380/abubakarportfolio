@@ -40,10 +40,10 @@ export default function UkAreaPage() {
       <BreadcrumbJsonLd items={getBreadcrumbsForPath("/areas/uk/")} />
       <UkHero />
       <UkTrusted />
-      <UkOtherServices />
-      <UkProcess />
       <Pricing />
       <Reviews />
+      <UkProcess />
+      <UkOtherServices />
       <UkSamples />
       <UkWhyAts />
       <UkDiyComparison />

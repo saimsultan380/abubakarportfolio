@@ -44,7 +44,7 @@ export function AusOtherServices() {
             Need More Than a <span className="text-primary">Resume?</span>
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-8">
-            Your resume is often only one part of the application. Resume Uplift
+            Your resume is often only one part of the application. Resumes Uplift
             also provides complementary career documents that can support your
             job search.
           </p>

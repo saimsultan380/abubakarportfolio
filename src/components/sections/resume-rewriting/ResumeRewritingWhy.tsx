@@ -96,13 +96,13 @@ export function ResumeRewritingWhy() {
             </div>
             <div className="flex-1">
               <h3 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-2">
-                The Fix — Resume Uplift&apos;s Professional Resume Rewriting
+                The Fix — Resumes Uplift&apos;s Professional Resume Rewriting
                 Services
               </h3>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 max-w-3xl">
                 This is exactly what a professional resume revamp fixes. No
                 gimmicks, no keyword stuffing, just a clear &amp; well-structured
-                ATS resume that is genuinely easy to read. Resume Uplift
+                ATS resume that is genuinely easy to read. Resumes Uplift
                 rewrites your content and formatting so you compete stronger for
                 every role you apply to.
               </p>

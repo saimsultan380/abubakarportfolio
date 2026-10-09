@@ -46,7 +46,7 @@ export function CanadaOtherServices() {
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-8">
             Your resume is often only one part of your professional application.
-            Resume Uplift also provides supporting career-document services to
+            Resumes Uplift also provides supporting career-document services to
             help maintain a consistent professional profile.
           </p>
         </div>

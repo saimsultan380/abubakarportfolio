@@ -40,12 +40,12 @@ export default function NewZealandAreaPage() {
       <BreadcrumbJsonLd items={getBreadcrumbsForPath("/areas/new-zealand/")} />
       <NzHero />
       <NzTrusted />
-      <NzProcess />
-      <NzOtherServices />
-      <NzWhyAts />
       <Pricing />
       <Reviews />
+      <NzProcess />
+      <NzOtherServices />
       <NzSamplesAndExtras />
+      <NzWhyAts />
       <NzComparison />
       <NzWhoAndMistakes />
       <NzFAQ />

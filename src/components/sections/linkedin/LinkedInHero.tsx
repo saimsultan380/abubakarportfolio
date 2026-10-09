@@ -116,7 +116,7 @@ export function LinkedInHero() {
               </a>
 
               <Link
-                href="https://wa.me/447478564745"
+                href="https://wa.me/18103809944"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-input bg-card px-5 text-sm sm:text-base font-medium text-foreground transition-all hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"

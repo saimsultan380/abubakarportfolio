@@ -203,7 +203,7 @@ export function Pricing() {
                       </p>
                       {bundleSavingsUsd > 0 ? (
                         <p className="mt-2.5 inline-flex w-full items-center justify-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-center text-[11px] font-semibold leading-tight text-primary sm:text-xs">
-                          Save ${bundleSavingsUsd} vs buying items separately
+                          Save ${bundleSavingsUsd} vs ordering items separately
                         </p>
                       ) : null}
                     </div>

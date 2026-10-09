@@ -170,7 +170,7 @@ export function CoverLetterPricing() {
 
               <div className="p-8 pt-0">
                 <a
-                  href="https://wa.me/447478564745"
+                  href="https://wa.me/18103809944"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] ${plan.popular ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90" : "border border-primary text-primary hover:bg-primary/5"}`}

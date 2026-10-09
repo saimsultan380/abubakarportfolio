@@ -1,4 +1,5 @@
 import { canonicalUrl, SITE_URL, type BreadcrumbItem } from "@/lib/seo";
+import { CONTACT } from "@/lib/contact";
 
 type BreadcrumbJsonLdProps = {
   items: BreadcrumbItem[];
@@ -51,8 +52,17 @@ export function SiteGraphJsonLd() {
         description:
           "Professional ATS-optimized resume and CV writing service that helps job seekers land more interviews.",
         url: `${SITE_URL}/`,
-        email: "resumesuplift@gmail.com",
+        email: CONTACT.email,
+        telephone: CONTACT.phoneDisplay,
         priceRange: "$$",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: CONTACT.addressLine1,
+          addressLocality: CONTACT.city,
+          addressRegion: CONTACT.region,
+          postalCode: CONTACT.postalCode,
+          addressCountry: CONTACT.country,
+        },
         areaServed: {
           "@type": "Place",
           name: "Worldwide",
@@ -95,7 +105,16 @@ export function SiteGraphJsonLd() {
         name: "Resumes Uplift",
         url: `${SITE_URL}/`,
         logo: `${SITE_URL}/brand/new%20logo.png`,
-        email: "resumesuplift@gmail.com",
+        email: CONTACT.email,
+        telephone: CONTACT.phoneDisplay,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: CONTACT.addressLine1,
+          addressLocality: CONTACT.city,
+          addressRegion: CONTACT.region,
+          postalCode: CONTACT.postalCode,
+          addressCountry: CONTACT.country,
+        },
         description:
           "Professional resume and CV writing service helping job seekers create ATS-optimized resumes that land interviews.",
         sameAs: [],
