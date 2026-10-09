@@ -88,8 +88,8 @@ export default function TermsPage() {
             <h2 className="text-xl md:text-2xl font-semibold text-foreground">Contact</h2>
             <p className="text-muted-foreground">
               Questions about these Terms? Contact{" "}
-              <a className="text-primary font-semibold hover:underline" href="mailto:resumesuplift@gmail.com">
-                resumesuplift@gmail.com
+              <a className="text-primary font-semibold hover:underline" href="mailto:career@resumesuplift.com">
+                career@resumesuplift.com
               </a>
               .
             </p>

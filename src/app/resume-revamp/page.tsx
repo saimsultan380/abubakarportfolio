@@ -239,7 +239,7 @@ Note: Please ensure that your current resume is attached to this email before se
     const subject = "Resume Revamp Request";
     const body = buildEmailBody();
 
-    const mailtoUrl = `mailto:resumesuplift@gmail.com?subject=${encodeURIComponent(
+    const mailtoUrl = `mailto:career@resumesuplift.com?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
 

@@ -345,7 +345,7 @@ Note: Please ensure that all uploaded files are attached to this email before se
     const subject = `Resume Request - ${fullName}`;
     const body = buildEmailBody();
 
-    const mailtoUrl = `mailto:resumesuplift@gmail.com?subject=${encodeURIComponent(
+    const mailtoUrl = `mailto:career@resumesuplift.com?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
 

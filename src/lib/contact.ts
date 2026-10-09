@@ -1,7 +1,7 @@
 /** Business contact details — single source of truth for the site. */
 export const CONTACT = {
   legalName: "Resumes Uplift LLC",
-  email: "resumesuplift@gmail.com",
+  email: "career@resumesuplift.com",
   phoneDisplay: "+1 (810) 380 9944",
   /** Digits only, country code included (for tel: and wa.me) */
   phoneE164: "18103809944",

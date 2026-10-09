@@ -125,7 +125,7 @@ Looking forward to your professional feedback!
 Thank you,
 [Your Name]`;
 
-    const mailtoUrl = `mailto:resumesuplift@gmail.com?subject=${encodeURIComponent(
+    const mailtoUrl = `mailto:career@resumesuplift.com?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
 
