@@ -110,7 +110,7 @@ export function AboutUs() {
               <div className="hidden sm:block h-10 w-px bg-border" />
               <div>
                 <div className="text-2xl sm:text-3xl font-bold font-heading text-primary">
-                  7+
+                  4+
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
                   Years of expertise

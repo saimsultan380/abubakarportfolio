@@ -77,7 +77,7 @@ export function SuccessStats() {
     startOnView: true,
     ref: sectionRef,
   });
-  const yearsCount = useCountUp(7, {
+  const yearsCount = useCountUp(4, {
     duration: 2000,
     suffix: "+",
     startOnView: true,
