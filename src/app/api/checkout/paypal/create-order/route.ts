@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         purchase_units: [
           {
             reference_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}:q${quantity}`,
-            description: `${plan.name} — ${pkg.name}${quantity > 1 ? ` × ${quantity}` : ""}${rush12h ? " (12h / item)" : ""}`,
+            description: `${plan.name} - ${pkg.name}${quantity > 1 ? ` × ${quantity}` : ""}${rush12h ? " (12h / item)" : ""}`,
             custom_id: `${planId}:${pkg.id}${rush12h ? ":rush12h" : ""}:q${quantity}`,
             amount: {
               currency_code: "USD",

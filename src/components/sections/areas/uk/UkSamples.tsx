@@ -21,7 +21,7 @@ export function UkSamples() {
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
               Browse ATS-optimised resume and CV samples built for UK hiring
-              systems — clear section headings, clean formatting, and
+              systems: clear section headings, clean formatting, and
               advert-matched wording that works for both software and recruiters.
             </p>
             <Link

@@ -32,7 +32,7 @@ export function AboutUs() {
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               Professional ATS resume writing, CV writing, cover letters, and
-              LinkedIn optimization — built to get you hired.
+              LinkedIn optimization, built to get you hired.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ export function AboutUs() {
               </p>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Every document is written by certified writers who understand
-                how modern applicant tracking systems parse applications — and
+                how modern applicant tracking systems parse applications, and
                 how hiring managers decide who gets the interview.
               </p>
             </div>
@@ -65,8 +65,8 @@ export function AboutUs() {
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 A strong career document should reflect real achievements, not
                 generic buzzwords. We work one-on-one with clients across
-                industries and career levels — from recent graduates to
-                executives — so your application is targeted, clear, and
+                industries and career levels, from recent graduates to
+                executives, so your application is targeted, clear, and
                 competitive.
               </p>
               <ul className="space-y-2.5 pt-1">

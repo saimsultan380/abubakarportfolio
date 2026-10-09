@@ -80,7 +80,7 @@ export function CoverLetterProcess() {
             Our Process
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-3">
-            How It Works &mdash;{" "}
+            How It Works:{" "}
             <span className="text-primary">
               Our Cover Letter Writing Process
             </span>

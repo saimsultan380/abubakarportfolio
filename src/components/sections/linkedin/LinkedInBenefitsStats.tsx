@@ -48,7 +48,7 @@ const stats = [
   {
     value: "85%",
     title: "of High-Paying Roles Filled via Sourcing",
-    description: "Top corporate and executive positions are rarely won on job boards—they go to sourced, optimized LinkedIn candidates.",
+    description: "Top corporate and executive positions are rarely won on job boards. They go to sourced, optimized LinkedIn candidates.",
     subtext: "Position yourself for hidden market opportunities.",
     icon: Briefcase,
   },

@@ -21,7 +21,7 @@ const cards = [
   },
   {
     title: "Where Most Resumes Fall Short",
-    body: "Yet research shows over half of resumes are far from ready. On average, more than half the important terms from a job posting are missing entirely — even when the candidate is qualified.",
+    body: "Yet research shows over half of resumes are far from ready. On average, more than half the important terms from a job posting are missing entirely, even when the candidate is qualified.",
     stat: "51%",
     statLabel: "of resumes score below 50/100 on ATS compatibility",
     icon: FileWarning,
@@ -96,7 +96,7 @@ export function ResumeRewritingWhy() {
             </div>
             <div className="flex-1">
               <h3 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-2">
-                The Fix — Resumes Uplift&apos;s Professional Resume Rewriting
+                The Fix: Resumes Uplift&apos;s Professional Resume Rewriting
                 Services
               </h3>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 max-w-3xl">

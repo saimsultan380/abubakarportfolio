@@ -598,7 +598,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
           >
             {plans.map((p) => (
               <option key={p.id} value={p.id}>
-                {p.name} — {money(p.priceUsd)}
+                {p.name} - {money(p.priceUsd)}
               </option>
             ))}
           </select>
@@ -701,7 +701,7 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
         <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className="text-sm font-bold">{plan.name} — {pkg.name}</div>
+              <div className="text-sm font-bold">{plan.name} - {pkg.name}</div>
               <div className="mt-1 text-xs text-muted-foreground font-semibold italic">
                 &ldquo;{plan.description}&rdquo;
               </div>

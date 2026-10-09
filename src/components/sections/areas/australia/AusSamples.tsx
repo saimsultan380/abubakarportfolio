@@ -21,7 +21,7 @@ export function AusSamples() {
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
               Browse ATS-optimised resume and CV samples built for Australian
-              employers — clear structure, relevant keywords, and
+              employers: clear structure, relevant keywords, and
               achievement-focused writing that works for both recruitment
               systems and recruiters.
             </p>

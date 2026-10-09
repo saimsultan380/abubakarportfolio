@@ -3,14 +3,14 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { getBreadcrumbsForPath } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Pricing — Resume & CV Writing Packages",
+  title: "Pricing - Resume & CV Writing Packages",
   description:
     "Choose from Entry, Mid, or Executive level resume packages. Cover letter, LinkedIn optimization, and full bundles available. Transparent pricing, no hidden fees.",
   alternates: {
     canonical: "https://resumesuplift.com/pricing/",
   },
   openGraph: {
-    title: "Pricing — Resume & CV Writing Packages | Resumes Uplift",
+    title: "Pricing - Resume & CV Writing Packages | Resumes Uplift",
     description:
       "Choose from Entry, Mid, or Executive level resume packages. Cover letter, LinkedIn optimization, and full bundles available.",
     url: "https://resumesuplift.com/pricing/",

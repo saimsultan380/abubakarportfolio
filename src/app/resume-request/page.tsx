@@ -236,7 +236,7 @@ Work Experience Entry #${idx + 1}
 - Job Title: ${e.jobTitle || "-"}
 - Company Name: ${e.companyName || "-"}
 - Location: ${e.location || "-"}
-- Start Date – End Date: ${e.startDate || "-"} – ${e.endDate || "-"}
+- Start Date - End Date: ${e.startDate || "-"} - ${e.endDate || "-"}
 - Key Responsibilities / Achievements:
 ${e.responsibilities || "-"}`
       )
@@ -820,7 +820,7 @@ Note: Please ensure that all uploaded files are attached to this email before se
                       </div>
                       <div className="space-y-1">
                         <label className="text-xs font-medium text-muted-foreground">
-                          Start Date – End Date
+                          Start Date - End Date
                         </label>
                         <div className="grid grid-cols-2 gap-2">
                           <input

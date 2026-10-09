@@ -101,7 +101,7 @@ export async function POST(req: Request) {
             currency: "usd",
             unit_amount: amount,
             product_data: {
-              name: `${plan.name} — ${pkg.name}${quantity > 1 ? ` × ${quantity}` : ""}${rush12h ? " (12h / item)" : ""}`,
+              name: `${plan.name} - ${pkg.name}${quantity > 1 ? ` × ${quantity}` : ""}${rush12h ? " (12h / item)" : ""}`,
               description: plan.description,
             },
           },

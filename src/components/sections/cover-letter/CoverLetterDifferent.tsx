@@ -66,7 +66,7 @@ export function CoverLetterDifferent() {
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Anyone can write a cover letter. But not everyone can write
               job-winning cover letters. Our team focuses on quality, relevance,
-              and results — not templates.
+              and results, not templates.
             </p>
           </div>
 

@@ -21,7 +21,7 @@ export function NzSamplesAndExtras() {
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
               Browse ATS-optimised resume and CV samples built for New Zealand
-              employers — clean formatting, role-matched keywords, and writing
+              employers: clean formatting, role-matched keywords, and writing
               that works for both screening systems and recruiters.
             </p>
             <Link
