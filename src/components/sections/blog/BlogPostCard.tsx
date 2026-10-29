@@ -3,35 +3,12 @@ import { ArrowRight } from "lucide-react";
 import type { BlogPost } from "@/lib/blog";
 import { blogPostPath } from "@/lib/blog";
 import { BlogCoverImage } from "@/components/sections/blog/BlogCoverImage";
-import { BlogImagePlaceholder } from "@/components/sections/blog/BlogImagePlaceholder";
 
-type BlogPostCardProps =
-  | { variant: "post"; post: BlogPost }
-  | { variant: "placeholder" };
+type BlogPostCardProps = {
+  post: BlogPost;
+};
 
-export function BlogPostCard(props: BlogPostCardProps) {
-  if (props.variant === "placeholder") {
-    return (
-      <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-dashed border-border/60 bg-muted/20">
-        <BlogImagePlaceholder
-          label="Coming soon"
-          aspect="video"
-          className="rounded-none border-0 border-b border-dashed border-border/60"
-        />
-        <div className="flex flex-1 flex-col p-5 sm:p-6">
-          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
-            Coming soon
-          </p>
-          <h2 className="text-lg sm:text-xl font-bold font-heading text-muted-foreground/80">
-            New post arriving soon
-          </h2>
-        </div>
-      </div>
-    );
-  }
-
-  const { post } = props;
-
+export function BlogPostCard({ post }: BlogPostCardProps) {
   return (
     <Link
       href={blogPostPath(post.slug)}

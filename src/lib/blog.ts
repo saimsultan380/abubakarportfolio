@@ -40,9 +40,6 @@ export const BLOG_POSTS: BlogPost[] = [
   },
 ];
 
-/** Fixed card slots on /blog/ — fill remaining with placeholders. */
-export const BLOG_CARD_COUNT = 3;
-
 export function getPublishedPosts(): BlogPost[] {
   return BLOG_POSTS.filter((post) => post.published);
 }

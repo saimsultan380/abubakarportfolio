@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   creator: "Resumes Uplift",
   publisher: "Resumes Uplift",
   verification: {
-    google: "3lT3phbyzEO6yh8nkCSIfsnzWpAhfxIhU_WNM2r60sQ",
+    google: "8pvd-SFOs0ir8VZ2BVW95CXxnrTZweR8Ateug8-jxgQ",
   },
   openGraph: {
     type: "website",

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { BlogCoverImage } from "@/components/sections/blog/BlogCoverImage";
-import { BlogImagePlaceholder } from "@/components/sections/blog/BlogImagePlaceholder";
+import { BlogFaqAccordion } from "@/components/sections/blog/BlogFaqAccordion";
 import { getBlogPost } from "@/lib/blog";
 
 function Prose({ children }: { children: ReactNode }) {
@@ -172,8 +172,6 @@ export function WhatTenseShouldAResumeBeIn() {
             </Prose>
           </section>
 
-          <BlogImagePlaceholder label="Resume tense examples placeholder" />
-
           <section className="space-y-4">
             <H2>When Should You Use Present Tense in a Resume?</H2>
             <Prose>
@@ -307,8 +305,6 @@ export function WhatTenseShouldAResumeBeIn() {
               </p>
             </Prose>
           </section>
-
-          <BlogImagePlaceholder label="Past vs present tense comparison placeholder" />
 
           <section className="space-y-5">
             <H2>Resume Present Tense or Past Tense: Examples</H2>
@@ -480,8 +476,6 @@ export function WhatTenseShouldAResumeBeIn() {
             </Prose>
           </section>
 
-          <BlogImagePlaceholder label="Common resume tense mistakes placeholder" />
-
           <section className="space-y-5">
             <H2>Common Resume Tense Mistakes to Avoid</H2>
             <Table
@@ -518,9 +512,9 @@ export function WhatTenseShouldAResumeBeIn() {
             </Prose>
           </section>
 
-          <section className="space-y-6">
-            <H2>Frequently Asked Questions</H2>
-            {[
+          <BlogFaqAccordion
+            title="Frequently Asked Questions"
+            items={[
               {
                 q: "What tense should a resume be in?",
                 a: "Use present tense for ongoing responsibilities in your current role and past tense for previous roles and completed achievements.",
@@ -545,17 +539,8 @@ export function WhatTenseShouldAResumeBeIn() {
                 q: "What is the past tense of oversee in a resume?",
                 a: 'The simple past tense is "oversaw." For example, "Oversaw daily operations and staff scheduling."',
               },
-            ].map((item, i) => (
-              <div key={item.q} className="space-y-2">
-                <H3>
-                  {i + 1}. {item.q}
-                </H3>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {item.a}
-                </p>
-              </div>
-            ))}
-          </section>
+            ]}
+          />
 
           <section className="rounded-3xl border border-primary/25 bg-primary/5 p-6 sm:p-8 space-y-4">
             <H2>Final Thoughts</H2>

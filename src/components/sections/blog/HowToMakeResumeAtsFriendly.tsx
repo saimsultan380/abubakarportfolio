@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { BlogCoverImage } from "@/components/sections/blog/BlogCoverImage";
-import { BlogImagePlaceholder } from "@/components/sections/blog/BlogImagePlaceholder";
 import { BlogChecklist } from "@/components/sections/blog/BlogChecklist";
+import { BlogFaqAccordion } from "@/components/sections/blog/BlogFaqAccordion";
 import { getBlogPost } from "@/lib/blog";
 
 function Prose({ children }: { children: ReactNode }) {
@@ -135,40 +135,14 @@ export function HowToMakeResumeAtsFriendly() {
             </ul>
           </section>
 
-          <section className="space-y-4">
-            <H2>Frequently asked questions</H2>
-            <H3>What is an ATS-friendly resume?</H3>
-            <Prose>
-              <p>
-                An ATS-friendly resume is a resume structured so that applicant
-                tracking software can extract and organise its information
-                accurately while remaining easy for recruiters to read. It is a
-                regular resume designed with readability, relevant terminology,
-                and straightforward formatting in mind.
-              </p>
-              <p>
-                Employers use ATS platforms to manage applications, maintain
-                candidate records, and support recruitment workflows. Depending
-                on the system and employer configuration, software may extract
-                employment history, education, contact information, and skills
-                into searchable fields.
-              </p>
-              <p>
-                For example, Greenhouse documents formatting problems that can
-                affect resume parsing, including columns, graphics, text boxes,
-                and contact information placed in certain document elements.
-                Lever explains how its parser extracts resume details into
-                candidate profiles.
-              </p>
-              <p>
-                An ATS-friendly resume does not guarantee that an employer will
-                select or interview you. Its purpose is to make your
-                qualifications easier to extract, find, and evaluate.
-              </p>
-            </Prose>
-          </section>
-
-          <BlogImagePlaceholder label="ATS resume layout placeholder" />
+          <BlogFaqAccordion
+            items={[
+              {
+                q: "What is an ATS-friendly resume?",
+                a: "An ATS-friendly resume is a resume structured so that applicant tracking software can extract and organise its information accurately while remaining easy for recruiters to read. It is a regular resume designed with readability, relevant terminology, and straightforward formatting in mind. Employers use ATS platforms to manage applications, maintain candidate records, and support recruitment workflows. Depending on the system and employer configuration, software may extract employment history, education, contact information, and skills into searchable fields. For example, Greenhouse documents formatting problems that can affect resume parsing, including columns, graphics, text boxes, and contact information placed in certain document elements. Lever explains how its parser extracts resume details into candidate profiles. An ATS-friendly resume does not guarantee that an employer will select or interview you. Its purpose is to make your qualifications easier to extract, find, and evaluate.",
+              },
+            ]}
+          />
 
           <section className="space-y-5">
             <H2>How to make your resume ATS friendly</H2>
@@ -358,8 +332,6 @@ export function HowToMakeResumeAtsFriendly() {
                 can make your application less credible to a recruiter.
               </p>
             </Prose>
-
-            <BlogImagePlaceholder label="Keyword matching example placeholder" />
 
             <H3>6. Write achievement-focused work experience</H3>
             <Prose>
@@ -627,8 +599,6 @@ export function HowToMakeResumeAtsFriendly() {
             </Prose>
           </section>
 
-          <BlogImagePlaceholder label="Resume structure overview placeholder" />
-
           <section className="space-y-5">
             <H2>How to check if your resume is ATS friendly?</H2>
             <Prose>
@@ -857,9 +827,8 @@ export function HowToMakeResumeAtsFriendly() {
             </Prose>
           </section>
 
-          <section className="space-y-6">
-            <H2>Frequently asked questions</H2>
-            {[
+          <BlogFaqAccordion
+            items={[
               {
                 q: "What is an ATS-friendly resume?",
                 a: "An ATS-friendly resume is a document designed to make your qualifications easy for applicant tracking software to extract and organise. It uses readable formatting, conventional section headings, and relevant keywords. It should also communicate your experience clearly to a recruiter. An ATS-friendly format reduces avoidable readability problems, but it cannot guarantee that an employer will select your application.",
@@ -892,17 +861,8 @@ export function HowToMakeResumeAtsFriendly() {
                 q: "Can I use a two-page ATS-friendly resume?",
                 a: "Yes. A two-page resume can be appropriate when your experience, qualifications, or career achievements justify the additional space. There is no universal ATS rule requiring every resume to fit on one page. Keep the document organised, remove irrelevant details, and make sure your most relevant qualifications are easy to find. Follow any specific length instructions provided by the employer.",
               },
-            ].map((item, i) => (
-              <div key={item.q} className="space-y-2">
-                <H3>
-                  {i + 1}. {item.q}
-                </H3>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {item.a}
-                </p>
-              </div>
-            ))}
-          </section>
+            ]}
+          />
 
           <section className="rounded-3xl border border-primary/25 bg-primary/5 p-6 sm:p-8 space-y-4">
             <H2>Improve your resume before your next application</H2>
