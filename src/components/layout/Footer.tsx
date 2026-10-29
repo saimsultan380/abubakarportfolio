@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { AREA_LINKS } from "@/lib/areas";
+import { blogPostPath, getPublishedPosts } from "@/lib/blog";
 import { CONTACT, WHATSAPP_URL } from "@/lib/contact";
 
 function WhatsAppBrandIcon({ className }: { className?: string }) {
@@ -110,6 +111,31 @@ export function Footer() {
                           className="h-3.5 w-5 shrink-0 rounded-[2px] object-cover ring-1 ring-white/20"
                         />
                         {area.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4 md:space-y-6">
+                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">
+                  Blog
+                </h3>
+                <ul className="space-y-2 md:space-y-3">
+                  <li>
+                    <Link
+                      href="/blog/"
+                      className="text-base md:text-lg hover:text-primary transition-colors"
+                    >
+                      All Posts
+                    </Link>
+                  </li>
+                  {getPublishedPosts().map((post) => (
+                    <li key={post.slug}>
+                      <Link
+                        href={blogPostPath(post.slug)}
+                        className="text-base md:text-lg hover:text-primary transition-colors"
+                      >
+                        {post.title}
                       </Link>
                     </li>
                   ))}

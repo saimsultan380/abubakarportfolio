@@ -128,6 +128,13 @@ export const INDEXABLE_PAGES: {
     priority: 0.9,
     breadcrumbs: [{ name: "Australia", path: "/areas/australia/" }],
   },
+  {
+    path: "/blog/",
+    title: "Blog",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    breadcrumbs: [{ name: "Blog", path: "/blog/" }],
+  },
 ];
 
 export function getBreadcrumbsForPath(path: string): BreadcrumbItem[] {
