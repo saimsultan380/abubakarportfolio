@@ -93,7 +93,6 @@ export function CoverLetterWhyMatters() {
               key={i}
               className="cl-stat-card relative rounded-2xl border border-border/60 bg-white dark:bg-zinc-900/50 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden group"
             >
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-primary to-accent-warm" />
               <div className="text-4xl sm:text-5xl font-bold text-primary mb-2 font-heading">
                 {stat.percent}
               </div>

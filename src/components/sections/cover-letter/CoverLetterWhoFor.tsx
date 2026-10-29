@@ -96,8 +96,6 @@ export function CoverLetterWhoFor() {
           {/* Right: Visual Card */}
           <div className="who-card relative">
             <div className="relative rounded-3xl overflow-hidden border border-border/60 bg-gradient-to-br from-primary/5 to-accent-warm/5 p-8 shadow-2xl">
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-primary to-accent-warm" />
-
               <div className="space-y-5">
                 {audiences.map((item, i) => (
                   <div

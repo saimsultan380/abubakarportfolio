@@ -101,11 +101,8 @@ export function CoverLetterPricing() {
           {plans.map((plan, i) => (
             <div
               key={i}
-              className={`cl-pricing-card relative rounded-3xl border ${plan.popular ? "border-primary shadow-2xl shadow-primary/10 ring-2 ring-primary/20" : "border-border/60 shadow-lg"} bg-card overflow-hidden flex flex-col`}
+              className={`cl-pricing-card relative rounded-3xl border ${plan.popular ? "border-primary shadow-2xl shadow-primary/10" : "border-border/60 shadow-lg"} bg-card overflow-hidden flex flex-col`}
             >
-              {plan.popular && (
-                <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-primary to-accent-warm" />
-              )}
               {plan.popular && (
                 <div className="absolute top-4 right-4">
                   <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5">
