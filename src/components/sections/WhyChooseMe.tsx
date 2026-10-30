@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Clock, Search, UserCheck, Shield, TrendingUp, RefreshCw } from "lucide-react";
-import { GradientBorderCard } from "@/components/ui/GradientBorderCard";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -60,40 +59,27 @@ export function WhyChooseMe() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({
+      gsap.from(".trust-content", {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+        y: 24,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+      gsap.from(".trust-card", {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 75%",
         },
-      });
-
-      tl.from(".trust-image", {
-        x: -50,
+        y: 24,
         opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      })
-        .from(
-          ".trust-content",
-          {
-            x: 50,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out",
-          },
-          "-=0.8",
-        )
-        .from(
-          ".trust-card",
-          {
-            y: 30,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "power2.out",
-          },
-          "-=0.6",
-        );
+        duration: 0.55,
+        stagger: 0.08,
+        ease: "power2.out",
+      });
     },
     { scope: containerRef },
   );
@@ -101,74 +87,46 @@ export function WhyChooseMe() {
   return (
     <section
       ref={containerRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative z-10 overflow-hidden"
+      className="py-12 md:py-16 bg-background relative z-10"
     >
-      <div className="container px-4 mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left: Image */}
-          <div className="trust-image relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[540px] border border-border/50 shadow-2xl">
-            <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
-            <img
-              src="/THE%20DIFFERENCE-IMAGE.jpeg"
-              alt="Professional Career Coach"
-              className="w-full h-full object-cover object-top"
-            />
-            <div className="absolute bottom-0 left-0 p-6 z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold mb-3">
-                <UserCheck className="h-3 w-3" />
-                Expert Guidance
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="trust-content mx-auto mb-8 md:mb-10 max-w-2xl text-center">
+          <span className="inline-block px-3 py-1 rounded-full bg-accent-cool/10 border border-accent-cool/20 text-accent-cool text-xs font-bold tracking-wide mb-3">
+            THE DIFFERENCE
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-3 tracking-tight text-foreground">
+            Why Trust <span className="text-primary">Us</span> With Your Career?
+          </h2>
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+            We provide career-winning resumes and CVs built by certified
+            professionals who know what recruiters and ATS systems are looking for.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          {features.map((feature) => (
+            <article
+              key={feature.title}
+              className="trust-card h-full rounded-2xl border border-border/70 bg-card p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+            >
+              <div
+                className={cn(
+                  "mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl",
+                  feature.accent === "primary" && "bg-primary/10 text-primary",
+                  feature.accent === "accent-warm" && "bg-accent-warm/10 text-accent-warm",
+                  feature.accent === "accent-cool" && "bg-accent-cool/10 text-accent-cool",
+                )}
+              >
+                <feature.icon className="h-5 w-5" />
               </div>
-              <blockquote className="text-white text-lg md:text-xl font-bold font-heading leading-tight max-w-md">
-                &ldquo;Your career story deserves to be told with power,
-                precision, and purpose.&rdquo;
-              </blockquote>
-            </div>
-          </div>
-
-          {/* Right: Content */}
-          <div className="trust-content">
-            <div className="mb-6">
-              <span className="inline-block px-3 py-1 rounded-full bg-accent-cool/10 border border-accent-cool/20 text-accent-cool text-xs font-bold tracking-wide mb-3">
-                THE DIFFERENCE
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-3 tracking-tight text-foreground">
-                Why Trust{" "}
-                <span className="text-primary">Us</span> With Your Career?
-              </h2>
-              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-                We provide career-winning resumes and CVs built by certified
-                professionals who know what recruiters and ATS systems are looking for.
+              <h3 className="text-base font-bold mb-2 text-foreground font-heading">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {feature.description}
               </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {features.map((feature, index) => (
-                <div key={index} className="trust-card">
-                  <GradientBorderCard className="h-full p-6 flex flex-col items-start text-left hover:bg-muted/50 transition-colors">
-                    <div
-                      className={cn(
-                        "mb-4 p-3 rounded-xl ring-1 ring-border/50",
-                        feature.accent === "primary" &&
-                          "bg-primary/10 text-primary",
-                        feature.accent === "accent-warm" &&
-                          "bg-accent-warm/10 text-accent-warm",
-                        feature.accent === "accent-cool" &&
-                          "bg-accent-cool/10 text-accent-cool",
-                      )}
-                    >
-                      <feature.icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-base font-bold mb-2 text-foreground">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </GradientBorderCard>
-                </div>
-              ))}
-            </div>
-          </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

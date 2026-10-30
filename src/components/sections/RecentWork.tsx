@@ -4,7 +4,7 @@ import * as React from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ArrowRight, Check, X, Sparkles, FileText } from "lucide-react"
+import { ArrowRight, Check, X, FileText, Star } from "lucide-react"
 import Link from "next/link"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -92,7 +92,7 @@ export function RecentWork() {
               {/* Left: Description */}
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-warm/10 text-accent-warm text-xs font-bold uppercase tracking-widest mb-6 border border-accent-warm/20">
-                  <Sparkles className="h-3 w-3" />
+                  <Star className="h-3 w-3" />
                   ATS-Friendly Minimalist
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold font-heading text-foreground mb-4">

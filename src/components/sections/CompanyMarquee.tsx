@@ -74,7 +74,7 @@ function CompanyLogo({
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className="flex shrink-0 items-center justify-center gap-3 px-6 py-3 rounded-xl bg-muted/50 dark:bg-muted/20 border border-border/50 hover:border-primary/30 transition-colors">
+    <div className="flex shrink-0 items-center justify-center gap-3 px-6 py-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-colors">
       {imgError ? (
         <div className="h-8 w-8 flex items-center justify-center text-muted-foreground">
           <Building2 className="h-6 w-6" />
@@ -124,7 +124,7 @@ export function CompanyMarquee() {
   const duplicated = [...COMPANIES, ...COMPANIES];
 
   return (
-    <section className="relative py-8 overflow-hidden bg-muted/30 dark:bg-muted/10 border-y border-border/50">
+    <section className="relative py-8 overflow-hidden bg-background border-y border-border/50">
       <p className="text-center text-sm font-medium text-muted-foreground mb-6 px-4">
         Clients hired at companies like
       </p>

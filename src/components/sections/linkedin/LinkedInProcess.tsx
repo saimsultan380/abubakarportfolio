@@ -79,7 +79,7 @@ export function LinkedInProcess() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden border-y border-border/50"
+      className="py-12 md:py-16 bg-background relative overflow-hidden border-y border-border/50"
     >
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto relative z-10">
         {/* Header */}

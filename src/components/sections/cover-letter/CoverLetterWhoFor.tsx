@@ -100,7 +100,7 @@ export function CoverLetterWhoFor() {
                 {audiences.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-border/40 shadow-sm hover:shadow-md transition-all hover:border-primary/20 group"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-card/60 border border-border/40 shadow-sm hover:shadow-md transition-all hover:border-primary/20 group"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                       <Check className="h-5 w-5 stroke-[2.5]" />

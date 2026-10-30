@@ -129,7 +129,7 @@ export function FAQ() {
     }, { scope: containerRef })
 
     return (
-        <section id="faq" ref={containerRef} className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative border-t border-border/50">
+        <section id="faq" ref={containerRef} className="py-12 md:py-16 bg-background relative border-t border-border/50">
             <div className="container px-4 mx-auto">
                 <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 

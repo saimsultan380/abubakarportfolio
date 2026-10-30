@@ -48,7 +48,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white dark:bg-zinc-900/50 hover:bg-muted/40 transition-colors group"
+        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-card hover:bg-muted/40 transition-colors group"
         aria-expanded={open}
       >
         <span className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors leading-snug">
@@ -79,7 +79,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
 
 export function ResumeRewritingFAQ() {
   return (
-    <section id="rr-faq" className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
+    <section id="rr-faq" className="py-12 md:py-16 bg-background relative overflow-hidden">
       <div className="container px-4 mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3 border border-primary/20">

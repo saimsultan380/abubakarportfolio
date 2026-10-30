@@ -70,7 +70,7 @@ export function CoverLetterProcess() {
     <section
       id="cl-process"
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
+      className="py-12 md:py-16 bg-background relative overflow-hidden"
     >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[400px] w-[400px] bg-primary/5 blur-[150px] rounded-full" />
 
@@ -96,7 +96,7 @@ export function CoverLetterProcess() {
             <div
               key={i}
               className={cn(
-                "cl-process-card group relative flex flex-col rounded-2xl border border-border/60 bg-white dark:bg-zinc-900/50 p-5 sm:p-6 shadow-sm transition-all duration-300",
+                "cl-process-card group relative flex flex-col rounded-2xl border border-border/60 bg-card p-5 sm:p-6 shadow-sm transition-all duration-300",
                 "hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5",
               )}
             >

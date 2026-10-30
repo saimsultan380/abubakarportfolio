@@ -7,7 +7,7 @@ import {
   FileText,
   Trophy,
   ListChecks,
-  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 
 const focusAreas = [
@@ -45,7 +45,7 @@ const focusAreas = [
     title: "Clean Australian resume format",
     description:
       "Australian resume guidance generally favours clear, professional presentation over excessive design. SEEK recommends focusing on substance and keeping the layout functional and easy to read.",
-    icon: Sparkles,
+    icon: CheckCircle2,
   },
 ];
 

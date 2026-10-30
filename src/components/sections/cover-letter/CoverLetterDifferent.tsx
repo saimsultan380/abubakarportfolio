@@ -48,7 +48,7 @@ export function CoverLetterDifferent() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
+      className="py-12 md:py-16 bg-background relative overflow-hidden"
     >
       <div className="absolute top-0 right-0 -z-10 h-[350px] w-[350px] bg-accent-warm/5 blur-[120px] rounded-full" />
 

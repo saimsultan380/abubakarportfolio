@@ -8,7 +8,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Search,
-  Sparkles,
   TrendingUp,
   Star,
   Eye,
@@ -165,7 +164,7 @@ export function LinkedInHero() {
                   </span>
                 </div>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-bold text-primary">
-                  <Sparkles className="h-3 w-3" />
+                  <Star className="h-3 w-3" />
                   Top 1% Ranked
                 </span>
               </div>

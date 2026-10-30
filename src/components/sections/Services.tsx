@@ -67,7 +67,7 @@ export function Services() {
     }, { scope: sectionRef })
 
     return (
-        <section id="services" ref={sectionRef} className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden">
+        <section id="services" ref={sectionRef} className="py-12 md:py-16 bg-background relative overflow-hidden">
             <div className="container px-4 mx-auto relative z-10">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                     <div className="max-w-2xl">

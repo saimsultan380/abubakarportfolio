@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Star, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
 
 function useCountUp(
   end: number,
@@ -106,56 +106,21 @@ export function SuccessStats() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50/50 dark:bg-black/20 relative overflow-hidden"
+      className="py-12 md:py-16 bg-background relative overflow-hidden"
     >
       <div className="container px-4 mx-auto relative z-10">
         <div className="rounded-3xl border border-border bg-card shadow-2xl shadow-primary/5 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Left: Visual Side */}
-            <div className="relative h-full min-h-[350px] lg:min-h-full bg-muted/30 p-6 lg:p-8 flex flex-col justify-between">
-              {/* Decorative elements */}
-              <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">
-                <div className="h-32 w-32 bg-primary/30 rounded-full blur-3xl" />
-              </div>
-
-              {/* Badge Overlay */}
-              <div className="absolute top-6 left-6 z-10 bg-background/80 backdrop-blur-md border border-border p-2.5 rounded-2xl shadow-sm max-w-[200px]">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                    Live Stats
-                  </span>
-                </div>
-                <div className="text-xl font-bold text-foreground">
-                  {liveCount}
-                </div>
-                <div className="text-[11px] font-medium text-muted-foreground">
-                  Happy Clients Globally
-                </div>
-              </div>
-
-              {/* Main Image Container */}
-              <div className="relative flex-1 w-full h-full flex items-center justify-center mt-12 lg:mt-0">
-                <div className="relative w-full max-w-sm aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-background rotate-[-2deg] hover:rotate-0 transition-transform duration-700 bg-muted/50">
-                  <Image
-                    src="/brand/success%20image.jpeg"
-                    alt="Your Career, Your Story Unforgettable - Resumes Uplift"
-                    fill
-                    className="object-cover object-center"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute bottom-6 left-6 right-6 text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]">
-                    <div className="flex gap-1 mb-2">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Left: Illustration */}
+            <div className="relative flex items-center justify-center bg-[#eef6ff] p-4 sm:p-6 lg:p-8">
+              <Image
+                src="/Your%20Career%2C%20Your%20Story%20Unforgettable.png"
+                alt="Your Career, Your Story Unforgettable"
+                width={2078}
+                height={1152}
+                className="h-auto w-full object-contain"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
 
             {/* Right: Content Side */}

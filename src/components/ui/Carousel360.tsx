@@ -4,24 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { RESUME_SAMPLES } from "@/lib/resume-samples";
 
-// ─────────────────────────────────────────────
-// Resume Sample Images
-// ─────────────────────────────────────────────
-
-const images = [
-  "/samples/Resumes Uplift Sample 1.jpg",
-  "/samples/Resumes Uplift Sample 2.jpg",
-  "/samples/Resumes Uplift Sample 3.jpg",
-  "/samples/Resumes Uplift Sample 4.jpg",
-  "/samples/Resumes Uplift Sample 5.jpg",
-  "/samples/Resumes Uplift Sample 6.jpeg",
-  "/samples/Resumes Uplift Sample 7.jpeg",
-  "/samples/Resumes Uplift Sample 8.jpeg",
-  "/samples/Resumes Uplift Sample 9.jpeg",
-  "/samples/Resumes Uplift Sample 10.jpeg",
-  "/samples/Resumes Uplift Sample 11.jpeg",
-];
+const images = [...RESUME_SAMPLES];
 
 // How often the carousel auto-rotates (ms)
 const AUTOPLAY_INTERVAL_MS = 2800;

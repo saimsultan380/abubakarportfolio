@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Check, Rocket, Shield, Zap, ArrowRight, Sparkles } from "lucide-react"
+import { Check, Rocket, Shield, Zap, ArrowRight, Star } from "lucide-react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -102,13 +102,13 @@ export function Pricing() {
     <section
       id="pricing"
       ref={containerRef}
-      className="relative py-12 md:py-16 overflow-hidden border-t border-border/50 bg-zinc-50 dark:bg-black/40"
+      className="relative py-12 md:py-16 overflow-hidden border-t border-border/50 bg-background"
     >
       <div className="container relative z-10 px-4 mx-auto">
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-8 md:mb-10">
           <div className="pricing-badge inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3 border border-primary/20">
-            <Sparkles className="h-3.5 w-3.5" />
+            <Star className="h-3.5 w-3.5" />
             Investment
           </div>
           <h2 className="pricing-title text-2xl sm:text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-2">

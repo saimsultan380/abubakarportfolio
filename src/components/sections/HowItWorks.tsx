@@ -55,13 +55,13 @@ function StepCard({
     return (
         <div
             className={cn(
-                "group relative flex h-full flex-col rounded-2xl border border-border/60 bg-white p-8 shadow-sm transition-all duration-300 dark:bg-zinc-900/50",
-                "hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/5",
+                "group relative flex h-full flex-col rounded-2xl border border-border/60 bg-card p-8 shadow-sm transition-all duration-300",
+                "hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5",
                 className
             )}
         >
             <div className="mb-8 flex items-start justify-between">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-orange-100 bg-orange-50 text-orange-600 transition-transform duration-300 dark:border-orange-500/20 dark:bg-orange-500/10 dark:text-orange-400 group-hover:scale-110">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
                     <step.icon className="h-7 w-7" />
                 </div>
                 <span className="font-heading text-xs font-bold tracking-widest text-muted-foreground/50">
@@ -69,7 +69,7 @@ function StepCard({
                 </span>
             </div>
             <div className="flex-grow text-left">
-                <h3 className="mb-3 font-heading text-xl font-bold text-foreground transition-colors group-hover:text-orange-600 dark:group-hover:text-orange-500">
+                <h3 className="mb-3 font-heading text-xl font-bold text-foreground transition-colors group-hover:text-primary">
                     {step.title}
                 </h3>
                 <p className="text-sm font-medium leading-relaxed text-muted-foreground">{step.description}</p>
@@ -213,7 +213,7 @@ export function HowItWorks() {
         <section
             id="process"
             ref={sectionRef}
-            className="relative overflow-hidden bg-zinc-50 py-12 md:py-16 text-center dark:bg-black/40 md:text-left"
+            className="relative overflow-hidden bg-background py-12 md:py-16 text-center md:text-left"
         >
             <div className="container relative z-10 mx-auto px-4">
                 <div className="mx-auto mb-8 max-w-3xl text-center md:mb-10">

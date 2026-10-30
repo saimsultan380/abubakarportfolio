@@ -52,11 +52,11 @@ export function Hero() {
             className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left"
           >
             <div className="flex flex-nowrap justify-center lg:justify-start items-center gap-1.5 sm:gap-3 mb-4">
-              <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-accent-warm/30 bg-accent-warm/10 px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-sm font-medium text-accent-warm backdrop-blur-sm whitespace-nowrap">
+              <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-accent-warm/30 px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-sm font-medium text-accent-warm whitespace-nowrap">
                 <Star className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-accent-warm shrink-0" />
                 Rated #1 Resume Service
               </span>
-              <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-accent-cool/30 bg-accent-cool/10 px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-sm font-medium text-accent-cool backdrop-blur-sm whitespace-nowrap">
+              <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-accent-cool/30 px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-sm font-medium text-accent-cool whitespace-nowrap">
                 <CheckCircle2 className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 shrink-0" />
                 ATS-Optimized
               </span>

@@ -144,7 +144,7 @@ export function LinkedInFAQ() {
         </div>
 
         {/* WhatsApp Callout */}
-        <div className="rounded-3xl border border-border/80 bg-zinc-50 dark:bg-black/40 p-6 sm:p-8 text-center">
+        <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 text-center">
           <h3 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-2">
             Still have questions before getting started?
           </h3>

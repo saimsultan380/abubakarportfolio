@@ -1,130 +1,90 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Building2, CheckCircle2 } from "lucide-react";
 import { CONTACT } from "@/lib/contact";
+
+const HIGHLIGHTS = [
+  "ATS-friendly resumes & CVs",
+  "Human-written, never AI-generated",
+  "Unlimited revisions until you're happy",
+] as const;
 
 export function AboutUs() {
   return (
     <section
       id="about"
-      className="relative py-14 md:py-20 overflow-hidden bg-background"
+      className="relative py-12 md:py-16 bg-background"
     >
-      {/* Top divider accent under hero */}
       <div className="absolute top-0 inset-x-0 h-px bg-border" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 sm:w-32 h-[3px] rounded-full bg-primary" />
+      <div className="absolute top-20 right-0 -z-10 h-[320px] w-[320px] bg-primary/10 blur-[120px] rounded-full opacity-40" />
 
-      <div className="absolute top-16 right-0 -z-10 h-[380px] w-[380px] bg-primary/10 blur-[120px] rounded-full opacity-50" />
-      <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] bg-primary/5 blur-[100px] rounded-full opacity-40" />
-
-      <div className="container mx-auto px-5 sm:px-6 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+          {/* Left: title + content */}
+          <div className="order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary mb-4">
               <Building2 className="h-3.5 w-3.5" />
               About Us
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-3 leading-[1.1]">
-              {CONTACT.legalName}
+            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-bold font-heading tracking-tight text-foreground mb-4 leading-[1.15]">
+              About{" "}
+              <span className="text-primary">{CONTACT.legalName}</span>
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Professional ATS resume writing, CV writing, cover letters, and
-              LinkedIn optimization, built to get you hired.
+
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+              <strong className="text-foreground font-semibold">
+                {CONTACT.legalName}
+              </strong>{" "}
+              is a professional resume writing company helping job seekers land
+              more interviews with clear, ATS-friendly resumes, CVs, cover
+              letters, and LinkedIn profiles.
             </p>
-          </div>
 
-          {/* Story + mission */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-10 md:mb-12">
-            <div className="space-y-4">
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-foreground">
-                Who we are
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                <strong className="text-foreground font-semibold">
-                  {CONTACT.legalName}
-                </strong>{" "}
-                is a professional resume writing company helping job seekers
-                worldwide land more interviews. We create ATS-friendly resumes,
-                CVs, cover letters, and LinkedIn profiles that make your value
-                obvious to both hiring software and real recruiters.
-              </p>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Every document is written by certified writers who understand
-                how modern applicant tracking systems parse applications, and
-                how hiring managers decide who gets the interview.
-              </p>
-            </div>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
+              Our certified writers shape your real achievements so both hiring
+              software and recruiters see your value, across industries and
+              career levels.
+            </p>
 
-            <div className="space-y-4">
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-foreground">
-                What we believe
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                A strong career document should reflect real achievements, not
-                generic buzzwords. We work one-on-one with clients across
-                industries and career levels, from recent graduates to
-                executives, so your application is targeted, clear, and
-                competitive.
-              </p>
-              <ul className="space-y-2.5 pt-1">
-                {[
-                  "No AI-generated content",
-                  "No one-size-fits-all templates",
-                  "Unlimited revisions until you're satisfied",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2.5 text-sm font-medium text-foreground/90"
-                  >
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-primary mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Stats + CTA */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-3xl border border-primary/25 bg-primary/5 px-6 py-6 sm:px-8 sm:py-7">
-            <div className="flex flex-wrap items-center gap-6 sm:gap-10">
-              <div>
-                <div className="text-2xl sm:text-3xl font-bold font-heading text-primary">
-                  2,000+
-                </div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">
-                  Clients helped
-                </div>
-              </div>
-              <div className="hidden sm:block h-10 w-px bg-border" />
-              <div>
-                <div className="text-2xl sm:text-3xl font-bold font-heading text-primary">
-                  80+
-                </div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">
-                  Industries served
-                </div>
-              </div>
-              <div className="hidden sm:block h-10 w-px bg-border" />
-              <div>
-                <div className="text-2xl sm:text-3xl font-bold font-heading text-primary">
-                  4+
-                </div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">
-                  Years of expertise
-                </div>
-              </div>
-            </div>
+            <ul className="space-y-2.5 mb-8">
+              {HIGHLIGHTS.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2.5 text-sm font-medium text-foreground/90"
+                >
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
 
             <Link
               href="/#contact"
-              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all"
             >
               Work With {CONTACT.legalName}
               <ArrowRight className="h-4 w-4" />
             </Link>
+          </div>
+
+          {/* Right: about image */}
+          <div className="order-1 lg:order-2 relative overflow-visible">
+            <div className="relative mx-auto w-full max-w-lg lg:max-w-none overflow-visible">
+              <Image
+                src="/about-image.png"
+                alt={`${CONTACT.legalName} — ATS-friendly resume writing, expert review, and human-written career documents`}
+                width={2714}
+                height={1598}
+                className="w-full h-auto max-w-none object-contain"
+                priority={false}
+                sizes="(max-width: 1024px) 90vw, 45vw"
+              />
+            </div>
           </div>
         </div>
       </div>

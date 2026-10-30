@@ -4,9 +4,9 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
-import { ThemeToggle } from "@/components/ThemeToggle"
 import { cn } from "@/lib/utils"
-import { Menu, X, ArrowRight, Briefcase, PenTool, Edit, Target, Linkedin, ChevronDown, MapPin } from "lucide-react"
+import { ThemeToggle } from "@/components/ThemeToggle"
+import { Menu, X, ArrowRight, Briefcase, PenTool, Edit, FileText, Linkedin, ChevronDown, MapPin, Home, BookOpen, Mail } from "lucide-react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { AREA_LINKS } from "@/lib/areas"
@@ -16,7 +16,10 @@ export function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const [isAreasOpen, setIsAreasOpen] = React.useState(false)
     const [isMobileAreasOpen, setIsMobileAreasOpen] = React.useState(false)
+    const [isServicesOpen, setIsServicesOpen] = React.useState(false)
+    const [isMobileServicesOpen, setIsMobileServicesOpen] = React.useState(false)
     const areasRef = React.useRef<HTMLDivElement>(null)
+    const servicesRef = React.useRef<HTMLDivElement>(null)
     const navRef = React.useRef<HTMLElement>(null)
     const mobileMenuRef = React.useRef<HTMLDivElement>(null)
     const router = useRouter()
@@ -30,12 +33,15 @@ export function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    // Close areas dropdown on outside click
+    // Close dropdowns on outside click
     React.useEffect(() => {
         const onPointerDown = (e: PointerEvent) => {
-            if (!areasRef.current) return
-            if (!areasRef.current.contains(e.target as Node)) {
+            const target = e.target as Node
+            if (areasRef.current && !areasRef.current.contains(target)) {
                 setIsAreasOpen(false)
+            }
+            if (servicesRef.current && !servicesRef.current.contains(target)) {
+                setIsServicesOpen(false)
             }
         }
         document.addEventListener("pointerdown", onPointerDown)
@@ -45,6 +51,8 @@ export function Navbar() {
     React.useEffect(() => {
         setIsAreasOpen(false)
         setIsMobileAreasOpen(false)
+        setIsServicesOpen(false)
+        setIsMobileServicesOpen(false)
     }, [pathname])
 
     // Body Scroll Lock
@@ -145,12 +153,18 @@ export function Navbar() {
         }
     }, [pathname, requestScrollAfterNavigation, router, scrollToSection])
 
-    const navLinks = [
-        { name: "Services", href: "/#services", icon: Briefcase },
+    const serviceLinks = [
+        { name: "ATS Resume/CV Writing", href: "/#services", icon: FileText },
         { name: "Resume Revamp", href: "/resume-rewriting", icon: Edit },
-        { name: "Career CV", href: "/career-specific-cv", icon: Target },
-        { name: "LinkedIn", href: "/linkedin-optimization", icon: Linkedin },
-        { name: "Cover Letter", href: "/cover-letter", icon: PenTool },
+        { name: "Cover Letter Writing", href: "/cover-letter", icon: PenTool },
+        { name: "LinkedIn Profile Optimization", href: "/linkedin-optimization", icon: Linkedin },
+        { name: "Career-Specific CV Writing", href: "/career-specific-cv", icon: Briefcase },
+    ]
+
+    const navLinks = [
+        { name: "Home", href: "/", icon: Home },
+        { name: "Blog", href: "/blog/", icon: BookOpen },
+        { name: "Contact", href: "/#contact", icon: Mail },
     ]
 
     return (
@@ -184,7 +198,69 @@ export function Navbar() {
 
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-1 bg-secondary/20 p-1 rounded-full border border-border/50 backdrop-blur-md nav-desktop-item">
-                            {navLinks.map((link) => (
+                            <Link
+                                href="/"
+                                className={cn(
+                                    "px-5 py-2 text-sm font-bold transition-all rounded-full",
+                                    pathname === "/"
+                                        ? "text-primary bg-background/50"
+                                        : "text-muted-foreground hover:text-primary hover:bg-background/50",
+                                )}
+                            >
+                                Home
+                            </Link>
+
+                            {/* Services dropdown */}
+                            <div ref={servicesRef} className="relative">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setIsServicesOpen((v) => !v)
+                                        setIsAreasOpen(false)
+                                    }}
+                                    className={cn(
+                                        "inline-flex items-center gap-1 px-5 py-2 text-sm font-bold rounded-full transition-all",
+                                        isServicesOpen
+                                            ? "text-primary bg-background/50"
+                                            : "text-muted-foreground hover:text-primary hover:bg-background/50",
+                                    )}
+                                    aria-expanded={isServicesOpen}
+                                    aria-haspopup="menu"
+                                >
+                                    Services
+                                    <ChevronDown
+                                        className={cn(
+                                            "h-3.5 w-3.5 transition-transform",
+                                            isServicesOpen && "rotate-180",
+                                        )}
+                                    />
+                                </button>
+
+                                {isServicesOpen && (
+                                    <div
+                                        role="menu"
+                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 rounded-2xl border border-border/70 bg-card p-2 shadow-xl shadow-black/10 z-50"
+                                    >
+                                        {serviceLinks.map((service) => (
+                                            <Link
+                                                key={service.name}
+                                                href={service.href}
+                                                role="menuitem"
+                                                onClick={(e) => {
+                                                    setIsServicesOpen(false)
+                                                    handleNavLinkClick(service.href)(e)
+                                                }}
+                                                className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-foreground hover:bg-muted hover:text-primary transition-colors"
+                                            >
+                                                <service.icon className="h-4 w-4 shrink-0 text-primary" />
+                                                {service.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {navLinks.filter((link) => link.name !== "Home").map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
@@ -199,7 +275,10 @@ export function Navbar() {
                             <div ref={areasRef} className="relative">
                                 <button
                                     type="button"
-                                    onClick={() => setIsAreasOpen((v) => !v)}
+                                    onClick={() => {
+                                        setIsAreasOpen((v) => !v)
+                                        setIsServicesOpen(false)
+                                    }}
                                     className={cn(
                                         "inline-flex items-center gap-1 px-5 py-2 text-sm font-bold rounded-full transition-all",
                                         isAreasOpen || pathname.startsWith("/areas")
@@ -315,7 +394,52 @@ export function Navbar() {
                     {/* Decorative Mesh */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[300px] w-[300px] bg-primary/10 blur-[100px] rounded-full" />
 
-                    {navLinks.map((link) => (
+                    <Link
+                        href="/"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="mobile-link group flex items-center gap-6 text-2xl xs:text-3xl sm:text-4xl font-bold font-heading text-foreground hover:text-primary transition-all italic tracking-tighter"
+                    >
+                        <div className="h-10 w-10 xs:h-12 xs:w-12 rounded-2xl bg-secondary flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors group-hover:rotate-[10deg]">
+                            <Home className="h-5 w-5 xs:h-6 xs:w-6" />
+                        </div>
+                        Home
+                    </Link>
+
+                    <div className="w-full">
+                        <button
+                            type="button"
+                            onClick={() => setIsMobileServicesOpen((v) => !v)}
+                            className="mobile-link group flex w-full items-center gap-6 text-2xl xs:text-3xl sm:text-4xl font-bold font-heading text-foreground hover:text-primary transition-all italic tracking-tighter"
+                        >
+                            <div className="h-10 w-10 xs:h-12 xs:w-12 rounded-2xl bg-secondary flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                <Briefcase className="h-5 w-5 xs:h-6 xs:w-6" />
+                            </div>
+                            <span className="flex-1 text-left">Services</span>
+                            <ChevronDown
+                                className={cn(
+                                    "h-5 w-5 text-muted-foreground transition-transform",
+                                    isMobileServicesOpen && "rotate-180 text-primary",
+                                )}
+                            />
+                        </button>
+                        {isMobileServicesOpen && (
+                            <div className="mt-4 ml-16 space-y-3">
+                                {serviceLinks.map((service) => (
+                                    <Link
+                                        key={service.name}
+                                        href={service.href}
+                                        onClick={handleNavLinkClick(service.href)}
+                                        className="flex items-center gap-3 text-lg sm:text-xl font-semibold text-muted-foreground hover:text-primary transition-colors"
+                                    >
+                                        <service.icon className="h-4 w-4 shrink-0 text-primary" />
+                                        {service.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {navLinks.filter((link) => link.name !== "Home").map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}

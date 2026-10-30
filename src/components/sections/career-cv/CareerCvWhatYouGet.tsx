@@ -6,7 +6,7 @@ import {
   Eye,
   Crosshair,
   BadgeCheck,
-  Sparkles,
+  Award,
   Trophy,
   Layers,
   ShieldCheck,
@@ -42,7 +42,7 @@ const benefits = [
     title: "A CV That Captures Attention",
     description:
       "Written to stand out in competitive shortlists, at any career level.",
-    icon: Sparkles,
+    icon: Award,
   },
   {
     title: "Leadership Impact on the Page",

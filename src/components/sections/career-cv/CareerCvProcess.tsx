@@ -100,7 +100,7 @@ export function CareerCvProcess() {
             <div
               key={step.title}
               className={cn(
-                "ccv-process-card group relative flex flex-col rounded-2xl border border-border/60 bg-white dark:bg-zinc-900/50 p-5 shadow-sm transition-all duration-300",
+                "ccv-process-card group relative flex flex-col rounded-2xl border border-border/60 bg-card p-5 shadow-sm transition-all duration-300",
                 "hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5",
               )}
             >

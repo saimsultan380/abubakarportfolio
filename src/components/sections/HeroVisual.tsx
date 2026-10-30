@@ -116,14 +116,14 @@ export function HeroVisual() {
 
       {/* Floating Decorative Elements — stay below full-screen overlays (modals use portal + z-10000) */}
       <div className="absolute -top-6 -right-6 z-0 animate-float-slow delay-700 hidden sm:block pointer-events-none">
-        <div className="bg-white dark:bg-zinc-800 p-3 rounded-2xl shadow-xl shadow-primary/5 border border-white/50 dark:border-white/5 rotate-12 transition-transform group-hover:rotate-6">
+        <div className="bg-card p-3 rounded-2xl shadow-xl shadow-primary/5 border border-white/50 dark:border-white/5 rotate-12 transition-transform group-hover:rotate-6">
           <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
         </div>
       </div>
 
       {/* Main Card — click to read full introduction (LinkedIn stays separate) */}
       <div
-        className="relative bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border border-white/60 dark:border-white/10 rounded-[2rem] p-6 sm:p-8 shadow-2xl transition-all duration-500 hover:shadow-primary/10 cursor-pointer"
+        className="relative bg-card/90 backdrop-blur-2xl border border-border rounded-[2rem] p-6 sm:p-8 shadow-2xl transition-all duration-500 hover:shadow-primary/10 cursor-pointer"
         onClick={() => setIntroOpen(true)}
       >
         {/* Header Label */}
@@ -190,14 +190,14 @@ export function HeroVisual() {
 
         {/* Bottom Tags */}
         <div className="mt-6 flex flex-wrap justify-center sm:justify-start gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border">
+            <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
             <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">
               Recruiter Approved
             </span>
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border">
+            <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
             <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-300">
               ATS Optimized
             </span>

@@ -10,7 +10,7 @@ import {
   type PackageId,
   type PlanId,
 } from "@/lib/plans"
-import { ArrowRight, Check, FileText, Linkedin, Sparkles, Layers, FileSignature } from "lucide-react"
+import { ArrowRight, Check, FileText, Linkedin, Layers, FileSignature, Star } from "lucide-react"
 
 /** 4th card: Resume + LinkedIn; same grid for every tier. */
 function packageOrder(): { id: PackageId; icon: React.ElementType }[] {
@@ -20,7 +20,7 @@ function packageOrder(): { id: PackageId; icon: React.ElementType }[] {
     { id: "resume", icon: FileText },
     { id: "linkedin_resume", icon: Layers },
     { id: "cover_resume", icon: Layers },
-    { id: "all", icon: Sparkles },
+    { id: "all", icon: Star },
   ]
 }
 
@@ -67,7 +67,7 @@ export default function PricingPage() {
       <div className="container px-4 mx-auto max-w-6xl">
         <div className="relative text-center max-w-3xl mx-auto mb-10 md:mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest mb-5 border border-primary/20">
-            <Sparkles className="h-3 w-3" />
+            <Star className="h-3 w-3" />
             Pricing
           </div>
           <h1 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground mb-4">

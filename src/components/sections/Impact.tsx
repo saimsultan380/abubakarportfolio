@@ -130,7 +130,7 @@ export function Impact() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden text-center md:text-left"
+      className="py-12 md:py-16 bg-background relative overflow-hidden text-center md:text-left"
     >
       <div className="container px-4 mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-8 md:mb-10">
@@ -194,7 +194,7 @@ export function Impact() {
               </div>
 
               {/* Floating "ATS Score" Badge */}
-              <div className="absolute top-4 right-4 bg-white/85 dark:bg-zinc-900/80 backdrop-blur-xl p-3.5 rounded-2xl shadow-xl border border-border flex items-center gap-3 z-20">
+              <div className="absolute top-4 right-4 bg-card/85 backdrop-blur-xl p-3.5 rounded-2xl shadow-xl border border-border flex items-center gap-3 z-20">
                 <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                   <CheckCircle2 className="h-5 w-5" />
                 </div>
@@ -207,7 +207,7 @@ export function Impact() {
               </div>
 
               {/* Floating "Interview Rate" Badge */}
-              <div className="absolute top-4 left-4 bg-white/85 dark:bg-zinc-900/80 backdrop-blur-xl p-3.5 rounded-2xl shadow-xl border border-border flex items-center gap-3 z-20">
+              <div className="absolute top-4 left-4 bg-card/85 backdrop-blur-xl p-3.5 rounded-2xl shadow-xl border border-border flex items-center gap-3 z-20">
                 <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                   <TrendingUp className="h-5 w-5" />
                 </div>
@@ -294,8 +294,8 @@ export function Impact() {
                 {/* After */}
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle2 className="h-4 w-4 text-green-500" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-green-500">
+                    <CheckCircle2 className="h-4 w-4 text-primary" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
                       After
                     </span>
                   </div>
@@ -305,7 +305,7 @@ export function Impact() {
                         key={i}
                         className="text-sm text-foreground font-medium flex items-start gap-2.5"
                       >
-                        <span className="text-green-500 mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
+                        <span className="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                         {achievement}
                       </li>
                     ))}
@@ -319,7 +319,7 @@ export function Impact() {
                   "mt-8 p-6 border-t",
                   item.accent === "highlight"
                     ? "bg-primary/5 border-primary/10"
-                    : "bg-zinc-50 dark:bg-zinc-900/50 border-border",
+                    : "bg-card border-border",
                 )}
               >
                 <div className="flex items-center justify-between">

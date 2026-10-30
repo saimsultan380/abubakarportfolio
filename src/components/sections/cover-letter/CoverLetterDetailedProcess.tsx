@@ -51,7 +51,7 @@ export function CoverLetterDetailedProcess() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
+      className="py-12 md:py-16 bg-background relative overflow-hidden"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -z-10 h-[350px] w-[350px] bg-primary/5 blur-[120px] rounded-full" />
 
@@ -82,7 +82,7 @@ export function CoverLetterDetailedProcess() {
                 <div
                   key={i}
                   className={cn(
-                    "step-item group flex items-center gap-5 rounded-2xl border border-border/60 bg-white dark:bg-zinc-900/50 p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5",
+                    "step-item group flex items-center gap-5 rounded-2xl border border-border/60 bg-card p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5",
                     i === detailedSteps.length - 1 &&
                       "border-primary/40 bg-primary/5 dark:bg-primary/10",
                   )}
@@ -93,7 +93,7 @@ export function CoverLetterDetailedProcess() {
                       "flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 font-bold text-sm font-heading transition-all duration-300 group-hover:scale-110 relative z-10",
                       i === detailedSteps.length - 1
                         ? "border-primary bg-primary text-white shadow-lg shadow-primary/30"
-                        : "border-primary/30 bg-white dark:bg-zinc-900 text-primary group-hover:border-primary group-hover:bg-primary group-hover:text-white",
+                        : "border-primary/30 bg-card text-primary group-hover:border-primary group-hover:bg-primary group-hover:text-white",
                     )}
                   >
                     {String(item.step).padStart(2, "0")}

@@ -64,7 +64,7 @@ export function CoverLetterWhyMatters() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden"
+      className="py-12 md:py-16 bg-background relative overflow-hidden"
     >
       <div className="absolute top-0 right-0 -z-10 h-[350px] w-[350px] bg-primary/5 blur-[120px] rounded-full" />
 
@@ -91,7 +91,7 @@ export function CoverLetterWhyMatters() {
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="cl-stat-card relative rounded-2xl border border-border/60 bg-white dark:bg-zinc-900/50 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden group"
+              className="cl-stat-card relative rounded-2xl border border-border/60 bg-card p-6 sm:p-7 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden group"
             >
               <div className="text-4xl sm:text-5xl font-bold text-primary mb-2 font-heading">
                 {stat.percent}

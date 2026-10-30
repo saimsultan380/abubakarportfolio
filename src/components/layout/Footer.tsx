@@ -20,71 +20,95 @@ function WhatsAppBrandIcon({ className }: { className?: string }) {
   );
 }
 
+const MENU_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Resume Revamp", href: "/resume-rewriting" },
+  { label: "Career CV", href: "/career-specific-cv" },
+  { label: "LinkedIn", href: "/linkedin-optimization" },
+  { label: "Cover Letter", href: "/cover-letter" },
+  { label: "Samples", href: "/samples" },
+  { label: "Blog", href: "/blog/" },
+] as const;
+
 export function Footer() {
+  const footerRef = React.useRef<HTMLElement>(null);
+  const [footerHeight, setFooterHeight] = React.useState(0);
+
+  React.useLayoutEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+
+    const sync = () => setFooterHeight(el.offsetHeight);
+    sync();
+
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    window.addEventListener("resize", sync);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", sync);
+    };
+  }, []);
+
   return (
-    <div className="relative min-h-[480px] h-[min(800px,85vh)] md:min-h-[560px] md:h-[min(900px,88vh)]">
-      <footer className="fixed bottom-0 left-0 right-0 w-full min-h-[480px] h-[min(800px,85vh)] md:min-h-[560px] md:h-[min(900px,88vh)] max-h-[95vh] bg-[#050505] text-[#e1e1e1] overflow-y-auto overflow-x-hidden">
-        <div className="min-h-full flex flex-col justify-between pl-5 pr-5 sm:pl-6 sm:pr-6 md:pl-12 md:pr-12 py-6 sm:py-8 md:py-12 gap-6 md:gap-8">
-          {/* Top Section: Nav & Links */}
-          <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-6 shrink-0">
-            <div className="space-y-4 md:space-y-6">
-              <h3 className="text-base md:text-lg font-medium text-white/60 uppercase tracking-widest">
+    <div
+      className="relative"
+      style={{ height: footerHeight || undefined, minHeight: footerHeight || 360 }}
+    >
+      <footer
+        ref={footerRef}
+        className="fixed bottom-0 left-0 right-0 w-full bg-[#050505] text-[#e1e1e1]"
+      >
+        <div className="flex flex-col px-4 sm:px-6 md:px-10 pt-6 sm:pt-7 md:pt-8 pb-4 sm:pb-5">
+          {/* Top: connect + nav */}
+          <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-10">
+            <div className="space-y-2.5 shrink-0 max-w-md">
+              <h3 className="text-[10px] sm:text-xs font-medium text-white/60 uppercase tracking-widest">
                 Connect
               </h3>
-              <div className="flex flex-col gap-3 md:gap-4">
+              <div className="flex flex-col gap-2">
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl hover:text-primary transition-colors flex items-center gap-3 md:gap-4 group"
+                  className="text-sm sm:text-base hover:text-primary transition-colors flex items-center gap-2 group"
                 >
-                  <Mail className="h-5 w-5 md:h-6 md:w-6 shrink-0 text-primary" aria-hidden />
-                  <span className="whitespace-nowrap">{CONTACT.email}</span>
-                  <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Mail className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                  <span className="truncate">{CONTACT.email}</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
                 <a
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl hover:text-primary transition-colors flex items-center gap-3 md:gap-4 group"
+                  className="text-sm sm:text-base hover:text-primary transition-colors flex items-center gap-2 group"
                 >
-                  <WhatsAppBrandIcon className="h-5 w-5 md:h-6 md:w-6 shrink-0 text-[#25D366]" />
-                  <span className="whitespace-nowrap">{CONTACT.phoneDisplay}</span>
-                  <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <WhatsAppBrandIcon className="h-4 w-4 shrink-0 text-[#25D366]" />
+                  <span>{CONTACT.phoneDisplay}</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
-                <div className="flex items-start gap-3 md:gap-4 text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal normal-case tracking-normal leading-snug">
-                  <MapPin className="h-5 w-5 md:h-6 md:w-6 shrink-0 text-primary mt-1.5" aria-hidden />
+                <div className="flex items-start gap-2 text-xs sm:text-sm leading-snug text-white/75">
+                  <MapPin
+                    className="h-3.5 w-3.5 shrink-0 text-primary mt-0.5"
+                    aria-hidden
+                  />
                   <p>
-                    {CONTACT.addressLine1}
-                    <br />
-                    {CONTACT.addressLine2}
-                    <br />
+                    {CONTACT.addressLine1}, {CONTACT.addressLine2},{" "}
                     {CONTACT.addressLine3}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-24 shrink-0">
-              <div className="space-y-4 md:space-y-6">
-                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">
+            <div className="grid grid-cols-3 gap-6 sm:gap-10 md:gap-14 shrink-0">
+              <div className="space-y-3">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">
                   Menu
                 </h3>
-                <ul className="space-y-2 md:space-y-3">
-                  {[
-                    { label: "Home", href: "/" },
-                    { label: "Services", href: "/#services" },
-                    { label: "Resume Revamp", href: "/resume-rewriting" },
-                    { label: "Career CV", href: "/career-specific-cv" },
-                    { label: "LinkedIn", href: "/linkedin-optimization" },
-                    { label: "Cover Letter", href: "/cover-letter" },
-                    { label: "Samples", href: "/samples" },
-                    { label: "Blog", href: "/blog/" },
-                    { label: "Process", href: "/#process" },
-                    { label: "FAQ", href: "/#faq" },
-                  ].map((item) => (
+                <ul className="space-y-2 sm:space-y-2.5">
+                  {MENU_LINKS.map((item) => (
                     <li key={item.label}>
                       <Link
                         href={item.href}
-                        className="text-base md:text-lg hover:text-primary transition-colors"
+                        className="text-xs sm:text-sm hover:text-primary transition-colors"
                       >
                         {item.label}
                       </Link>
@@ -92,23 +116,23 @@ export function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="space-y-4 md:space-y-6">
-                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">
+              <div className="space-y-3">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">
                   Areas
                 </h3>
-                <ul className="space-y-2 md:space-y-3">
+                <ul className="space-y-2 sm:space-y-2.5">
                   {AREA_LINKS.map((area) => (
                     <li key={area.href}>
                       <Link
                         href={area.href}
-                        className="flex items-center gap-2.5 text-base md:text-lg hover:text-primary transition-colors"
+                        className="flex items-center gap-2 text-xs sm:text-sm hover:text-primary transition-colors"
                       >
                         <Image
                           src={area.flagSrc}
                           alt={area.flagAlt}
-                          width={20}
-                          height={14}
-                          className="h-3.5 w-5 shrink-0 rounded-[2px] object-cover ring-1 ring-white/20"
+                          width={16}
+                          height={12}
+                          className="h-2.5 w-3.5 shrink-0 rounded-[2px] object-cover ring-1 ring-white/20"
                         />
                         {area.name}
                       </Link>
@@ -116,22 +140,22 @@ export function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="space-y-4 md:space-y-6">
-                <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">
+              <div className="space-y-3">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40">
                   Socials
                 </h3>
-                <ul className="space-y-2 md:space-y-3">
+                <ul className="space-y-2 sm:space-y-2.5">
                   <li>
                     <a
                       href="https://www.linkedin.com/company/resumesuplift/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 text-base md:text-lg hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-xs sm:text-sm hover:text-primary transition-colors"
                     >
                       <svg
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        className="h-5 w-5 shrink-0 text-[#0A66C2]"
+                        className="h-3.5 w-3.5 shrink-0 text-[#0A66C2]"
                         aria-hidden
                       >
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -144,12 +168,12 @@ export function Footer() {
                       href="https://www.facebook.com/share/1BAfxAm5tK/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 text-base md:text-lg hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-xs sm:text-sm hover:text-primary transition-colors"
                     >
                       <svg
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        className="h-5 w-5 shrink-0 text-[#1877F2]"
+                        className="h-3.5 w-3.5 shrink-0 text-[#1877F2]"
                         aria-hidden
                       >
                         <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
@@ -162,41 +186,21 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Middle: Logo + Big Text — shrinkable on small viewports */}
-          <div className="flex-1 min-h-[60px] flex flex-col items-center justify-center py-6 md:py-12 shrink gap-4">
-            <Link
-              href="/"
-              className="block transition-transform hover:scale-105"
-            >
-              <Image
-                src="/brand/new%20logo.png"
-                alt="Resumes Uplift"
-                width={120}
-                height={120}
-                className="h-16 w-auto sm:h-20 md:h-24 object-contain"
-              />
-            </Link>
-            <h1 className="text-[10vw] sm:text-[11vw] md:text-[12vw] leading-[0.8] font-bold tracking-tighter text-center uppercase text-white/10 select-none transition-all duration-500 cursor-default hover:text-primary hover:scale-105 max-w-full">
-              Resumes Uplift
-            </h1>
-          </div>
+          {/* Big website name */}
+          <h2 className="mt-8 sm:mt-10 md:mt-12 text-[clamp(2.75rem,14vw,9rem)] leading-[0.8] font-bold tracking-tighter text-center uppercase text-white/12 select-none hover:text-primary/40 transition-colors cursor-default w-full">
+            Resumes Uplift
+          </h2>
 
-          {/* Bottom: Copyright */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 pt-6 md:pt-8 border-t border-white/10 text-white/40 text-[11px] sm:text-xs md:text-sm font-medium uppercase tracking-widest shrink-0">
-            <p className="text-center md:text-left">
+          {/* Legal */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-4 mt-4 border-t border-white/10 text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
+            <p className="text-center sm:text-left">
               © {new Date().getFullYear()} Resumes Uplift. All Rights Reserved.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
-              <Link
-                href="/privacy/"
-                className="hover:text-white transition-colors"
-              >
+            <div className="flex items-center gap-5 sm:gap-6">
+              <Link href="/privacy/" className="hover:text-white transition-colors">
                 Privacy
               </Link>
-              <Link
-                href="/terms/"
-                className="hover:text-white transition-colors"
-              >
+              <Link href="/terms/" className="hover:text-white transition-colors">
                 Terms
               </Link>
             </div>

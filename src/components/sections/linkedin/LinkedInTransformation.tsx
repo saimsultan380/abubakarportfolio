@@ -8,7 +8,6 @@ import {
   Search,
   Shield,
   KeyRound,
-  Sparkles,
   TrendingUp,
   XCircle,
   CheckCircle2,
@@ -16,6 +15,7 @@ import {
   Target,
   Briefcase,
   Zap,
+  BookOpen,
 } from "lucide-react";
 import { GradientBorderCard } from "@/components/ui/GradientBorderCard";
 
@@ -57,7 +57,7 @@ const pillars = [
     title: "Executive Storytelling",
     description:
       "A compelling first-person narrative in your About section that turns casual profile visitors into interested recruiters.",
-    icon: Sparkles,
+    icon: BookOpen,
   },
   {
     title: "Quantifiable Impact Framing",

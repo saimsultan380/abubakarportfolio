@@ -18,7 +18,7 @@ const audiences = [
 
 export function CanadaWhyAndWho() {
   return (
-    <section className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden border-y border-border/50">
+    <section className="py-12 md:py-16 bg-background relative overflow-hidden border-y border-border/50">
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto relative z-10 space-y-14">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start max-w-6xl mx-auto">
           <div>

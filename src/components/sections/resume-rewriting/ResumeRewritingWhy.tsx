@@ -37,7 +37,7 @@ const cards = [
 
 export function ResumeRewritingWhy() {
   return (
-    <section className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden border-y border-border/50">
+    <section className="py-12 md:py-16 bg-background relative overflow-hidden border-y border-border/50">
       <div className="absolute top-0 right-0 -z-0 h-[320px] w-[320px] bg-primary/10 blur-[100px] rounded-full opacity-60 pointer-events-none" />
       <div className="absolute bottom-0 left-0 -z-0 h-[280px] w-[280px] bg-primary/5 blur-[90px] rounded-full opacity-50 pointer-events-none" />
 

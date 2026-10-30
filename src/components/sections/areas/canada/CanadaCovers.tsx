@@ -7,7 +7,7 @@ import {
   Trophy,
   KeyRound,
   ListChecks,
-  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 
 const covers = [
@@ -45,7 +45,7 @@ const covers = [
     title: "Clean Professional Formatting",
     description:
       "Your resume should look professional without relying on excessive graphics, complicated layouts, or decorative elements that may interfere with readability.",
-    icon: Sparkles,
+    icon: CheckCircle2,
   },
 ];
 

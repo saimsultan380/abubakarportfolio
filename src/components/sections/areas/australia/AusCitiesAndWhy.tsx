@@ -50,7 +50,7 @@ const reasons = [
 
 export function AusCitiesAndWhy() {
   return (
-    <section className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden border-y border-border/50">
+    <section className="py-12 md:py-16 bg-background relative overflow-hidden border-y border-border/50">
       <div className="container px-4 mx-auto relative z-10 space-y-14">
         <div className="max-w-5xl mx-auto rounded-3xl border border-border/70 bg-card p-6 sm:p-8 shadow-sm">
           <div className="flex items-start gap-3 mb-4">

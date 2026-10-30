@@ -58,7 +58,7 @@ const leaveOut = [
 
 export function AusStrongFormat() {
   return (
-    <section className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden border-y border-border/50">
+    <section className="py-12 md:py-16 bg-background relative overflow-hidden border-y border-border/50">
       <div className="container px-4 mx-auto relative z-10 space-y-14">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">

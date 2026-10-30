@@ -7,7 +7,7 @@ import { ImagePlaceholder } from "@/components/sections/resume-rewriting/ImagePl
 
 export function NzSamplesAndExtras() {
   return (
-    <section className="py-12 md:py-16 bg-zinc-50 dark:bg-black/40 relative overflow-hidden border-y border-border/50">
+    <section className="py-12 md:py-16 bg-background relative overflow-hidden border-y border-border/50">
       <div className="container px-4 mx-auto relative z-10 space-y-14">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
           <div>
