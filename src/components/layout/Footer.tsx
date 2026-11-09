@@ -191,8 +191,8 @@ export function Footer() {
             Resumes Uplift
           </h2>
 
-          {/* Legal */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-4 mt-4 border-t border-white/10 text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
+          {/* Legal — extra right padding so links clear the floating WhatsApp button */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-4 mt-4 pr-20 sm:pr-24 border-t border-white/10 text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
             <p className="text-center sm:text-left">
               © {new Date().getFullYear()} Resumes Uplift. All Rights Reserved.
             </p>
@@ -202,6 +202,9 @@ export function Footer() {
               </Link>
               <Link href="/terms/" className="hover:text-white transition-colors">
                 Terms
+              </Link>
+              <Link href="/refund/" className="hover:text-white transition-colors">
+                Refund
               </Link>
             </div>
           </div>

@@ -146,6 +146,7 @@ export function getBreadcrumbsForPath(path: string): BreadcrumbItem[] {
   const extras: Record<string, BreadcrumbItem[]> = {
     "/privacy/": [{ name: "Privacy Policy", path: "/privacy/" }],
     "/terms/": [{ name: "Terms of Service", path: "/terms/" }],
+    "/refund/": [{ name: "Refund Policy", path: "/refund/" }],
   };
   return extras[normalized] ?? [];
 }

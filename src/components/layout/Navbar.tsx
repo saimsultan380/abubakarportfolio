@@ -18,6 +18,9 @@ export function Navbar() {
     const [isMobileAreasOpen, setIsMobileAreasOpen] = React.useState(false)
     const [isServicesOpen, setIsServicesOpen] = React.useState(false)
     const [isMobileServicesOpen, setIsMobileServicesOpen] = React.useState(false)
+    // Compact (hamburger) nav: CSS lg OR real phone screens even in "Desktop site" mode
+    const [navReady, setNavReady] = React.useState(false)
+    const [isCompactNav, setIsCompactNav] = React.useState(false)
     const areasRef = React.useRef<HTMLDivElement>(null)
     const servicesRef = React.useRef<HTMLDivElement>(null)
     const navRef = React.useRef<HTMLElement>(null)
@@ -32,6 +35,41 @@ export function Navbar() {
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
+
+    React.useEffect(() => {
+        const mq = window.matchMedia("(max-width: 1023px)")
+        const update = () => {
+            const cssNarrow = mq.matches
+            // Phones requesting "Desktop site" keep a small physical screen
+            const shortSide = Math.min(window.screen.width, window.screen.height)
+            const realPhone = shortSide > 0 && shortSide < 768
+            const compact = cssNarrow || realPhone
+            setIsCompactNav(compact)
+            setNavReady(true)
+            if (!compact) setIsMobileMenuOpen(false)
+        }
+        update()
+        mq.addEventListener("change", update)
+        window.addEventListener("resize", update)
+        return () => {
+            mq.removeEventListener("change", update)
+            window.removeEventListener("resize", update)
+        }
+    }, [])
+
+    // Before mount: CSS lg breakpoint. After mount: also force compact on real phones (Desktop site mode).
+    const desktopNavVisible = navReady ? !isCompactNav : null
+    const showDesktopNav =
+        desktopNavVisible === null ? "hidden lg:flex" : desktopNavVisible ? "flex" : "hidden"
+    const showDesktopCta =
+        desktopNavVisible === null
+            ? "hidden lg:inline-flex"
+            : desktopNavVisible
+              ? "inline-flex"
+              : "hidden"
+    const showMobileToggle =
+        desktopNavVisible === null ? "inline-flex lg:hidden" : desktopNavVisible ? "hidden" : "inline-flex"
+    const showMobileOverlay = desktopNavVisible === null ? true : !desktopNavVisible
 
     // Close dropdowns on outside click
     React.useEffect(() => {
@@ -183,21 +221,28 @@ export function Navbar() {
                         {/* Logo */}
                         <Link
                             href="/"
-                            className="group flex items-center gap-3 text-xl font-bold tracking-tight text-foreground nav-desktop-item"
+                            className="group flex items-center gap-2 sm:gap-3 text-lg sm:text-xl font-bold tracking-tight text-foreground nav-desktop-item min-w-0"
                         >
                             <Image
-                                src="/brand/new%20logo.png"
+                                src="/logo.jpeg"
                                 alt="Resumes Uplift logo"
-                                width={56}
-                                height={56}
-                                className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
+                                width={72}
+                                height={40}
+                                className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105 shrink-0"
                                 priority
                             />
-                            <span>Resumes <span className="text-primary">Uplift</span></span>
+                            <span className="truncate">
+                                Resumes <span className="text-primary">Uplift</span>
+                            </span>
                         </Link>
 
-                        {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-1 bg-secondary/20 p-1 rounded-full border border-border/50 backdrop-blur-md nav-desktop-item">
+                        {/* Desktop Navigation — unchanged look; hidden on phones / compact viewports */}
+                        <div
+                            className={cn(
+                                "items-center gap-1 bg-secondary/20 p-1 rounded-full border border-border/50 backdrop-blur-md nav-desktop-item",
+                                showDesktopNav,
+                            )}
+                        >
                             <Link
                                 href="/"
                                 className={cn(
@@ -331,12 +376,15 @@ export function Navbar() {
                         </div>
 
                         {/* Right Actions */}
-                        <div className="flex items-center gap-4 nav-desktop-item">
+                        <div className="flex items-center gap-2 sm:gap-3 shrink-0 nav-desktop-item">
                             <ThemeToggle />
                             <Link
                                 href="/#contact"
                                 onClick={handleNavLinkClick("/#contact")}
-                                className="hidden md:inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-widest text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
+                                className={cn(
+                                    "h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-widest text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95",
+                                    showDesktopCta,
+                                )}
                             >
                                 Hire Us
                                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -344,8 +392,13 @@ export function Navbar() {
 
                             {/* Mobile Toggle */}
                             <button
-                                className="md:hidden p-2 text-foreground rounded-xl bg-secondary/50 border border-border transition-colors hover:bg-secondary"
+                                type="button"
+                                className={cn(
+                                    "p-2 text-foreground rounded-xl bg-secondary/50 border border-border transition-colors hover:bg-secondary",
+                                    showMobileToggle,
+                                )}
                                 onClick={() => setIsMobileMenuOpen(true)}
+                                aria-label="Open menu"
                             >
                                 <Menu className="h-6 w-6" />
                             </button>
@@ -358,7 +411,9 @@ export function Navbar() {
             <div
                 ref={mobileMenuRef}
                 className={cn(
-                    "fixed top-0 left-0 right-0 bottom-0 z-[200] bg-background w-full h-full transition-all duration-500 ease-in-out md:hidden flex flex-col",
+                    "fixed top-0 left-0 right-0 bottom-0 z-[200] bg-background w-full h-full transition-all duration-500 ease-in-out flex flex-col",
+                    showMobileOverlay ? undefined : "hidden",
+                    !navReady && "lg:hidden",
                     isMobileMenuOpen
                         ? "opacity-100 translate-x-0"
                         : "opacity-0 translate-x-full pointer-events-none"
@@ -372,11 +427,11 @@ export function Navbar() {
                         className="flex items-center gap-3 text-xl font-bold tracking-tight text-foreground"
                     >
                         <Image
-                            src="/brand/new%20logo.png"
+                            src="/logo.jpeg"
                             alt="Resumes Uplift logo"
-                            width={56}
-                            height={56}
-                            className="h-12 w-auto object-contain"
+                            width={72}
+                            height={40}
+                            className="h-9 w-auto object-contain"
                             priority
                         />
                         <span>Resumes <span className="text-primary">Uplift</span></span>

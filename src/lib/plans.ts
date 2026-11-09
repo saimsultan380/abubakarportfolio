@@ -44,7 +44,15 @@ export const PLANS: PricingPlan[] = [
       { name: "Cover Letter", priceUsd: 50 },
       { name: "LinkedIn Profile Optimization", priceUsd: 60 },
     ],
-    features: ["Resume", "Cover Letter", "LinkedIn Profile Optimization"],
+    features: [
+      "ATS-optimized Resume/CV",
+      "Custom Cover Letter",
+      "LinkedIn Profile Optimization",
+      "Keyword research for target roles",
+      "Professional formatting",
+      "100% human-written content",
+      "PDF & editable Word delivery",
+    ],
   },
   {
     id: "mid",
@@ -59,7 +67,16 @@ export const PLANS: PricingPlan[] = [
       { name: "Cover Letter", priceUsd: 70 },
       { name: "LinkedIn Profile Optimization", priceUsd: 80 },
     ],
-    features: ["Resume", "Cover Letter", "LinkedIn Profile Optimization"],
+    features: [
+      "ATS-optimized Resume/CV",
+      "Custom Cover Letter",
+      "LinkedIn Profile Optimization",
+      "Achievement-focused rewriting",
+      "Industry keyword strategy",
+      "Recruiter-ready positioning",
+      "100% human-written content",
+      "PDF & editable Word delivery",
+    ],
   },
   {
     id: "executive",
@@ -74,7 +91,17 @@ export const PLANS: PricingPlan[] = [
       { name: "Cover Letter", priceUsd: 80 },
       { name: "LinkedIn Profile Optimization", priceUsd: 90 },
     ],
-    features: ["Resume", "Cover Letter", "LinkedIn Profile Optimization"],
+    features: [
+      "Executive ATS-optimized Resume/CV",
+      "Leadership-focused Cover Letter",
+      "LinkedIn Profile Optimization",
+      "Board-ready career narrative",
+      "Senior-level keyword strategy",
+      "Executive branding consultation notes",
+      "Priority writer support",
+      "100% human-written content",
+      "PDF & editable Word delivery",
+    ],
   },
 ]
 
@@ -145,7 +172,7 @@ export function getPlanPackage(plan: PricingPlan, packageId: PackageId): PlanPac
         id: "all",
         name: "All in One",
         priceUsd: plan.priceUsd,
-        includes: [...plan.features],
+        includes: plan.breakdown.map((item) => item.name),
       }
     default:
       return null

@@ -59,26 +59,30 @@ export function WhyChooseMe() {
 
   useGSAP(
     () => {
+      // Transform-only so cards never stay stuck at opacity 0 if ScrollTrigger misses
       gsap.from(".trust-content", {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 80%",
+          once: true,
         },
         y: 24,
-        opacity: 0,
         duration: 0.7,
         ease: "power2.out",
+        clearProps: "transform",
       });
+
       gsap.from(".trust-card", {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 75%",
+          once: true,
         },
-        y: 24,
-        opacity: 0,
+        y: 20,
         duration: 0.55,
         stagger: 0.08,
         ease: "power2.out",
+        clearProps: "transform",
       });
     },
     { scope: containerRef },
@@ -103,11 +107,11 @@ export function WhyChooseMe() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 w-full">
           {features.map((feature) => (
             <article
               key={feature.title}
-              className="trust-card h-full rounded-2xl border border-border/70 bg-card p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+              className="trust-card visible h-full min-w-0 rounded-2xl border border-border/70 bg-card p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
             >
               <div
                 className={cn(

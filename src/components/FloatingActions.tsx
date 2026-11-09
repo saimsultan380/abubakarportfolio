@@ -1,106 +1,12 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
-import { ChevronUp, ShoppingBag } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CONTACT } from "@/lib/contact";
 
 const WHATSAPP_MESSAGE =
   "Hi! I'm interested in your CV/resume and career services.";
-
-type PurchaseEvent = {
-  name: string;
-  city: string;
-  country: string;
-  flagSrc: string;
-  service: string;
-  minutesAgo: number;
-};
-
-/** International client purchase notifications (social proof). */
-const PURCHASE_EVENTS: PurchaseEvent[] = [
-  {
-    name: "James Mitchell",
-    city: "London",
-    country: "UK",
-    flagSrc: "/flags/gb.png",
-    service: "Mid Level Resume Package",
-    minutesAgo: 2,
-  },
-  {
-    name: "Sophie Laurent",
-    city: "Toronto",
-    country: "Canada",
-    flagSrc: "/flags/ca.png",
-    service: "LinkedIn Profile Optimization",
-    minutesAgo: 5,
-  },
-  {
-    name: "Daniel Okonkwo",
-    city: "New York",
-    country: "USA",
-    flagSrc: "/flags/us.png",
-    service: "Executive Level All-in-One",
-    minutesAgo: 8,
-  },
-  {
-    name: "Amelia Chen",
-    city: "Sydney",
-    country: "Australia",
-    flagSrc: "/flags/au.png",
-    service: "Resume Revamp Service",
-    minutesAgo: 12,
-  },
-  {
-    name: "Oliver Hansen",
-    city: "Auckland",
-    country: "New Zealand",
-    flagSrc: "/flags/nz.png",
-    service: "Cover Letter Writing",
-    minutesAgo: 15,
-  },
-  {
-    name: "Priya Sharma",
-    city: "Wellington",
-    country: "New Zealand",
-    flagSrc: "/flags/nz.png",
-    service: "Career-Specific CV Writing",
-    minutesAgo: 18,
-  },
-  {
-    name: "Lucas Ferreira",
-    city: "Chicago",
-    country: "USA",
-    flagSrc: "/flags/us.png",
-    service: "Entry Level Resume Package",
-    minutesAgo: 22,
-  },
-  {
-    name: "Emily Walsh",
-    city: "Manchester",
-    country: "UK",
-    flagSrc: "/flags/gb.png",
-    service: "Resume + LinkedIn Bundle",
-    minutesAgo: 27,
-  },
-  {
-    name: "Noah Tremblay",
-    city: "Vancouver",
-    country: "Canada",
-    flagSrc: "/flags/ca.png",
-    service: "Executive Resume Writing",
-    minutesAgo: 31,
-  },
-  {
-    name: "Grace Okafor",
-    city: "Melbourne",
-    country: "Australia",
-    flagSrc: "/flags/au.png",
-    service: "Cover Letter + LinkedIn",
-    minutesAgo: 36,
-  },
-];
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -115,18 +21,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function timeLabel(minutesAgo: number) {
-  if (minutesAgo < 2) return "Just now";
-  if (minutesAgo < 60) return `${minutesAgo} min ago`;
-  return `${Math.floor(minutesAgo / 60)} hr ago`;
-}
-
 export function FloatingActions() {
   const [showScrollTop, setShowScrollTop] = React.useState(false);
-  const [purchaseIndex, setPurchaseIndex] = React.useState(0);
-  const [toastVisible, setToastVisible] = React.useState(false);
-  const [toastExiting, setToastExiting] = React.useState(false);
-  const [dismissed, setDismissed] = React.useState(false);
 
   React.useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400);
@@ -135,106 +31,14 @@ export function FloatingActions() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Cycle purchase toasts: show → hold → hide → next
-  React.useEffect(() => {
-    if (dismissed) return;
-
-    let hideTimer: number | undefined;
-    let exitTimer: number | undefined;
-    let nextTimer: number | undefined;
-
-    const showTimer = window.setTimeout(() => {
-      setToastExiting(false);
-      setToastVisible(true);
-
-      hideTimer = window.setTimeout(() => {
-        setToastExiting(true);
-        exitTimer = window.setTimeout(() => {
-          setToastVisible(false);
-          setToastExiting(false);
-          nextTimer = window.setTimeout(() => {
-            setPurchaseIndex((i) => (i + 1) % PURCHASE_EVENTS.length);
-          }, 4500);
-        }, 350);
-      }, 5500);
-    }, 1800);
-
-    return () => {
-      window.clearTimeout(showTimer);
-      if (hideTimer) window.clearTimeout(hideTimer);
-      if (exitTimer) window.clearTimeout(exitTimer);
-      if (nextTimer) window.clearTimeout(nextTimer);
-    };
-  }, [purchaseIndex, dismissed]);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const whatsappUrl = `https://wa.me/${CONTACT.phoneE164}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
-  const purchase = PURCHASE_EVENTS[purchaseIndex];
 
   return (
     <>
-      {/* Left: live purchase social proof */}
-      <div className="fixed left-3 bottom-20 sm:left-6 sm:bottom-24 z-50 flex flex-col items-start gap-3 max-w-[min(92vw,320px)] pointer-events-none">
-        {!dismissed && toastVisible && (
-          <div
-            className={cn(
-              "pointer-events-auto w-full rounded-2xl border border-border/80 bg-background/95 backdrop-blur-md shadow-xl shadow-black/10 p-3 sm:p-3.5",
-              toastExiting ? "purchase-toast-exit" : "purchase-toast-enter",
-            )}
-            role="status"
-            aria-live="polite"
-          >
-            <div className="flex items-start gap-3">
-              <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <ShoppingBag className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-background">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                </span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  Just ordered
-                </p>
-                <p className="text-sm font-semibold text-foreground truncate">
-                  {purchase.name}
-                </p>
-                <p className="text-xs text-muted-foreground leading-snug mt-0.5">
-                  {purchase.service}
-                </p>
-                <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                  <Image
-                    src={purchase.flagSrc}
-                    alt=""
-                    width={16}
-                    height={11}
-                    className="h-2.5 w-4 rounded-[1px] object-cover ring-1 ring-border/60"
-                  />
-                  <span>
-                    {purchase.city}, {purchase.country}
-                  </span>
-                  <span className="opacity-40">·</span>
-                  <span>{timeLabel(purchase.minutesAgo)}</span>
-                </div>
-              </div>
-              <button
-                type="button"
-                aria-label="Dismiss purchase notifications"
-                onClick={() => {
-                  setDismissed(true);
-                  setToastVisible(false);
-                }}
-                className="h-6 w-6 shrink-0 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
-              >
-                <span className="text-sm font-bold leading-none">×</span>
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-
       {/* Left: scroll to top */}
       <button
         onClick={scrollToTop}

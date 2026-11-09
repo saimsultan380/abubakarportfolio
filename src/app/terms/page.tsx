@@ -78,9 +78,12 @@ export default function TermsPage() {
           <div className="space-y-2">
             <h2 className="text-xl md:text-2xl font-semibold text-foreground">Refunds</h2>
             <p className="text-muted-foreground">
-              Because services are customized and time-based, refunds are generally not offered once work has begun.
-              If you believe there is an issue with delivery or quality, contact us and we will work to resolve it
-              through revisions as outlined by your package.
+              Refund eligibility depends on project stage (before work begins, after work begins, after first draft,
+              missed deadlines, and inactive orders). Full details are in our{" "}
+              <a className="text-primary font-semibold hover:underline" href="/refund/">
+                Refund Policy
+              </a>
+              .
             </p>
           </div>
 

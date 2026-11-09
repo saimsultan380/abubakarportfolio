@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "Resumes Uplift",
     images: [
       {
-        url: "/brand/new%20logo.png",
+        url: "/logo.jpeg",
         width: 1200,
         height: 630,
         alt: "Resumes Uplift - Professional Resume & CV Writing Service",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/brand/new%20logo.png"],
+    images: ["/logo.jpeg"],
   },
   // No sitewide canonical — child pages must set their own unique URL
   robots: {
@@ -77,19 +77,19 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    shortcut: ["/brand/new%20logo.png"],
+    shortcut: ["/logo.jpeg"],
     icon: [
-      { url: "/brand/new%20logo.png", sizes: "32x32", type: "image/png" },
-      { url: "/brand/new%20logo.png", sizes: "16x16", type: "image/png" },
+      { url: "/logo.jpeg", sizes: "32x32", type: "image/jpeg" },
+      { url: "/logo.jpeg", sizes: "16x16", type: "image/jpeg" },
     ],
     apple: [
-      { url: "/brand/new%20logo.png" },
-      { url: "/brand/new%20logo.png", sizes: "180x180", type: "image/png" },
+      { url: "/logo.jpeg" },
+      { url: "/logo.jpeg", sizes: "180x180", type: "image/jpeg" },
     ],
     other: [
       {
         rel: "apple-touch-icon-precomposed",
-        url: "/brand/new%20logo.png",
+        url: "/logo.jpeg",
       },
     ],
   },

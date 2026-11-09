@@ -10,18 +10,11 @@ import {
   type PackageId,
   type PlanId,
 } from "@/lib/plans"
-import { ArrowRight, Check, FileText, Linkedin, Layers, FileSignature, Star } from "lucide-react"
+import { ArrowRight, Check, Star } from "lucide-react"
 
-/** 4th card: Resume + LinkedIn; same grid for every tier. */
-function packageOrder(): { id: PackageId; icon: React.ElementType }[] {
-  return [
-    { id: "cover", icon: FileSignature },
-    { id: "linkedin", icon: Linkedin },
-    { id: "resume", icon: FileText },
-    { id: "linkedin_resume", icon: Layers },
-    { id: "cover_resume", icon: Layers },
-    { id: "all", icon: Star },
-  ]
+/** Same package grid for every tier. */
+function packageOrder(): PackageId[] {
+  return ["cover", "linkedin", "resume", "linkedin_resume", "cover_resume"]
 }
 
 function money(amountUsd: number) {
@@ -145,30 +138,18 @@ export default function PricingPage() {
 
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2.5 sm:text-xs">
-                    À la carte (reference)
+                    Services included
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {plan.breakdown.map((b) => (
                       <span
                         key={b.name}
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
+                        className="inline-flex items-center rounded-full border border-border bg-muted/30 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
                       >
-                        <span className="max-w-[140px] truncate sm:max-w-none">{b.name}</span>
-                        <span className="text-primary tabular-nums">{money(b.priceUsd)}</span>
+                        {b.name}
                       </span>
                     ))}
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    Items total{" "}
-                    <span className="font-semibold text-foreground tabular-nums">{money(breakdownSum)}</span>
-                    {bundleSavingsUsd > 0 ? (
-                      <>
-                        {" "}
-                        · All in One{" "}
-                        <span className="font-semibold text-primary tabular-nums">{money(allInOnePrice)}</span>
-                      </>
-                    ) : null}
-                  </p>
                 </div>
               </div>
 
@@ -211,61 +192,61 @@ export default function PricingPage() {
         {/* Packages — full width grid */}
         <div className="relative">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-              {packageOrder().map((p) => {
-                const pkg = getPlanPackage(plan, p.id)
+              {packageOrder().map((packageId) => {
+                const pkg = getPlanPackage(plan, packageId)
                 if (!pkg) return null
-                const Icon = p.icon
-                const isAll = p.id === "all"
+                const isAll = packageId === "all"
                 const hasResume = pkg.includes.some((inc) => inc.toLowerCase().includes("resume"))
                 return (
                   <div
-                    key={p.id}
+                    key={packageId}
                     className={[
-                      "group rounded-3xl border bg-card/60 backdrop-blur-sm p-6 flex flex-col transition-all duration-300",
+                      "group rounded-2xl border bg-card p-5 sm:p-6 flex flex-col transition-all duration-300",
                       "hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10",
                       isAll ? "border-primary/40 ring-1 ring-primary/20" : "border-border",
                     ].join(" ")}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="h-11 w-11 rounded-2xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center">
-                        <Icon className="h-5 w-5" />
-                      </div>
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-base font-semibold text-foreground leading-snug">
+                        {pkg.name}
+                      </h3>
                       {isAll ? (
-                        <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+                        <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                           Recommended
                         </span>
                       ) : null}
                     </div>
 
-                    <h3 className="mt-4 text-base font-semibold text-foreground">
-                      {pkg.name}
-                    </h3>
-
                     <div className="mt-3 flex items-baseline gap-2">
-                      <div className="text-3xl font-bold tracking-tight text-foreground">
+                      <div className="text-3xl font-bold tracking-tight text-foreground tabular-nums">
                         {money(pkg.priceUsd)}
                       </div>
                       <div className="text-xs font-semibold text-muted-foreground">USD</div>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <ul className="mt-4 space-y-2">
                       {pkg.includes.map((inc) => (
-                        <span
+                        <li
                           key={inc}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/50 px-3 py-1 text-xs font-semibold text-muted-foreground"
+                          className="flex items-center gap-2 text-sm font-medium text-foreground/90"
                         >
-                          <Check className="h-3.5 w-3.5 text-primary" />
+                          <Check className="h-4 w-4 shrink-0 text-primary" />
                           {includeLabel(inc)}
-                        </span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
 
-                    <div className="mt-4 border-t border-border/60 pt-4 text-xs font-semibold text-muted-foreground space-y-1">
-                      <p>{plan.deliveryDays} days delivery</p>
-                      <p>
-                        Revisions:{" "}
-                        {isAll ? REVISIONS_ALL_IN_ONE : REVISIONS_PARTIAL_PACKAGE}
-                      </p>
+                    <div className="mt-4 border-t border-border/60 pt-4 text-xs text-muted-foreground space-y-1.5">
+                      <div className="flex items-center justify-between gap-3">
+                        <span>Delivery</span>
+                        <span className="font-semibold text-foreground/80">{plan.deliveryDays} days</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-3">
+                        <span>Revisions</span>
+                        <span className="font-semibold text-foreground/80">
+                          {isAll ? REVISIONS_ALL_IN_ONE : REVISIONS_PARTIAL_PACKAGE}
+                        </span>
+                      </div>
                     </div>
 
                     {hasResume ? (

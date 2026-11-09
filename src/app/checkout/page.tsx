@@ -16,15 +16,18 @@ export default function CheckoutPage({
   return (
     <section className="min-h-screen pt-24 md:pt-32 pb-16 bg-background">
       <div className="container px-4 mx-auto max-w-6xl">
-        <div className="mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold font-heading tracking-tight text-foreground">
+        <div className="mb-8 md:mb-10 max-w-2xl">
+          <h1 className="text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground">
             Checkout
           </h1>
+          <p className="mt-2 text-sm md:text-base text-muted-foreground">
+            Confirm your details and package, then send your order on WhatsApp.
+          </p>
         </div>
 
         <Suspense
           fallback={
-            <div className="text-sm text-muted-foreground font-medium animate-pulse">
+            <div className="rounded-2xl border border-border bg-card p-8 text-sm text-muted-foreground font-medium animate-pulse">
               Loading checkout...
             </div>
           }
@@ -35,4 +38,3 @@ export default function CheckoutPage({
     </section>
   )
 }
-

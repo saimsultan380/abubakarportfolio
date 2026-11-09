@@ -104,7 +104,7 @@ export function SiteGraphJsonLd() {
         "@id": `${SITE_URL}/#organization`,
         name: "Resumes Uplift",
         url: `${SITE_URL}/`,
-        logo: `${SITE_URL}/brand/new%20logo.png`,
+        logo: `${SITE_URL}/logo.jpeg`,
         email: CONTACT.email,
         telephone: CONTACT.phoneDisplay,
         address: {

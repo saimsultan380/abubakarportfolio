@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -12,20 +11,14 @@ import {
   type PlanId,
 } from "@/lib/plans"
 import { getCouponDiscountUsd } from "@/lib/coupons"
-import { SHOW_DIRECT_PAYMENT } from "@/lib/checkout-flags"
-import { Lock, ShieldCheck, FileText, PenLine, Minus, Plus } from "lucide-react"
-import { MastercardLogo, VisaLogo } from "./PaymentIcons"
+import { buildWhatsAppOrderUrl, type ResumeIntent } from "@/lib/whatsapp-order"
+import { Lock, FileText, PenLine, Minus, Plus } from "lucide-react"
 
 type Props = {
   initialPlanId: PlanId
   initialPackageId?: string
   plans: PricingPlan[]
 }
-
-type PaymentMethod = "card" | "direct"
-type ResumeIntent = "revamp" | "scratch" | ""
-
-const CHECKOUT_DRAFT_KEY = "resumes_uplift_checkout_draft"
 
 type CustomerDetails = {
   fullName: string
@@ -123,13 +116,6 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     setQuantity(parseCheckoutQty(qtyParam))
   }, [qtyParam])
 
-  const [method, setMethod] = React.useState<PaymentMethod>(() =>
-    SHOW_DIRECT_PAYMENT ? "direct" : "card"
-  )
-
-  React.useEffect(() => {
-    if (!SHOW_DIRECT_PAYMENT && method === "direct") setMethod("card")
-  }, [method])
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
 
@@ -143,20 +129,6 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     postalCode: "",
     notes: "",
   })
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return
-    try {
-      const raw = sessionStorage.getItem(CHECKOUT_DRAFT_KEY)
-      if (!raw) return
-      const draft = JSON.parse(raw) as { customer?: CustomerDetails }
-      if (draft?.customer && typeof draft.customer === "object") {
-        setCustomer((prev) => ({ ...prev, ...draft.customer }))
-      }
-    } catch {
-      // ignore
-    }
-  }, [])
 
   React.useEffect(() => {
     const urlPlan = sp.get("plan")
@@ -187,6 +159,8 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     setCustomer((prev) => ({ ...prev, [key]: value }))
   }
 
+  const includesResume = selectedServices.includes("resume")
+
   function validate(): string | null {
     if (!customer.fullName.trim()) return "Please enter your full name."
     if (!customer.email.trim()) return "Please enter your email."
@@ -196,6 +170,9 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     if (!customer.addressLine1.trim()) return "Please enter your address."
     if (!customer.city.trim()) return "Please enter your city."
     if (!customer.postalCode.trim()) return "Please enter your postal/zip code."
+    if (includesResume && intent !== "scratch" && intent !== "revamp") {
+      return "Please select a resume type (from scratch or revamp)."
+    }
     return null
   }
 
@@ -245,7 +222,10 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
       const nextPkg = servicesToPackageId(next)
       setPackageId(nextPkg)
 
-      const nextParams = buildParams({ plan: planId, pkg: nextPkg })
+      const nextIntent: ResumeIntent = next.includes("resume") ? intent : ""
+      if (!next.includes("resume")) setIntent("")
+
+      const nextParams = buildParams({ plan: planId, pkg: nextPkg, intent: nextIntent })
       router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
       return next
     })
@@ -270,7 +250,13 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
   const subtotalUsd = pkg.priceUsd * quantity + rushPerUnitUsd * quantity
   const totalUsd = Math.max(0, subtotalUsd - couponDiscountUsd)
 
-  async function payWithCard() {
+  function selectResumeIntent(next: ResumeIntent) {
+    setIntent(next)
+    const nextParams = buildParams({ plan: planId, pkg: packageId, intent: next })
+    router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false })
+  }
+
+  function orderViaWhatsApp() {
     const v = validate()
     if (v) {
       setError(v)
@@ -279,41 +265,38 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
     setError(null)
     setIsSubmitting(true)
     try {
-      const res = await fetch("/api/checkout/stripe", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          planId,
-          packageId,
-          rush12h,
-          quantity,
-          customer,
-          couponCode: couponCode.trim() || undefined,
-        }),
+      const url = buildWhatsAppOrderUrl({
+        plan,
+        planId,
+        packageId,
+        quantity,
+        rush12h,
+        intent: includesResume ? intent : "",
+        couponCode: couponCode.trim() || undefined,
+        couponDiscountUsd,
+        customer,
       })
-      const data = (await res.json()) as { url?: string; error?: string }
-      if (!res.ok || !data.url) throw new Error(data.error ?? "Unable to start card checkout.")
-      window.location.href = data.url
+      window.open(url, "_blank", "noopener,noreferrer")
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Payment failed.")
+      setError(e instanceof Error ? e.message : "Unable to open WhatsApp.")
     } finally {
       setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-      <div className="lg:col-span-3 rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-8">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
+      <div className="lg:col-span-3 rounded-2xl border border-border bg-card p-5 sm:p-6 md:p-8">
         <div className="flex items-start justify-between gap-6">
           <div>
             <h2 className="text-xl md:text-2xl font-bold font-heading tracking-tight">Your details</h2>
-            <p className="mt-2 text-sm text-muted-foreground font-medium">
-              We only use this information to deliver your service and send your confirmation.
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              Used only to deliver your service and confirm your order.
             </p>
           </div>
-          <div className="hidden md:flex items-center gap-2 text-xs font-bold text-muted-foreground">
-            <Lock className="h-4 w-4" />
-            SSL secure
+          <div className="hidden md:flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground">
+            <Lock className="h-3.5 w-3.5" />
+            Secure
           </div>
         </div>
 
@@ -393,197 +376,90 @@ export function CheckoutClient({ initialPlanId, initialPackageId, plans }: Props
           </Field>
         </div>
 
-        {selectedServices.includes("resume") ? (
-          <div className="mt-10 rounded-3xl border border-border bg-background/40 p-5">
+        {includesResume ? (
+          <div className="mt-8 rounded-2xl border border-border bg-muted/20 p-4 sm:p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="text-lg font-bold font-heading tracking-tight">Resume type</h3>
-                <p className="mt-2 text-sm text-muted-foreground font-medium">
-                  Choose how you want your resume handled. This opens the right form.
+                <h3 className="text-base sm:text-lg font-bold font-heading tracking-tight">Resume type</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Choose how you want your resume handled.
                 </p>
               </div>
-              <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <FileText className="h-5 w-5" />
+              <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <FileText className="h-4 w-4" />
               </div>
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => {
-                  try {
-                    sessionStorage.setItem(
-                      CHECKOUT_DRAFT_KEY,
-                      JSON.stringify({ customer, planId, packageId, rush12h, quantity })
-                    )
-                  } catch {
-                    // ignore
-                  }
-                  const q = new URLSearchParams({ plan: planId, pkg: packageId })
-                  if (rush12h) q.set("rush", "1")
-                  if (quantity > QTY_MIN) q.set("qty", String(quantity))
-                  router.push(`/resume-request?${q.toString()}`)
-                }}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm font-bold text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors text-left"
+                onClick={() => selectResumeIntent("scratch")}
+                className={cn(
+                  "flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm font-semibold text-left transition-colors",
+                  intent === "scratch"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary text-foreground"
+                    : "border-border bg-background text-foreground hover:border-primary/40",
+                )}
               >
                 Resume from scratch
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <FileText className="h-4 w-4" />
                 </span>
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  try {
-                    sessionStorage.setItem(
-                      CHECKOUT_DRAFT_KEY,
-                      JSON.stringify({ customer, planId, packageId, rush12h, quantity })
-                    )
-                  } catch {
-                    // ignore
-                  }
-                  const q = new URLSearchParams({ plan: planId, pkg: packageId, intent: "revamp" })
-                  if (rush12h) q.set("rush", "1")
-                  if (quantity > QTY_MIN) q.set("qty", String(quantity))
-                  router.push(`/resume-revamp?${q.toString()}`)
-                }}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card/60 px-4 py-3 text-sm font-bold text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors text-left"
+                onClick={() => selectResumeIntent("revamp")}
+                className={cn(
+                  "flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm font-semibold text-left transition-colors",
+                  intent === "revamp"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary text-foreground"
+                    : "border-border bg-background text-foreground hover:border-primary/40",
+                )}
               >
                 Resume revamp
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <PenLine className="h-4 w-4" />
                 </span>
               </button>
             </div>
-            <p className="mt-3 text-xs text-muted-foreground font-medium">
-              Your checkout details are saved. Use &ldquo;Back to checkout&rdquo; on the form to return without losing your info.
-            </p>
           </div>
         ) : null}
 
-        <div className="mt-10">
-          <h3 className="text-lg font-bold font-heading tracking-tight">Payment method</h3>
-
-          <div className="mt-4 flex flex-col gap-3">
-            <label
-              className={cn(
-                "relative flex items-center justify-between rounded-xl border p-4 transition-all duration-300",
-                method === "card"
-                  ? "border-primary bg-primary/5 ring-1 ring-primary"
-                  : SHOW_DIRECT_PAYMENT
-                    ? "border-border bg-background opacity-60 cursor-not-allowed pointer-events-none"
-                    : "border-border bg-background"
-              )}
-            >
-              <div className="flex items-center gap-3">
-                <input
-                  type="radio"
-                  name="payment_method"
-                  value="card"
-                  checked={method === "card"}
-                  disabled={SHOW_DIRECT_PAYMENT}
-                  onChange={() => setMethod("card")}
-                  className="h-4 w-4 border-gray-300 text-primary focus:ring-primary disabled:opacity-50"
-                />
-                <div className="text-sm font-bold text-foreground">Pay with Card</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <VisaLogo className="h-6 w-auto" />
-                <MastercardLogo className="h-6 w-auto" />
-              </div>
-            </label>
-
-            {SHOW_DIRECT_PAYMENT ? (
-              <label
-                className={cn(
-                  "relative flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all duration-300 hover:bg-muted/50",
-                  method === "direct"
-                    ? "border-primary bg-primary/5 ring-1 ring-primary"
-                    : "border-border bg-background"
-                )}
-              >
-                <div className="flex items-center gap-3">
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    value="direct"
-                    checked={method === "direct"}
-                    onChange={() => setMethod("direct")}
-                    className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
-                  />
-                  <div className="text-sm font-bold text-foreground">
-                    Pay directly (Zelle, Apple Pay, Google Pay, PayPal)
-                  </div>
-                </div>
-              </label>
-            ) : null}
-          </div>
-
-          {method === "direct" && SHOW_DIRECT_PAYMENT ? (
-            <div className="mt-6 rounded-2xl border border-border bg-background/40 p-5 space-y-4">
-              <p className="text-sm text-foreground font-medium">
-                Order total: <span className="font-bold text-primary">{money(totalUsd)}</span>
-                {couponDiscountUsd > 0 ? (
-                  <span className="text-muted-foreground"> (after any coupon you applied)</span>
-                ) : null}
-              </p>
-              <p className="text-sm text-muted-foreground font-medium">
-                After you confirm, our team will contact you on WhatsApp with secure payment instructions for your
-                package.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  const v = validate()
-                  if (v) {
-                    setError(v)
-                    return
-                  }
-                  setError(null)
-                  const params = new URLSearchParams()
-                  params.set("provider", "direct")
-                  params.set("amount", totalUsd.toFixed(2))
-                  if (intent) params.set("intent", intent)
-                  router.push(`/checkout/success?${params.toString()}`)
-                }}
-                className="w-full h-12 rounded-2xl bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all flex items-center justify-center gap-2 mt-4"
-              >
-                Confirm order
-              </button>
-            </div>
-          ) : null}
+        <div className="mt-8 border-t border-border pt-8">
+          <h3 className="text-base sm:text-lg font-bold font-heading tracking-tight">Place order</h3>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Send your package details on WhatsApp and we&apos;ll confirm payment instructions.
+          </p>
 
           {error && (
-            <div className="mt-5 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm font-semibold text-red-600 dark:text-red-400">
+            <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-3.5 text-sm font-semibold text-red-600 dark:text-red-400">
               {error}
             </div>
           )}
 
-          {method === "card" && (
-            <div className="mt-6">
-              <button
-                type="button"
-                onClick={payWithCard}
-                disabled={isSubmitting}
-                className={cn(
-                  "w-full h-12 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2",
-                  "bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:bg-primary/90",
-                  isSubmitting && "opacity-60 pointer-events-none"
-                )}
-              >
-                Pay {money(totalUsd)} with Card <ShieldCheck className="h-5 w-5" />
-              </button>
-              <p className="mt-3 text-xs text-muted-foreground font-medium">
-                You’ll be redirected to a secure Stripe checkout page to complete your payment.
-              </p>
-            </div>
-          )}
-
+          <div className="mt-5">
+            <button
+              type="button"
+              onClick={orderViaWhatsApp}
+              disabled={isSubmitting}
+              className={cn(
+                "w-full h-12 rounded-xl text-sm font-bold transition-colors flex items-center justify-center gap-2",
+                "bg-[#25D366] text-white hover:bg-[#20bd5a] active:bg-[#1da851]",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]/40 focus-visible:ring-offset-2",
+                isSubmitting && "opacity-60 pointer-events-none",
+              )}
+            >
+              {isSubmitting ? "Opening WhatsApp…" : `Order ${money(totalUsd)} via WhatsApp`}
+            </button>
+            <p className="mt-2.5 text-xs text-muted-foreground">
+              Opens WhatsApp with your plan, package, total, and contact details ready to send.
+            </p>
+          </div>
         </div>
       </div>
 
-      <aside className="lg:col-span-2 rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-8 h-fit">
+      <aside className="lg:col-span-2 rounded-2xl border border-border bg-card p-5 sm:p-6 md:p-8 h-fit lg:sticky lg:top-28">
         <h2 className="text-xl md:text-2xl font-bold font-heading tracking-tight">Order summary</h2>
-        <p className="mt-2 text-sm text-muted-foreground font-medium">
+        <p className="mt-1.5 text-sm text-muted-foreground">
           Select your plan and review the total.
         </p>
 
@@ -812,5 +688,5 @@ function Field({
 }
 
 const inputClass =
-  "w-full rounded-[4px] border border-border bg-background/60 px-4 py-3 text-sm font-semibold text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 placeholder:text-muted-foreground/70"
+  "w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 placeholder:text-muted-foreground/70"
 

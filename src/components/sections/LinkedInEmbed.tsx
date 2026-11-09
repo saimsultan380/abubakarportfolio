@@ -29,11 +29,11 @@ export function LinkedInEmbed() {
         <article className="mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-border/60 bg-card shadow-lg">
           <div className="flex items-center gap-3 px-5 pt-5 pb-3">
             <Image
-              src="/brand/new%20logo.png"
+              src="/logo.jpeg"
               alt="Resumes Uplift"
               width={48}
               height={48}
-              className="h-12 w-12 rounded-full object-contain bg-muted border border-border/60"
+              className="h-12 w-12 rounded-full object-contain bg-white dark:bg-muted border border-border/60 p-1"
             />
             <div className="min-w-0 flex-1">
               <p className="font-bold text-foreground leading-tight">
