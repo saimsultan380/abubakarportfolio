@@ -4,8 +4,9 @@ import * as React from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, CheckCircle2, Star } from "lucide-react";
+import { CheckCircle2, Star } from "lucide-react";
 import { Carousel360 } from "@/components/ui/Carousel360";
+import { TrustpilotMicroStar } from "@/components/Trustpilot";
 
 gsap.registerPlugin(useGSAP);
 
@@ -88,32 +89,10 @@ export function Hero() {
               >
                 Free Resume Review
               </Link>
-              <Link
-                href="/pricing"
-                className="inline-flex h-11 w-full sm:w-auto items-center justify-center rounded-lg bg-primary px-6 text-sm sm:text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                Hire Us
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
             </div>
 
-            <div className="mt-6 flex items-center justify-center lg:justify-start gap-3.5 text-xs text-muted-foreground">
-              <div className="flex -space-x-2">
-                {[11, 12, 13, 14].map((id) => (
-                  <img
-                    key={id}
-                    src={`https://i.pravatar.cc/64?img=${id}`}
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-full object-cover border-2 border-background bg-muted"
-                  />
-                ))}
-              </div>
-              <div>
-                <span className="font-bold text-accent-cool">800+</span> Clients
-                Hired
-              </div>
+            <div className="mt-3 flex justify-center lg:justify-start">
+              <TrustpilotMicroStar />
             </div>
           </div>
 

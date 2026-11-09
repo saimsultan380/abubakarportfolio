@@ -104,7 +104,18 @@ export function SiteGraphJsonLd() {
         "@id": `${SITE_URL}/#organization`,
         name: "Resumes Uplift",
         url: `${SITE_URL}/`,
-        logo: `${SITE_URL}/logo.jpeg`,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/og-logo.png`,
+          width: 1200,
+          height: 630,
+        },
+        image: `${SITE_URL}/og-logo.png`,
+        brand: {
+          "@type": "Brand",
+          name: "Resumes Uplift",
+          logo: `${SITE_URL}/logo-light.png`,
+        },
         email: CONTACT.email,
         telephone: CONTACT.phoneDisplay,
         address: {

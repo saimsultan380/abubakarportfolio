@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+import { TrustpilotMicroStar } from "@/components/Trustpilot";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -358,15 +359,18 @@ export function Reviews() {
 
       <div className="container px-5 sm:px-6 md:px-8 mx-auto mb-8 md:mb-10">
         <div className="reviews-header text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-card border border-[#dadce0] dark:border-border shadow-sm mb-4">
-            <GoogleG className="h-4 w-4" />
-            <span className="text-xs font-semibold text-[#3c4043] dark:text-foreground tracking-wide">
-              Google Reviews
-            </span>
-            <GoogleStars />
-            <span className="text-xs font-medium text-[#70757a] dark:text-muted-foreground">
-              5.0
-            </span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-card border border-[#dadce0] dark:border-border shadow-sm">
+              <GoogleG className="h-4 w-4" />
+              <span className="text-xs font-semibold text-[#3c4043] dark:text-foreground tracking-wide">
+                Google Reviews
+              </span>
+              <GoogleStars />
+              <span className="text-xs font-medium text-[#70757a] dark:text-muted-foreground">
+                5.0
+              </span>
+            </div>
+            <TrustpilotMicroStar />
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading mb-3 tracking-tight text-foreground">
             What clients shared{" "}

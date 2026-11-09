@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { BrandLogo } from "@/components/BrandLogo"
 import { Menu, X, ArrowRight, Briefcase, PenTool, Edit, FileText, Linkedin, ChevronDown, MapPin, Home, BookOpen, Mail } from "lucide-react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
@@ -223,12 +224,10 @@ export function Navbar() {
                             href="/"
                             className="group flex items-center gap-2 sm:gap-3 text-lg sm:text-xl font-bold tracking-tight text-foreground nav-desktop-item min-w-0"
                         >
-                            <Image
-                                src="/logo.jpeg"
-                                alt="Resumes Uplift logo"
-                                width={72}
-                                height={40}
-                                className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105 shrink-0"
+                            <BrandLogo
+                                width={64}
+                                height={36}
+                                className="h-7 sm:h-8 transition-transform group-hover:scale-105 shrink-0"
                                 priority
                             />
                             <span className="truncate">
@@ -379,14 +378,14 @@ export function Navbar() {
                         <div className="flex items-center gap-2 sm:gap-3 shrink-0 nav-desktop-item">
                             <ThemeToggle />
                             <Link
-                                href="/#contact"
-                                onClick={handleNavLinkClick("/#contact")}
+                                href="/#pricing"
+                                onClick={handleNavLinkClick("/#pricing")}
                                 className={cn(
                                     "h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-widest text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95",
                                     showDesktopCta,
                                 )}
                             >
-                                Hire Us
+                                Get Started
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
 
@@ -426,12 +425,10 @@ export function Navbar() {
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="flex items-center gap-3 text-xl font-bold tracking-tight text-foreground"
                     >
-                        <Image
-                            src="/logo.jpeg"
-                            alt="Resumes Uplift logo"
-                            width={72}
-                            height={40}
-                            className="h-9 w-auto object-contain"
+                        <BrandLogo
+                            width={64}
+                            height={36}
+                            className="h-8"
                             priority
                         />
                         <span>Resumes <span className="text-primary">Uplift</span></span>
@@ -553,11 +550,14 @@ export function Navbar() {
                 {/* Mobile Footer */}
                 <div className="p-8 border-t border-border bg-background">
                     <Link
-                        href="/#contact"
-                        onClick={handleNavLinkClick("/#contact")}
+                        href="/#pricing"
+                        onClick={(e) => {
+                            setIsMobileMenuOpen(false)
+                            handleNavLinkClick("/#pricing")(e)
+                        }}
                         className="inline-flex h-16 w-full items-center justify-center rounded-2xl bg-primary px-8 text-base font-bold uppercase tracking-widest text-primary-foreground shadow-xl shadow-primary/20"
                     >
-                        Elevate My Career
+                        Get Started
                         <ArrowRight className="ml-3 h-5 w-5" />
                     </Link>
                     <p className="mt-6 text-center text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">

@@ -153,9 +153,14 @@ export function FAQ() {
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-background ring-2 ring-border bg-card flex items-center justify-center">
                                     <img
-                                        src="/logo.jpeg"
+                                        src="/logo-light.png"
                                         alt="Resumes Uplift"
-                                        className="h-full w-full object-contain p-1.5 bg-white"
+                                        className="brand-logo-light h-full w-full object-contain p-1.5"
+                                    />
+                                    <img
+                                        src="/logo-dark.png"
+                                        alt="Resumes Uplift"
+                                        className="brand-logo-dark h-full w-full object-contain p-1.5"
                                     />
                                 </div>
                                 <div>

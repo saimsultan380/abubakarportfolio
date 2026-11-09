@@ -101,6 +101,17 @@
     --accent-cool-rgb: 165, 148, 224;
 }
 
+/* Brand logo: navy on light, white on dark (next-themes sets .dark on <html>) */
+.brand-logo-dark {
+    display: none;
+}
+html.dark .brand-logo-light {
+    display: none;
+}
+html.dark .brand-logo-dark {
+    display: block;
+}
+
 @layer base {
     * {
         @apply border-border outline-ring/50;
