@@ -5,6 +5,8 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { BlogPageHero } from "@/components/sections/blog/BlogPageHero";
 import { HowToMakeResumeAtsFriendly } from "@/components/sections/blog/HowToMakeResumeAtsFriendly";
 import { WhatTenseShouldAResumeBeIn } from "@/components/sections/blog/WhatTenseShouldAResumeBeIn";
+import { CanAtsDetectAiGeneratedResumes } from "@/components/sections/blog/CanAtsDetectAiGeneratedResumes";
+import { MultiplePositionsSameCompany } from "@/components/sections/blog/MultiplePositionsSameCompany";
 import {
   BLOG_POSTS,
   getBlogPost,
@@ -13,6 +15,8 @@ import {
 import { canonicalUrl } from "@/lib/seo";
 
 const POST_CONTENT: Record<string, ComponentType> = {
+  "can-ats-systems-detect-ai-generated-resumes": CanAtsDetectAiGeneratedResumes,
+  "multiple-positions-same-company-resume": MultiplePositionsSameCompany,
   "how-to-make-resume-ats-friendly": HowToMakeResumeAtsFriendly,
   "what-tense-should-a-resume-be-in-past-or-present": WhatTenseShouldAResumeBeIn,
 };

@@ -14,6 +14,30 @@ export type BlogPost = {
 /** Published and upcoming blog posts. Post URLs are root-level: /{slug}/ */
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "can-ats-systems-detect-ai-generated-resumes",
+    title: "Can ATS Detect AI-Generated Resumes?",
+    headline: "Can ATS Systems Detect AI-Generated Resumes or CVs?",
+    metaTitle: "Can ATS Systems Detect AI-Generated Resumes or CVs?",
+    metaDescription:
+      "Can ATS systems detect AI-generated resumes? Learn how ATS screening works, whether recruiters spot ChatGPT writing & how to create a genuine, ATS-friendly resume.",
+    image: "/blog/ats-detect-ai-resume-thumbnail.webp",
+    imageAlt:
+      "Can ATS systems detect AI-generated resumes - what ATS checks vs what recruiters notice",
+    published: true,
+  },
+  {
+    slug: "multiple-positions-same-company-resume",
+    title: "Multiple Positions at the Same Company",
+    headline: "How to List Multiple Positions at the Same Company on a Resume",
+    metaTitle: "How to List Multiple Positions at the Same Company on Resume",
+    metaDescription:
+      "Learn how to list multiple positions at the same company on your resume. Show promotions clearly, choose the right format, and highlight career growth tips.",
+    image: "/blog/multiple-positions-same-company-thumbnail.webp",
+    imageAlt:
+      "How to list multiple positions at the same company - show promotions clearly",
+    published: true,
+  },
+  {
     slug: "how-to-make-resume-ats-friendly",
     title: "How to Make Your Resume ATS Friendly",
     headline: "How to Make Your Resume ATS Friendly: A Step-by-Step Guide",
