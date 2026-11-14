@@ -25,9 +25,9 @@ export default function BlogPage() {
     <>
       <BreadcrumbJsonLd items={getBreadcrumbsForPath("/blog/")} />
       <BlogPageHero title="Blog" />
-      <section className="pb-16 md:pb-24">
+      <section className="pt-8 sm:pt-10 pb-16 md:pb-24">
         <div className="container mx-auto px-5 sm:px-6 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto">
             {posts.map((post) => (
               <BlogPostCard key={post.slug} post={post} />
             ))}
