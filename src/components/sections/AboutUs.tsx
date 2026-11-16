@@ -76,7 +76,7 @@ export function AboutUs() {
           <div className="order-1 lg:order-2 relative overflow-visible">
             <div className="relative mx-auto w-full max-w-lg lg:max-w-none overflow-visible">
               <Image
-                src="/about-image.png"
+                src="/about-image.webp"
                 alt={`${CONTACT.legalName} — ATS-friendly resume writing, expert review, and human-written career documents`}
                 width={2714}
                 height={1598}

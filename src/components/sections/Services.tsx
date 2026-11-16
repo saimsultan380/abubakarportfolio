@@ -90,17 +90,23 @@ export function Services() {
 
   useGSAP(
     () => {
-      gsap.from(".service-card", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
+      gsap.fromTo(
+        ".service-card",
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          stagger: 0.08,
+          ease: "power2.out",
+          clearProps: "opacity,transform",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+            once: true,
+          },
         },
-        y: 28,
-        opacity: 0,
-        duration: 0.55,
-        stagger: 0.08,
-        ease: "power2.out",
-      })
+      )
     },
     { scope: sectionRef },
   )
@@ -135,7 +141,7 @@ export function Services() {
         </div>
 
         <div className="flex flex-col gap-4 lg:gap-5">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
             {topRow.map((service) => (
               <Link
                 key={service.title}
@@ -163,7 +169,7 @@ export function Services() {
           </div>
 
           {/* Bottom row: two cards centered under the three */}
-          <div className="mx-auto grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5 xl:w-[calc((100%-2.5rem)*2/3+1.25rem)]">
+          <div className="mx-auto grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:w-[calc((100%-2.5rem)*2/3+1.25rem)] lg:gap-5">
             {bottomRow.map((service) => (
               <Link
                 key={service.title}

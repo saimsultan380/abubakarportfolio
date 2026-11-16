@@ -114,10 +114,10 @@ export function SuccessStats() {
             {/* Left: Illustration */}
             <div className="relative flex items-center justify-center bg-[#eef6ff] p-4 sm:p-6 lg:p-8">
               <Image
-                src="/Your%20Career%2C%20Your%20Story%20Unforgettable.png"
+                src="/Your%20Career%2C%20Your%20Story%20Unforgettable.webp"
                 alt="Your Career, Your Story Unforgettable"
-                width={2078}
-                height={1152}
+                width={1600}
+                height={887}
                 className="h-auto w-full object-contain"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />

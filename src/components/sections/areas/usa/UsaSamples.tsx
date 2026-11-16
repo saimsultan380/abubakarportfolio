@@ -36,7 +36,7 @@ export function UsaSamples() {
 
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border/70 bg-muted/30 shadow-sm">
             <Image
-              src="/areas/us-ats-templates-samples.png"
+              src="/areas/us-ats-templates-samples.webp"
               alt="ATS-friendly resume templates and samples for the United States"
               fill
               className="object-cover"
