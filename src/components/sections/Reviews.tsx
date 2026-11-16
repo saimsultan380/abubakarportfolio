@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ThumbsUp, MoreVertical } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -235,15 +235,6 @@ function ReviewCard({ review }: { review: Review }) {
       <p className="mt-2 text-[14px] leading-5 text-[#3c4043] dark:text-foreground/90 line-clamp-4">
         {review.quote}
       </p>
-
-      {/* Footer actions */}
-      <div className="mt-3 flex items-center gap-5 text-[12px] font-medium text-[#5f6368] dark:text-muted-foreground">
-        <span className="inline-flex items-center gap-1.5">
-          <ThumbsUp className="h-3.5 w-3.5" strokeWidth={2} />
-          Like
-        </span>
-        <span>Share</span>
-      </div>
     </article>
   );
 }
