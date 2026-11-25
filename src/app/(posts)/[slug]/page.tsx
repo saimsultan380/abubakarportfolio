@@ -7,6 +7,9 @@ import { HowToMakeResumeAtsFriendly } from "@/components/sections/blog/HowToMake
 import { WhatTenseShouldAResumeBeIn } from "@/components/sections/blog/WhatTenseShouldAResumeBeIn";
 import { CanAtsDetectAiGeneratedResumes } from "@/components/sections/blog/CanAtsDetectAiGeneratedResumes";
 import { MultiplePositionsSameCompany } from "@/components/sections/blog/MultiplePositionsSameCompany";
+import { HowToWriteResumeWithNoExperience } from "@/components/sections/blog/HowToWriteResumeWithNoExperience";
+import { ResumeSummaryExamples } from "@/components/sections/blog/ResumeSummaryExamples";
+import { HowLongShouldAResumeBe } from "@/components/sections/blog/HowLongShouldAResumeBe";
 import {
   BLOG_POSTS,
   getBlogPost,
@@ -19,6 +22,9 @@ const POST_CONTENT: Record<string, ComponentType> = {
   "multiple-positions-same-company-resume": MultiplePositionsSameCompany,
   "how-to-make-resume-ats-friendly": HowToMakeResumeAtsFriendly,
   "what-tense-should-a-resume-be-in-past-or-present": WhatTenseShouldAResumeBeIn,
+  "how-to-write-resume-with-no-experience": HowToWriteResumeWithNoExperience,
+  "resume-summary-examples": ResumeSummaryExamples,
+  "how-long-should-a-resume-be": HowLongShouldAResumeBe,
 };
 
 type PageProps = {

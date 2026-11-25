@@ -4,7 +4,7 @@ import * as React from "react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const ITEMS = [
+const DEFAULT_ITEMS = [
   "I have tailored the resume to the job description.",
   "My layout is simple and follows a clear reading order.",
   "My section headings are standard and descriptive.",
@@ -17,7 +17,13 @@ const ITEMS = [
   "I have reviewed the final application for errors and missing information.",
 ] as const;
 
-export function BlogChecklist() {
+type BlogChecklistProps = {
+  items?: readonly string[];
+  title?: string;
+};
+
+export function BlogChecklist({ items, title }: BlogChecklistProps) {
+  const ITEMS = items ?? DEFAULT_ITEMS;
   const [checked, setChecked] = React.useState<boolean[]>(
     () => ITEMS.map(() => false),
   );
@@ -44,7 +50,7 @@ export function BlogChecklist() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
         <div>
           <h3 className="text-xl font-bold font-heading text-foreground">
-            Resume readiness checklist
+            {title ?? "Resume readiness checklist"}
           </h3>
           <p className="text-sm text-muted-foreground mt-1">
             {done} of {ITEMS.length} complete

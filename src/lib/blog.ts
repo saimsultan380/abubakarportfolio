@@ -62,6 +62,39 @@ export const BLOG_POSTS: BlogPost[] = [
     imageAlt: "What tense should a resume be in - match the verb to the timing",
     published: true,
   },
+  {
+    slug: "how-to-write-resume-with-no-experience",
+    title: "How to Write a Resume With No Experience",
+    headline: "How to Write a Resume With No Experience: A Complete Guide",
+    metaTitle: "How to Write a Resume With No Experience (2025 Guide)",
+    metaDescription:
+      "Learn how to write a resume with no experience. Real examples, section-by-section tips, and recruiter-tested strategies for students, graduates, and career changers.",
+    image: "/blog/resume-no-experience-thumbnail-1200x675.jpg",
+    imageAlt: "How to write a resume with no experience - a complete guide for graduates and career changers",
+    published: true,
+  },
+  {
+    slug: "resume-summary-examples",
+    title: "Resume Summary Examples for Every Job",
+    headline: "Resume Summary Examples: How to Write a Professional Summary That Gets Interviews",
+    metaTitle: "Resume Summary Examples for Every Role and Level (2025)",
+    metaDescription:
+      "Explore 10+ resume summary examples for every career level and industry. Learn the exact formula to write a professional summary that passes ATS and impresses recruiters.",
+    image: "/blog/resume-summary-examples-thumbnail-final.jpg",
+    imageAlt: "Resume summary examples - how to write a professional summary that gets interviews",
+    published: true,
+  },
+  {
+    slug: "how-long-should-a-resume-be",
+    title: "How Long Should a Resume Be?",
+    headline: "How Long Should a Resume Be? The Right Resume Length for Every Level",
+    metaTitle: "How Long Should a Resume Be? 1 Page or 2 Pages (2025)",
+    metaDescription:
+      "How long should a resume be? Find the right resume length for your experience level, country, and industry. Includes what to cut and formatting tips to save space.",
+    image: "/blog/resume-length-blog-thumbnail.jpg",
+    imageAlt: "How long should a resume be - the right length for every career level",
+    published: true,
+  },
 ];
 
 export function getPublishedPosts(): BlogPost[] {

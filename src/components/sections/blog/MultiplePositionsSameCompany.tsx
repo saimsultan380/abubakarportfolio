@@ -80,9 +80,9 @@ export function MultiplePositionsSameCompany() {
   const cover = getBlogPost("multiple-positions-same-company-resume");
 
   return (
-    <article className="pb-16 md:pb-24">
+    <article className="pt-8 md:pt-10 pb-16 md:pb-24">
       <div className="container mx-auto px-5 sm:px-6 md:px-8">
-        <div className="max-w-3xl mx-auto space-y-10">
+        <div className="max-w-3xl mx-auto space-y-8">
           {cover ? (
             <BlogCoverImage
               src={cover.image}
