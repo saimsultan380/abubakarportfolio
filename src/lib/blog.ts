@@ -95,6 +95,28 @@ export const BLOG_POSTS: BlogPost[] = [
     imageAlt: "How long should a resume be - the right length for every career level",
     published: true,
   },
+  {
+    slug: "how-to-write-a-cover-letter",
+    title: "How to Write a Cover Letter",
+    headline: "How to Write a Cover Letter: Examples, Tips & Templates for 2025",
+    metaTitle: "How to Write a Cover Letter: Examples & Templates (2025)",
+    metaDescription:
+      "Learn how to write a cover letter that gets interviews. Includes cover letter examples, format guide, structure tips, and a full sample letter for every career level.",
+    image: "/blog/how-to-write-a-cover-letter-thumbnail.jpg",
+    imageAlt: "How to write a cover letter - examples, tips and templates for every career level",
+    published: true,
+  },
+  {
+    slug: "linkedin-headline-examples",
+    title: "LinkedIn Headline Examples for Every Industry",
+    headline: "LinkedIn Headline Examples: 30+ Best Headlines for Job Seekers in 2025",
+    metaTitle: "LinkedIn Headline Examples: Best Headlines for Job Seekers (2025)",
+    metaDescription:
+      "Explore 30+ LinkedIn headline examples for every industry and career level. Learn the proven formula to write a headline that attracts recruiters and gets you noticed.",
+    image: "/blog/linkedin-headline-examples-thumbnail.jpg",
+    imageAlt: "LinkedIn headline examples - best headlines for job seekers in 2025",
+    published: true,
+  },
 ];
 
 export function getPublishedPosts(): BlogPost[] {

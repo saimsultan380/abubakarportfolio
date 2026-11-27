@@ -10,6 +10,8 @@ import { MultiplePositionsSameCompany } from "@/components/sections/blog/Multipl
 import { HowToWriteResumeWithNoExperience } from "@/components/sections/blog/HowToWriteResumeWithNoExperience";
 import { ResumeSummaryExamples } from "@/components/sections/blog/ResumeSummaryExamples";
 import { HowLongShouldAResumeBe } from "@/components/sections/blog/HowLongShouldAResumeBe";
+import { HowToWriteACoverLetter } from "@/components/sections/blog/HowToWriteACoverLetter";
+import { LinkedInHeadlineExamples } from "@/components/sections/blog/LinkedInHeadlineExamples";
 import {
   BLOG_POSTS,
   getBlogPost,
@@ -25,6 +27,8 @@ const POST_CONTENT: Record<string, ComponentType> = {
   "how-to-write-resume-with-no-experience": HowToWriteResumeWithNoExperience,
   "resume-summary-examples": ResumeSummaryExamples,
   "how-long-should-a-resume-be": HowLongShouldAResumeBe,
+  "how-to-write-a-cover-letter": HowToWriteACoverLetter,
+  "linkedin-headline-examples": LinkedInHeadlineExamples,
 };
 
 type PageProps = {
